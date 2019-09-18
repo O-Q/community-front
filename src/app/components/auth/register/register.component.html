@@ -1,0 +1,33 @@
+    <!-- register card -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>ثبت‌نام</mat-card-title>
+        <mat-card-subtitle dir="rtl">به پایگاه اجتماعات ایران خوش آمدید.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form">
+          <mat-form-field>
+            <input formControlName="username" matInput placeholder="نام کاربری" autocomplete="username" type="text">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="email" matInput placeholder="ایمیل" autocomplete="email" type="text">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-icon matSuffix (click)="onVisibilityClick(input.type)">{{visibilityIcon}}</mat-icon>
+            <input formControlName="password" #input matInput placeholder="گذرواژه" autocomplete="new-password"
+              [type]="passwordFieldType">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="passwordConfirm" matInput placeholder="تکرار گذرواژه" autocomplete="new-password"
+              type="password">
+          </mat-form-field>
+          <mat-checkbox (click)="onCheckbox()" formControlName="acceptRules"><span><span class="dotted-underline">قوانین
+                و مقررات</span> سایت را
+              می‌پذیرم.</span></mat-checkbox>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button (click)="register()" class="btn register-btn" mat-raised-button color="primary">ثبت‌نام</button>
+      </mat-card-actions>
+    </mat-card>
+    <!-- register card -->

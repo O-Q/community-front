@@ -1,0 +1,24 @@
+.cdk-overlay-container {
+  z-index: 1045;
+}
+
+[mat-menu-item] {
+  text-align: right !important;
+}
+
+.mat-menu-item .mat-icon {
+  margin-right: 0 !important;
+  margin-left: 16px;
+}
+
+mat-form-field {
+  text-align: right !important;
+}
+
+mat-dialog-container {
+  padding: 0 !important;
+}
+
+.mat-tooltip {
+  font-family: IRANSans;
+}

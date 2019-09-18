@@ -1,0 +1,20 @@
+  <header>
+    <span class="header__title">پایگاه اجتماعات ایران</span>
+    <div class="header__user">
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>arrow_drop_down</mat-icon>
+        <mat-icon>person</mat-icon>
+        <span>مهدی شیری</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item style="display: flex; justify-content: center">
+          <mat-slide-toggle style="vertical-align: middle" (change)="onThemeChange($event)">پس‌زمینه تیره
+          </mat-slide-toggle>
+        </button>
+        <button (click)="onLogin()" mat-menu-item>
+          <span>ورود / ثبت‌نام</span>
+          <mat-icon>input</mat-icon>
+        </button>
+      </mat-menu>
+    </div>
+  </header>

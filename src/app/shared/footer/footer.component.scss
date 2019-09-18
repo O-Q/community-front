@@ -1,0 +1,8 @@
+@import '../../../variables';
+
+:host {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $footer-height;
+}

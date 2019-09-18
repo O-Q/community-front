@@ -1,0 +1,26 @@
+@import '../../../styles/form';
+
+
+mat-icon[matPrefix] {
+  user-select: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  text-align: right;
+  margin-bottom: 8px;
+
+  .login-btn {
+    margin: 10px auto 0 auto;
+  }
+}
+
+.register-btn {
+  margin-top: 10px;
+}

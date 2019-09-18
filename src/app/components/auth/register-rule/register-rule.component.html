@@ -1,0 +1,17 @@
+<mat-card class="register-rules-card">
+  <mat-card-content class="register-rules-content">
+    <app-register [rulesRef]="rules"></app-register>
+    <div class="rules-container">
+      <button (click)="toggleRule()" mat-icon-button class="show-rule-btn">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <div class="rules collapsed" #rules>
+        <div class="rules-text">
+          <h3>قوانین و مقررات</h3>
+          <p>ِشسیتشسنیتشسمنیت تینمشت منتشینت منتینشتسیمنشتیمنشت نمتشت متشیتنمشتس ینمشتم نتینشستنمش تیتمستینمتشتی تمستیت
+            تشنستیمنتشنیتشنمت نتت نمیتشنمیتنمشتیت تیتنمش تمنیشسی تشیتتضخصتخحصضت کئ. دی صئیتض</p>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

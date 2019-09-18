@@ -1,0 +1,27 @@
+@import '../../../variables';
+
+:host {
+  position: fixed;
+  background-color: cadetblue;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  height: $header-height;
+
+  header {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto 20px;
+
+    .header__title {
+      font-size: 1.5rem;
+      align-self: center;
+    }
+
+    .header__user {
+      align-self: center;
+    }
+  }
+}

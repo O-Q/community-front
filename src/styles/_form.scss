@@ -1,0 +1,20 @@
+  mat-card {
+    margin: auto;
+    min-width: 300px;
+    min-height: 300px;
+    display: grid;
+
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+    }
+
+    mat-card-content,
+    form {
+      display: grid;
+    }
+  }
+
+  .btn {
+    min-width: 90px;
+  }

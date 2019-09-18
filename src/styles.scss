@@ -1,1 +1,31 @@
+@import './themes';
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: 'IRANSans';
+  font-style: normal;
+  src: url('assets/fonts/IRANSans.ttf');
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0 auto;
+  direction: rtl;
+  text-align: center;
+  max-width: 100vw;
+
+  font-family: IRANSans, Open-Sans;
+
+  * {
+    font-family: IRANSans, Open-Sans;
+  }
+
+  span,
+  button {
+    font-family: IRANSans, Open-Sans !important;
+  }
+}

@@ -1,0 +1,9 @@
+<mat-card *ngIf="(error$ | async) as error">
+  <mat-icon>error</mat-icon>
+  <div class="error">
+    <span class="error__code">{{error.code}}</span>
+    <br>
+    <span class="error__message">{{error.message}}</span>
+  </div>
+  <button mat-raised-button color="primary" (click)="onReturn()">بازگشت</button>
+</mat-card>

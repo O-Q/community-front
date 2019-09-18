@@ -1,0 +1,30 @@
+@import './../../../../styles/form';
+
+mat-icon[matSuffix] {
+  user-select: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+mat-checkbox {
+  text-align: right;
+  margin-top: 15px;
+
+  span {
+    margin-right: 5px;
+    font-size: 14px;
+  }
+}
+
+.dotted-underline {
+  border-bottom: 1px dotted #000;
+  color: green;
+  opacity: .8;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+}
