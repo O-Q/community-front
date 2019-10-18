@@ -7,6 +7,5 @@ import { OverlayContainer } from '@angular/cdk/overlay';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'community';
   constructor() {}
 }

@@ -2,26 +2,36 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+
 import {
   passwordControl,
-  passwordMatchValidator
+  passwordMatchValidator,
+  requiredError
 } from 'src/app/utils/form.util';
+import * as AuthActions from './../../../../store/auth/auth.actions';
+import * as fromApp from './../../../../store/state';
+import * as fromAuth from './../../../../store/auth/auth.reducer';
 
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit {
-  @Input() rulesRef;
-
+  @Output() checkboxChange = new EventEmitter<boolean>();
+  required = requiredError;
   passwordFieldType: 'password' | 'text';
   visibilityIcon: 'visibility' | 'visibility_off';
   form: FormGroup;
-  constructor() {
+  auth$: Observable<fromAuth.State>;
+  constructor(private store: Store<fromApp.AppState>) {
     this.passwordFieldType = 'password';
     this.visibilityIcon = 'visibility_off';
     this.form = new FormGroup(
@@ -33,16 +43,23 @@ export class RegisterComponent implements OnInit {
         email: new FormControl('', [Validators.required, Validators.email]),
         password: passwordControl(),
         passwordConfirm: passwordControl(),
-        acceptRules: new FormControl({ value: false, disabled: true }, [
-          Validators.requiredTrue
-        ])
+        acceptRules: new FormControl('', [Validators.requiredTrue])
       },
       passwordMatchValidator
     );
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.auth$ = this.store.select('auth');
+  }
   register() {
-    console.log(this.form);
+    if (this.form.valid) {
+      const { username, phone, email, password } = this.form.value;
+      this.store.dispatch(
+        AuthActions.signupStart({ username, password, email, phone })
+      );
+    } else {
+      this.form.markAllAsTouched();
+    }
   }
   onVisibilityClick() {
     if (this.passwordFieldType === 'password') {
@@ -54,16 +71,8 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  /**
-   * enable checkbox and expand rules
-   */
   onCheckbox() {
     const acceptRules = this.form.get('acceptRules');
-    const cl: DOMTokenList = this.rulesRef.classList;
-    cl.toggle('collapsed');
-    cl.toggle('expanded');
-    if (acceptRules.disabled) {
-      setTimeout(() => acceptRules.enable(), 1);
-    }
+    this.checkboxChange.emit(acceptRules.value);
   }
 }

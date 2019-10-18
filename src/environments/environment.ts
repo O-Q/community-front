@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  configPath: './assets/config/config.json',
+  urls: {
+    baseUrl: 'http://localhost:3000',
+    auth: {
+      SIGN_IN: 'auth/signin',
+      SIGN_UP: 'auth/signup'
+    }
+  }
 };
 
 /*

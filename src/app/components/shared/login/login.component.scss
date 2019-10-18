@@ -1,4 +1,4 @@
-@import '../../../styles/form';
+@import '../../../../styles/form';
 
 
 mat-icon[matPrefix] {
@@ -18,6 +18,15 @@ mat-card-actions {
 
   .login-btn {
     margin: 10px auto 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .forgot-password {
+    &:hover {
+      cursor: pointer;
+      opacity: .5;
+    }
   }
 }
 

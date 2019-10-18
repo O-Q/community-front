@@ -15,6 +15,12 @@ export function passwordControl(): FormControl {
     Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{6,}$/)
   ]);
 }
+export function phoneControl(initialValue = ''): FormControl {
+  return new FormControl(initialValue, [
+    Validators.required,
+    Validators.pattern(/^(([0]?)([0-9]{10}))$/)
+  ]);
+}
 
 export const passwordMatchValidator: ValidatorFn = (
   control: FormGroup
@@ -26,3 +32,7 @@ export const passwordMatchValidator: ValidatorFn = (
     ? null
     : { passwordMismatch: true };
 };
+
+export function requiredError(fieldName: string) {
+  return `وارد کردن "${fieldName}" الزامی است`;
+}

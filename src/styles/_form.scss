@@ -18,3 +18,12 @@
   .btn {
     min-width: 90px;
   }
+
+  .auth-error {
+    text-align: center;
+    direction: rtl;
+    color: red;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 15px;
+  }

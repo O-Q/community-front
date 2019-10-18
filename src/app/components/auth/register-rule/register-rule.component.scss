@@ -39,3 +39,14 @@
 .collapsed {
   width: 0;
 }
+
+.rotate-right {
+  transform: rotateZ(180deg);
+  transition: transform 0.5s;
+}
+
+.rotate-left {
+  transform: rotateZ(0deg);
+  transition: transform 0.5s;
+
+}

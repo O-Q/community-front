@@ -1,9 +1,9 @@
 <mat-card class="register-rules-card">
   <mat-card-content class="register-rules-content">
-    <app-register [rulesRef]="rules"></app-register>
+    <app-register (checkboxChange)="toggleRule()"></app-register>
     <div class="rules-container">
       <button (click)="toggleRule()" mat-icon-button class="show-rule-btn">
-        <mat-icon>keyboard_arrow_left</mat-icon>
+        <mat-icon [ngClass]="isRuleOpen ? 'rotate-right' : 'rotate-left'">keyboard_arrow_left</mat-icon>
       </button>
       <div class="rules collapsed" #rules>
         <div class="rules-text">

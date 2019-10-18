@@ -1,4 +1,4 @@
-@import './../../../../styles/form';
+@import './../../../../../styles/form';
 
 mat-icon[matSuffix] {
   user-select: none;
@@ -27,4 +27,13 @@ mat-checkbox {
     cursor: pointer;
     opacity: 1;
   }
+}
+
+mat-card-actions {
+  display: grid;
+
+  .register-btn {
+    margin-bottom: 5px;
+  }
+
 }

@@ -4,6 +4,9 @@ enum Role {
 }
 
 export class User {
-  username: string;
-  role: Role;
+  constructor(
+    public id?: string,
+    public username?: string,
+    public roles?: Role[]
+  ) {}
 }

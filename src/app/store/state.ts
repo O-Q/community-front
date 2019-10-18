@@ -1,12 +1,12 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { fromCredential, fromLoading } from './index';
+import { fromAuth, fromLoading } from './index';
 
 export interface AppState {
-  credential: fromCredential.State;
+  auth: fromAuth.State;
   loading: fromLoading.State;
 }
 
 export const rootReducer: ActionReducerMap<AppState> = {
-  credential: fromCredential.reducer,
+  auth: fromAuth.reducer,
   loading: fromLoading.reducer
 };

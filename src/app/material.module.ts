@@ -3,18 +3,16 @@ import {
   MatCardModule,
   MatIconModule,
   MatButtonModule,
-  MatSidenavModule,
-  MatSlideToggleModule,
-  MatMenuModule,
-  MatListModule,
-  MatDividerModule
+  MatDividerModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 const modules = [
   MatCardModule,
   MatIconModule,
   MatButtonModule,
-  MatDividerModule
+  MatDividerModule,
+  MatProgressSpinnerModule
 ];
 @NgModule({
   imports: modules,
