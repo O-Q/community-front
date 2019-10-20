@@ -1,0 +1,19 @@
+@import './../../../../../../../styles/widget';
+
+.rules {
+
+  .rules__content {
+    .rule {
+      display: grid;
+
+      .rule__subject {
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .rule__description {
+        font-size: 12px;
+      }
+    }
+  }
+}

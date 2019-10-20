@@ -9,7 +9,7 @@
         <input formControlName="username" matInput placeholder="نام کاربری" autocomplete="username" type="text">
       </mat-form-field>
       <mat-form-field>
-        <mat-icon matPrefix (click)="onVisibilityClick(input.type)">{{visibilityIcon}}</mat-icon>
+        <mat-icon matPrefix (click)="onVisibilityClick()">{{visibilityIcon}}</mat-icon>
         <input formControlName="password" (keyup.enter)="login()" #input matInput placeholder="گذرواژه"
           autocomplete="current-password" [type]="passwordFieldType">
       </mat-form-field>

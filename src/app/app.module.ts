@@ -7,13 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppStoreModule } from './store/app-store.module';
 import { SharedModule } from './components/shared/shared.module';
 import { MaterialBaseModule } from './material.module';
-import { MatSidenavModule, MatDialogModule } from '@angular/material';
-import { ConfigService } from './services/config.service';
+import { MatSidenavModule } from '@angular/material';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_KEY } from './constants/local-storage.constant';
-
+export function appTokenGetter() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,7 +23,7 @@ import { ACCESS_TOKEN_KEY } from './constants/local-storage.constant';
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem(ACCESS_TOKEN_KEY),
+        tokenGetter: appTokenGetter,
         whitelistedDomains: [environment.urls.baseUrl]
       }
     }),

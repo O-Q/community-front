@@ -25,7 +25,7 @@ export const reducer = createReducer(
   })),
   on(credentialActions.authenticateSuccess, (state, action) => ({
     ...state,
-    user: action.payload,
+    user: action.payload.user,
     authError: null,
     loading: false
   })),

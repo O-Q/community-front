@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/models/user.model';
+import { User } from '../../models/user.model';
 
 export const loginStart = createAction(
   '[Auth] Login Start',
@@ -7,19 +7,17 @@ export const loginStart = createAction(
 );
 export const authenticateSuccess = createAction(
   '[Auth] Authenticate Success',
-  props<{ payload: User }>()
+  props<{ payload: AuthSuccessPayload }>()
 );
 export const authenticateFail = createAction(
   '[Auth] Authenticate Fail',
-  props<{ payload: { message: string; mode: 'signin' | 'signup' } }>()
+  props<{ payload: { message: string; mode: Mode } }>()
 );
 export const signupStart = createAction(
   '[Auth] Signup Start',
   props<SignupStartPayload>()
 );
 export const logout = createAction('[Auth] Logout');
-
-// can add requesting, success and failure
 
 interface SigninStartPayload {
   username: string;
@@ -31,3 +29,10 @@ interface SignupStartPayload {
   password: string;
   phone: number;
 }
+
+interface AuthSuccessPayload {
+  mode: Mode;
+  user: User;
+}
+
+type Mode = 'signin' | 'signup';

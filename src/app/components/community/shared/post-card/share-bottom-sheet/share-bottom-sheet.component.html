@@ -1,0 +1,18 @@
+<mat-nav-list>
+  <a mat-list-item (click)="onCopy()">
+    <mat-icon mat-font-icon class="far fa-clipboard"></mat-icon>
+    <span mat-line>کپی کردن لینک</span>
+  </a>
+  <a mat-list-item (click)="onShare(ShareURL.TWITTER)">
+    <mat-icon mat-font-icon class="fab fa-twitter"></mat-icon>
+    <span mat-line>اشتراک‌گذاری در توییتر</span>
+  </a>
+  <a mat-list-item (click)="onShare(ShareURL.FACEBOOK)">
+    <mat-icon mat-font-icon class="fab fa-facebook"></mat-icon>
+    <span mat-line>اشتراک‌گذاری در فیس‌بوک</span>
+  </a>
+  <a mat-list-item (click)="onShare(ShareURL.LINKEDIN)">
+    <mat-icon mat-font-icon class="fab fa-linkedin"></mat-icon>
+    <span mat-line>اشتراک‌گذاری در لینکداین</span>
+  </a>
+</mat-nav-list>

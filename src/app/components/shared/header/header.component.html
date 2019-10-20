@@ -7,7 +7,7 @@
         <span>{{ authState.user?.username }}</span>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item style="display: flex; justify-content: center">
+        <button disableRipple mat-menu-item style="display: flex; justify-content: center">
           <mat-slide-toggle style="vertical-align: middle" (change)="onThemeChange($event)">پس‌زمینه تیره
           </mat-slide-toggle>
         </button>

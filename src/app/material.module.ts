@@ -4,7 +4,10 @@ import {
   MatIconModule,
   MatButtonModule,
   MatDividerModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarConfig
 } from '@angular/material';
 
 const modules = [
@@ -12,10 +15,21 @@ const modules = [
   MatIconModule,
   MatButtonModule,
   MatDividerModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSnackBarModule
 ];
 @NgModule({
   imports: modules,
-  exports: modules
+  exports: modules,
+  providers: [
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 3000,
+        direction: 'rtl',
+        horizontalPosition: 'center'
+      } as MatSnackBarConfig
+    }
+  ]
 })
 export class MaterialBaseModule {}

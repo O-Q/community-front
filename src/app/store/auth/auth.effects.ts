@@ -13,6 +13,7 @@ import { ACCESS_TOKEN_KEY } from '../../constants/local-storage.constant';
 import { User } from '../../models/user.model';
 import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
 import { RegisterUser } from '../../models/register-user.model';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class AuthEffects {
@@ -35,13 +36,16 @@ export class AuthEffects {
           map(resData => {
             this._setSession(resData);
             const user = this._decodeUser();
-            AuthActions.authenticateSuccess({ payload: user });
+
+            return AuthActions.authenticateSuccess({
+              payload: { mode: 'signup', user }
+            });
           }),
           catchError((error: HttpErrorResponse) => {
             let message: string;
             if (error.status === 409) {
-              error = error.error;
               // conflict
+              error = error.error;
               const field: string = error.message[0].split(' ')[0];
               const word = this._translateField(field);
               message = `این ${word} قبلا انتخاب شده است.`;
@@ -75,7 +79,9 @@ export class AuthEffects {
           map(resData => {
             this._setSession(resData);
             const user = this._decodeUser();
-            return AuthActions.authenticateSuccess({ payload: user });
+            return AuthActions.authenticateSuccess({
+              payload: { mode: 'signin', user }
+            });
           }),
           catchError((error: HttpErrorResponse) => {
             let message: string;
@@ -97,17 +103,22 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   authSuccess = this.actions$.pipe(
     ofType(AuthActions.authenticateSuccess),
-    tap(() => {
+    tap(actionData => {
       this.router.navigateByUrl('/');
-      // todo: snackbar
+      const message =
+        actionData.payload.mode === 'signin'
+          ? 'شما با موفقیت وارد شدید 😀'
+          : 'ثبت‌نام با موفقیت انجام شد 😊';
+      this.snackbar.open(message);
     })
   );
 
   constructor(
     private actions$: Actions,
     private http: HttpClient,
+    private router: Router,
     private configService: ConfigService,
-    private router: Router
+    private snackbar: MatSnackBar
   ) {}
 
   private _setSession(payload: { accessToken: string }) {

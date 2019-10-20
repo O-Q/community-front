@@ -19,7 +19,7 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-icon matSuffix (click)="onVisibilityClick(input.type)">{{visibilityIcon}}</mat-icon>
+            <mat-icon matSuffix (click)="onVisibilityClick()">{{visibilityIcon}}</mat-icon>
             <input formControlName="password" #input matInput placeholder="گذرواژه" autocomplete="new-password"
               [type]="passwordFieldType">
             <mat-error>
