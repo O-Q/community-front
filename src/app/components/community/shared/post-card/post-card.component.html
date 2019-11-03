@@ -1,31 +1,31 @@
-    <mat-card class="post">
-      <div class="post__interact">
+    <mat-card class="post text-persian pr-0 pb-0 d-flex">
+      <div class="d-grid post__interact">
         <button mat-icon-button>
-          <mat-icon mat-font-icon="fa-icon" class="fa fa-angle-up"></mat-icon>
+          <mat-icon mat-font-icon class="fa fa-angle-up"></mat-icon>
         </button>
         <button mat-icon-button>
-          <mat-icon mat-font-icon="fa-icon" class="fa fa-angle-down"></mat-icon>
+          <mat-icon mat-font-icon class="fa fa-angle-down"></mat-icon>
         </button>
       </div>
-      <div class="post__main">
+      <div class="d-grid w-100">
 
-        <mat-card-header class="post__header">
+        <mat-card-header class="flex-between">
           <mat-card-title class="post__title">پست {{post}}
           </mat-card-title>
-          <mat-card-subtitle class="post__subtitle">
+          <mat-card-subtitle>
             مهدی شیری - {{post}} ماه پیش
           </mat-card-subtitle>
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <button class="post__more" mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
           </button>
 
         </mat-card-header>
-        <mat-card-content class="post__content">
+        <mat-card-content class="post__content d-flex">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum aperiam ipsam odio, molestias, laudantium
           similique temporibus, commodi recusandae quidem corrupti maiores voluptatum ratione in quaerat unde soluta at.
           Aut, amet.
         </mat-card-content>
-        <mat-card-actions class="post__actions">
+        <mat-card-actions class="mb-0 p-0">
           <app-post-actions></app-post-actions>
         </mat-card-actions>
       </div>
@@ -33,16 +33,16 @@
 
     <mat-menu #menu="matMenu">
       <!-- if moderator or writer -->
-      <button mat-menu-item class="mat-button mat-primary">
-        <mat-icon color="primary" mat-font-icon="fa-icon" class="fa fa-edit m__b__icon"></mat-icon>
+      <button mat-menu-item class="mat-button mat-primary text-persian">
+        <mat-icon color="primary" mat-font-icon class="fa fa-edit m__b__icon"></mat-icon>
         ویرایش
       </button>
       <button mat-menu-item class="mat-button mat-warn">
-        <mat-icon color="warn" mat-font-icon="fa-icon" class="far fa-flag m__b__icon"></mat-icon>
+        <mat-icon color="warn" mat-font-icon class="far fa-flag m__b__icon"></mat-icon>
         گزارش
       </button>
       <!-- if moderator or writer -->
-      <button mat-menu-item class="mat-button mat-warn">
+      <button mat-menu-item class="mat-button mat-warn" (click)="onDeletePost()">
         <mat-icon color="warn" mat-font-icon="fa-icon" class="fa fa-trash m__b__icon"></mat-icon>
         حذف
       </button>

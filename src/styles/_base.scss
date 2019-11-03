@@ -1,0 +1,18 @@
+// Just import it in _common.scss
+%d-flex {
+  display: flex;
+}
+
+%d-grid {
+  display: grid;
+}
+
+%flex-center {
+  @extend %d-flex;
+  justify-content: center;
+}
+
+%flex-between {
+  @extend %d-flex;
+  justify-content: space-between;
+}

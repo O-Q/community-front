@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-widget-users-list',
-  templateUrl: './widget-users-list.component.html',
-  styleUrls: ['./widget-users-list.component.scss']
+  selector: 'app-widget-user-list',
+  templateUrl: './widget-user-list.component.html',
+  styleUrls: ['./widget-user-list.component.scss']
 })
-export class WidgetUsersListComponent implements OnInit {
+export class WidgetUserListComponent implements OnInit {
   // todo: must contain username and link to profile
   @Input()
   users;

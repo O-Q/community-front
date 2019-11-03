@@ -9,12 +9,10 @@ mat-icon[matSuffix] {
 }
 
 mat-checkbox {
-  text-align: right;
   margin-top: 15px;
 
   span {
     margin-right: 5px;
-    font-size: 14px;
   }
 }
 
@@ -29,11 +27,6 @@ mat-checkbox {
   }
 }
 
-mat-card-actions {
-  display: grid;
-
-  .register-btn {
-    margin-bottom: 5px;
-  }
-
+.register-btn {
+  margin-bottom: 5px;
 }

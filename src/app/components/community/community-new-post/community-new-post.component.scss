@@ -1,0 +1,35 @@
+.editor-container {
+  min-width: 70%;
+  max-width: 100%;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+ckeditor {
+  min-width: 70%;
+
+  ::ng-deep {
+    font-size: 14px; // same as %fs-normal
+
+
+    .ck.ck-toolbar {
+      border: none;
+
+    }
+
+    .ck.ck-editor__main>.ck-editor__editable {
+      background-color: unset;
+    }
+
+    .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+      border-color: transparent;
+    }
+
+    .ck.ck-editor__main>.ck-editor__editable.ck-focused {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}

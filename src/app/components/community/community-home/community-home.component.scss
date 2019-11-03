@@ -1,24 +1,18 @@
 @import './../../../../variables.scss';
 
-.posts-widgets-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+.posts-container {
+  max-width: 60vw;
+  margin-left: 32px;
 
-  .posts-container {
-    max-width: 60vw;
-    margin-left: 32px;
-
-    @media screen and (max-width: $max-width) {
-      max-width: 80vw;
-    }
+  @media screen and (max-width: $max-width) {
+    max-width: 80vw;
   }
+}
 
-  .widgets-container {
-    max-width: 300px;
+.widgets-container {
+  max-width: 300px;
 
-    @media screen and (max-width: $max-width) {
-      display: none;
-    }
+  @media screen and (max-width: $max-width) {
+    display: none;
   }
 }

@@ -6,10 +6,9 @@ mat-card {
     justify-content: center;
 
     mat-card-title {
-      font-size: 12px;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 14px; // same as %fs-medium-title
       margin-bottom: 0;
-
     }
   }
 }

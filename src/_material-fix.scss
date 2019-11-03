@@ -23,3 +23,11 @@ mat-dialog-container {
 .mat-tooltip {
   font-family: IRANSans;
 }
+
+.mat-form-field-appearance-outline {
+  direction: ltr;
+
+  .mat-form-field-label mat-label {
+    padding-right: 24px;
+  }
+}

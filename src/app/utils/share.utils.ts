@@ -9,7 +9,7 @@ export function copyToClipboard(str: string) {
   document.body.removeChild(el);
 }
 
-export const FEATURES_OPEN_WINDOW_MINI =
+export const OPEN_WINDOW_FEATURES_MINI =
   'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350';
 
 export enum ShareURL {

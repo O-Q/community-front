@@ -1,17 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
-
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JwtModule } from '@auth0/angular-jwt';
+import { MatSidenavModule } from '@angular/material';
+import { AppComponent } from './app.component';
 import { AppStoreModule } from './store/app-store.module';
 import { SharedModule } from './components/shared/shared.module';
 import { MaterialBaseModule } from './material.module';
-import { MatSidenavModule } from '@angular/material';
 import { environment } from '../environments/environment';
-import { HttpClientModule } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_KEY } from './constants/local-storage.constant';
+import { LAZY_WIDGETS } from './components/widgets/tokens';
+import { LoadWidgetMap } from './components/widgets/lazy-widgets';
 export function appTokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
@@ -33,6 +34,7 @@ export function appTokenGetter() {
     MatSidenavModule,
     SharedModule
   ],
+  providers: [{ provide: LAZY_WIDGETS, useFactory: LoadWidgetMap }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

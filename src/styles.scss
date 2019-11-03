@@ -1,4 +1,5 @@
 @import './themes';
+@import './styles/common';
 /* You can add global styles to this file, and also import other style files */
 
 @font-face {
@@ -26,7 +27,13 @@ body {
 
   span,
   h1,
-  button {
+  button,
+  label,
+  div {
     font-family: IRANSans, Open-Sans !important;
+  }
+
+  code {
+    font-family: monospace;
   }
 }

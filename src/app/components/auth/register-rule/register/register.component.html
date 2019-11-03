@@ -34,12 +34,13 @@
               "گذرواژه" با "تکرار گذرواژه" یکسان نیست
             </mat-error>
           </mat-form-field>
-          <mat-checkbox (click)="onCheckbox()" formControlName="acceptRules"><span><span class="dotted-underline">قوانین
+          <mat-checkbox class="text-persian fs-normal" (click)="onCheckbox()" formControlName="acceptRules"><span><span
+                class="dotted-underline">قوانین
                 و مقررات</span> سایت را
               می‌پذیرم.</span></mat-checkbox>
         </form>
       </mat-card-content>
-      <mat-card-actions>
+      <mat-card-actions class="d-grid">
         <button [disabled]="auth.loading" (click)="register()" class="btn register-btn" mat-raised-button
           color="primary">
           <span *ngIf="!auth.loading else loading">

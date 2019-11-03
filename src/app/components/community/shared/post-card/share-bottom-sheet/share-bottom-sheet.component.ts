@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   copyToClipboard,
-  FEATURES_OPEN_WINDOW_MINI,
+  OPEN_WINDOW_FEATURES_MINI,
   ShareURL
 } from '../../../../../utils/share.utils';
 import { MatBottomSheetRef, MatSnackBar } from '@angular/material';
@@ -27,7 +27,7 @@ export class ShareBottomSheetComponent implements OnInit {
   }
 
   onShare(shareURL: ShareURL) {
-    window.open(shareURL + this.postUrl, 'share', FEATURES_OPEN_WINDOW_MINI);
+    window.open(shareURL + this.postUrl, 'share', OPEN_WINDOW_FEATURES_MINI);
     this.bottomSheetRef.dismiss();
   }
 }

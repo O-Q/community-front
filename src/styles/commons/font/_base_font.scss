@@ -1,0 +1,39 @@
+%fw-bold {
+  font-weight: 700;
+}
+
+%fw-normal {
+  font-weight: 400;
+}
+
+%fs-14 {
+  font-size: 14px !important;
+}
+
+%f-large-title {
+  font-size: 20px; // Material DEFAULT 
+  @extend %fw-bold; // Material DEFAULT
+}
+
+
+%f-medium-title {
+  @extend %fs-14;
+  @extend %fw-bold;
+}
+
+%f-large-subtitle {
+  @extend %fw-normal;
+  font-size: 10px !important;
+}
+
+%f-medium-subtitle {
+  @extend %f-large-subtitle;
+}
+
+%fs-normal {
+  @extend %fs-14;
+}
+
+%fs-small {
+  font-size: 12px;
+}

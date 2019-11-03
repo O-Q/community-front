@@ -1,0 +1,21 @@
+<!-- TODO: set options with registered groups of user which user access to write -->
+<mat-form-field>
+  <mat-select [value]="groupName" (selectionChange)="changeCommunity($event.value)">
+    <mat-option value="option1">Option 1</mat-option>
+    <mat-option value="option2">Option 2</mat-option>
+    <mat-option value="option3">Option 3</mat-option>
+  </mat-select>
+</mat-form-field>
+<div class="editor-container">
+  <mat-form-field>
+    <mat-label>عنوان پست</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <!-- <mat-form-field appearance="outline" class="mat-editor"> -->
+  <!-- <ckeditor matCkeditor [editor]="editor" [config]="config" [(ngModel)]="content"> -->
+  <!-- </ckeditor> -->
+  <!-- </mat-form-field> -->
+  <!-- <ckeditor [config]="config" [editor]="editor" [(ngModel)]="content"></ckeditor> -->
+</div>
+<!-- sanitizing problem -->
+<!-- <div style="width: 100%; text-align: right;" [innerHTML]="content"></div> -->

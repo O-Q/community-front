@@ -1,7 +1,7 @@
-<mat-card *ngIf="(success$ | async) as success">
+<mat-card *ngIf="(success$ | async) as success" class="m-auto">
   <mat-icon>{{ success.iconName }}</mat-icon>
   <div class="success">
-    <span class="success__message">{{ success.message }}</span>
+    <span class="f-medium-title">{{ success.message }}</span>
   </div>
   <button class="return-btn" mat-raised-button color="primary" (click)="onReturn()">بازگشت</button>
 </mat-card>

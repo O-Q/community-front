@@ -1,0 +1,45 @@
+@import './base_font';
+
+.f-large-title,
+mat-card-title {
+  @extend %f-large-title;
+}
+
+.f-medium-title {
+  @extend %f-medium-title;
+}
+
+.f-large-subtitle,
+mat-card-subtitle {
+  @extend %f-large-subtitle;
+}
+
+.f-medium-subtitle {
+  @extend %f-medium-subtitle;
+}
+
+.fs-normal {
+  @extend %fs-normal;
+}
+
+.fs-small {
+  @extend %fs-small;
+}
+
+.fw-bold {
+  @extend %fw-bold;
+}
+
+.fw-normal {
+  @extend %fw-normal;
+}
+
+.text-persian {
+  direction: rtl;
+  text-align: right;
+}
+
+.text-english {
+  direction: ltr;
+  text-align: left;
+}

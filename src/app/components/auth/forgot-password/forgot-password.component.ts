@@ -23,8 +23,7 @@ export class ForgotPasswordComponent {
       // subscription will close automatically
       this.dialog
         .open(ConfirmDialogComponent, {
-          data: `آیا از ارسال پیام به شماره‌ی ${this.form.value.phone} اطمینان دارید؟`,
-          minWidth: '250px'
+          data: `آیا از ارسال پیام به شماره‌ی ${this.form.value.phone} اطمینان دارید؟`
         })
         .afterClosed()
         .subscribe(this._sendMessage);

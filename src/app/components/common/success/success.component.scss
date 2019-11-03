@@ -1,28 +1,14 @@
-    mat-card {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      max-width: 400px;
-      min-width: 250px;
-      margin: auto 10px;
+mat-icon {
+  font-size: 20rem;
+  height: auto;
+  width: auto;
+  color: yellowgreen;
+}
 
-      mat-icon {
-        font-size: 20rem;
-        height: auto;
-        width: auto;
-        color: yellowgreen;
-      }
+.success {
+  margin-bottom: 10px;
+}
 
-      .success {
-        margin-bottom: 10px;
-
-        .success__message {
-          font-size: 14px;
-          font-weight: bold;
-        }
-      }
-
-      .return-btn {
-        margin-top: 16px;
-      }
-    }
+.return-btn {
+  margin-top: 16px;
+}

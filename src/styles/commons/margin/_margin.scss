@@ -1,0 +1,62 @@
+@import './base_margin';
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.m-auto {
+  margin: auto !important;
+}
+
+.mr-0 {
+  @extend %mr-0;
+}
+
+.ml-0 {
+  @extend %ml-0;
+}
+
+.mt-0 {
+  @extend %mt-0;
+}
+
+.mb-0 {
+  @extend %mb-0;
+}
+
+.my-0 {
+  @extend %mb-0;
+  @extend %mt-0;
+}
+
+.mx-0 {
+  @extend %mr-0;
+  @extend %ml-0;
+}
+
+.mr-auto {
+  @extend %mr-auto;
+
+}
+
+.ml-auto {
+  @extend %ml-auto;
+}
+
+.mt-auto {
+  @extend %mt-auto;
+}
+
+.mb-auto {
+  @extend %mb-auto;
+}
+
+.my-auto {
+  @extend %mt-auto;
+  @extend %mb-auto;
+}
+
+.mx-auto {
+  @extend %mr-auto;
+  @extend %ml-auto;
+}

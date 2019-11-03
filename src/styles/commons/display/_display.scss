@@ -1,0 +1,29 @@
+@import './base-display';
+
+.d-grid {
+  @extend %d-grid;
+}
+
+.d-flex {
+  @extend %d-flex;
+}
+
+.flex-between {
+  @extend %flex-between;
+}
+
+.flex-center {
+  @extend %flex-center;
+}
+
+.flex-evenly {
+  @extend %flex-evenly;
+}
+
+.flex-end {
+  @extend %flex-end;
+}
+
+.flex-dir-col {
+  @extend %flex-dir-col;
+}

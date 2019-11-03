@@ -1,7 +1,7 @@
 <mat-card class="register-rules-card">
-  <mat-card-content class="register-rules-content">
+  <mat-card-content class="d-flex">
     <app-register (checkboxChange)="toggleRule()"></app-register>
-    <div class="rules-container">
+    <div class="d-flex">
       <button (click)="toggleRule()" mat-icon-button class="show-rule-btn">
         <mat-icon [ngClass]="isRuleOpen ? 'rotate-right' : 'rotate-left'">keyboard_arrow_left</mat-icon>
       </button>

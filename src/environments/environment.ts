@@ -2,6 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// NOTE: ":something" will replace with value in makeURLs function
 export const environment = {
   production: false,
   configPath: './assets/config/config.json',
@@ -10,6 +11,12 @@ export const environment = {
     auth: {
       SIGN_IN: 'auth/signin',
       SIGN_UP: 'auth/signup'
+    },
+    blog: {
+      GET_BLOG: 'blog/:id'
+    },
+    forum: {
+      GET_FORUM: 'forum/:id'
     }
   }
 };

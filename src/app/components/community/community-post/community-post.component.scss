@@ -1,0 +1,52 @@
+.container {
+  max-width: 70%;
+
+  .post-container {
+
+    .p__card {}
+
+    .comments {
+      margin-top: 40px;
+
+      .comments__title {
+        align-items: center;
+
+        mat-divider {
+          width: 40%;
+        }
+      }
+
+      .comments__new {
+        margin-top: 16px;
+
+        .c__n__content__pic {
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          flex-shrink: 0;
+          object-fit: cover;
+          background-size: cover;
+        }
+
+
+        .c__n__content__field {
+          margin-right: 10px;
+
+          textarea {
+            min-height: 20px;
+          }
+        }
+
+
+
+        button {
+          width: 6rem;
+          margin-top: -10px;
+        }
+      }
+
+    }
+
+
+  }
+}
