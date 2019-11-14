@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 // NOTE: ":something" will replace with value in makeURLs function
+// NOTE: "something=xxx" will replace "xxx" with value in makeURLs function
 export const environment = {
   production: false,
   configPath: './assets/config/config.json',

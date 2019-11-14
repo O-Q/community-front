@@ -1,6 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../../models/user.model';
 
+
+export const loadUser = createAction('[Auth] Load User', props<{ payload: User }>());
 export const loginStart = createAction(
   '[Auth] Login Start',
   props<SigninStartPayload>()

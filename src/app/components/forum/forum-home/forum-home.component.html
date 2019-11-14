@@ -1,0 +1,12 @@
+<app-forum-base></app-forum-base>
+<div class="w-100 flex-center">
+  <div class="posts-container">
+    <!-- posts -->
+    <app-post-card *ngFor="let post of posts" [post]="post"></app-post-card>
+  </div>
+  <div class="widgets-container">
+    <app-forum-detail></app-forum-detail>
+    <!-- widgets -->
+    <app-forum-widget [widgets]="widgets"></app-forum-widget>
+  </div>
+</div>

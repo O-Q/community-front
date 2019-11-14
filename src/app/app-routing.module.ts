@@ -7,8 +7,8 @@ const routes: Routes = [
   {
     path: 'c',
     loadChildren: () =>
-      import('./components/community/community.module').then(
-        m => m.CommunityModule
+      import('./components/forum/forum.module').then(
+        m => m.ForumModule
       )
   },
   {
@@ -30,4 +30,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

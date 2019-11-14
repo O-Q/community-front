@@ -27,3 +27,29 @@
 .flex-dir-col {
   @extend %flex-dir-col;
 }
+
+.no-scroll-x {
+  @extend %no-scroll-x;
+}
+
+.no-scroll-y {
+  @extend %no-scroll-y;
+}
+
+.no-scroll {
+  @extend %no-scroll-x;
+  @extend %no-scroll-y;
+}
+
+.scroll-auto-x {
+  @extend %scroll-auto-x;
+}
+
+.scroll-auto-y {
+  @extend %scroll-auto-y;
+}
+
+.scroll-auto {
+  @extend %scroll-auto-x;
+  @extend %scroll-auto-y;
+}

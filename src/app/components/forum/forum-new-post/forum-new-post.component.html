@@ -1,0 +1,46 @@
+<!-- TODO: set options with registered groups of user which user access to write -->
+<div class="container">
+  <span class="fw-bold fs-small flex-end">کلمات: {{ wordsCount }}</span>
+  <div class="flex-between">
+    <mat-form-field>
+      <mat-select
+        placeholder="انجمن یا بلاگ"
+        [value]="groupName"
+        (selectionChange)="changeForum($event.value)"
+      >
+        <mat-option value="option1">Option 1</mat-option>
+        <mat-option value="option2">Option 2</mat-option>
+        <mat-option value="option3">Option 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="my-auto">
+      <button mat-stroked-button color="warn" class="ml-1">
+        حذف
+      </button>
+      <button mat-stroked-button color="accent" class="ml-1">
+        ذخیره پیش‌نویس
+      </button>
+      <button mat-stroked-button color="primary">
+        انتشار
+      </button>
+    </div>
+  </div>
+  <div>
+    <textarea
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      type="text"
+      class="d-flex editor__input title"
+      placeholder="موضوع"
+    ></textarea>
+    <textarea
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1.2"
+      type="text"
+      class="d-flex no-scroll editor__input mat-card-subtitle"
+      placeholder="زیرنویس"
+    ></textarea>
+    <ckeditor [editor]="editor" [config]="config" [(ngModel)]="content">
+    </ckeditor>
+  </div>
+</div>

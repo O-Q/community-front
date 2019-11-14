@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RuleGroup } from '../../../../../../interfaces/widgets.interface';
+import { RuleGroup } from '../../../interfaces/widgets.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-widget-rules',
@@ -11,7 +12,7 @@ export class WidgetRulesComponent implements OnInit {
     { subject: 'قانون اول', description: 'توضیح قانون اول' },
     { subject: 'قانون دوم', description: 'توضیح قانون دوم' }
   ];
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

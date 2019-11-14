@@ -29,3 +29,19 @@
 %flex-dir-col {
   flex-direction: column;
 }
+
+%no-scroll-x {
+  overflow-x: hidden !important;
+}
+
+%no-scroll-y {
+  overflow-y: hidden !important;
+}
+
+%scroll-auto-x {
+  overflow-x: auto !important;
+}
+
+%scroll-auto-y {
+  overflow-y: auto !important;
+}

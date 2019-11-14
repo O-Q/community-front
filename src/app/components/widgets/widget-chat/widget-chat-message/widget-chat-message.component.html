@@ -1,0 +1,14 @@
+<mat-list-item *ngIf="chatMessage && (auth$ | async).user as user"
+  [dir]="chatMessage.username === user.username ? 'rtl' : 'ltr'">
+  <img matListAvatar src="https://randomuser.me/api/portraits/thumb/lego/2.jpg" />
+  <div class="d-grid">
+    <span [ngStyle]="{'text-align' : chatMessage.username === user.username ? 'right' : 'left'}"
+      class="fw-bold">{{ chatMessage.username }}</span>
+    <p class="text-persian">{{ chatMessage.message }}</p>
+  </div>
+  <!-- <p *ngIf="event.type == 'member:joined'" class="text-center"> -->
+  <!-- <b>{{selectedConversation.members[event.from].user.name}}</b> has joined the conversation</p> -->
+</mat-list-item>
+<!-- <ng-template #noMessage>
+  <span style="color: grey;">پیامی وجود ندارد</span>
+</ng-template> -->

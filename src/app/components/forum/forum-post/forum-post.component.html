@@ -1,0 +1,28 @@
+<div class="container">
+  <app-forum-base></app-forum-base>
+  <div class="post-container">
+    <app-post-card class="p__card" [post]="5"></app-post-card>
+    <div class="comments">
+      <div class="comments__title flex-between">
+        <mat-divider> </mat-divider>
+        <span>بخش نظرات</span>
+        <mat-divider> </mat-divider>
+      </div>
+      <div class="comments__new text-persian">
+        <div class="d-flex">
+
+          <div class="content__pic" [ngStyle]="{'background-image': backgroundImage }">
+          </div>
+          <mat-form-field class="c__n__content__field fs-normal w-100">
+            <textarea matInput placeholder="نظر خود را بنویسید"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="flex-end">
+          <button color="primary" mat-button>
+            ثبت نظر
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

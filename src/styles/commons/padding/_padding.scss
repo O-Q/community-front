@@ -1,7 +1,10 @@
 @import './base-padding';
 
 .p-0 {
-  padding: 0 !important;
+  @extend %pr-0;
+  @extend %pl-0;
+  @extend %pb-0;
+  @extend %pt-0;
 }
 
 .pr-0 {
@@ -29,4 +32,39 @@
 .py-0 {
   @extend %pt-0;
   @extend %pb-0;
+}
+
+
+.p-1 {
+  @extend %pr-1;
+  @extend %pl-1;
+  @extend %pb-1;
+  @extend %pt-1;
+}
+
+.pr-1 {
+  @extend %pr-1;
+}
+
+
+.pb-1 {
+  @extend %pb-1;
+}
+
+.pt-1 {
+  @extend %pt-1;
+}
+
+.pl-1 {
+  @extend %pl-1;
+}
+
+.px-1 {
+  @extend %pr-1;
+  @extend %pl-1;
+}
+
+.py-1 {
+  @extend %pt-1;
+  @extend %pb-1;
 }

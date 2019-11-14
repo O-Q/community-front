@@ -18,6 +18,10 @@ const INIT_STATE: State = {
 
 export const reducer = createReducer(
   INIT_STATE,
+  on(credentialActions.loadUser, (state, action) => ({
+    ...state,
+    user: action.payload
+  })),
   on(credentialActions.loginStart, state => ({
     ...state,
     authError: null,

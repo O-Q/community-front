@@ -1,18 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { JwtModule } from '@auth0/angular-jwt';
 import { MatSidenavModule } from '@angular/material';
-import { AppComponent } from './app.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+import { environment } from '../environments/environment';
+import { LAZY_WIDGETS } from './components/widgets/tokens';
+import { ACCESS_TOKEN_KEY } from './constants/local-storage.constant';
+import { MaterialBaseModule } from './material.module';
 import { AppStoreModule } from './store/app-store.module';
 import { SharedModule } from './components/shared/shared.module';
-import { MaterialBaseModule } from './material.module';
-import { environment } from '../environments/environment';
-import { ACCESS_TOKEN_KEY } from './constants/local-storage.constant';
-import { LAZY_WIDGETS } from './components/widgets/tokens';
 import { LoadWidgetMap } from './components/widgets/lazy-widgets';
+import { AppComponent } from './app.component';
+
 export function appTokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
@@ -34,7 +36,9 @@ export function appTokenGetter() {
     MatSidenavModule,
     SharedModule
   ],
-  providers: [{ provide: LAZY_WIDGETS, useFactory: LoadWidgetMap }],
+  providers: [
+    { provide: LAZY_WIDGETS, useFactory: LoadWidgetMap }],
+
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

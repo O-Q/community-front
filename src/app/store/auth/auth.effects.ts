@@ -14,6 +14,7 @@ import { User } from '../../models/user.model';
 import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
 import { RegisterUser } from '../../models/register-user.model';
 import { MatSnackBar } from '@angular/material';
+import { decodeUser } from '../../utils/decode-user.util';
 
 @Injectable()
 export class AuthEffects {
@@ -34,8 +35,8 @@ export class AuthEffects {
         )
         .pipe(
           map(resData => {
-            this._setSession(resData);
-            const user = this._decodeUser();
+            const token = this._setSession(resData);
+            const user = decodeUser(token);
 
             return AuthActions.authenticateSuccess({
               payload: { mode: 'signup', user }
@@ -77,8 +78,8 @@ export class AuthEffects {
         )
         .pipe(
           map(resData => {
-            this._setSession(resData);
-            const user = this._decodeUser();
+            const token = this._setSession(resData);
+            const user = decodeUser(token);
             return AuthActions.authenticateSuccess({
               payload: { mode: 'signin', user }
             });
@@ -119,24 +120,13 @@ export class AuthEffects {
     private router: Router,
     private configService: ConfigService,
     private snackbar: MatSnackBar
-  ) {}
+  ) { }
 
   private _setSession(payload: { accessToken: string }) {
     localStorage.setItem(ACCESS_TOKEN_KEY, payload.accessToken);
+    return payload.accessToken;
   }
 
-  private _decodeUser() {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (token) {
-      const helper = new JwtHelperService();
-      const isExpired = helper.isTokenExpired(token);
-      if (!isExpired) {
-        const decodedToken: DecodedToken = helper.decodeToken(token);
-        const { username, roles, id } = decodedToken;
-        return new User(id, username, roles);
-      }
-    }
-  }
   private _translateField(field: string) {
     switch (field.toLowerCase()) {
       case 'username':
@@ -149,11 +139,3 @@ export class AuthEffects {
   }
 }
 
-interface DecodedToken {
-  // todo
-  roles: any[];
-  exp: number;
-  iat: number;
-  id: string;
-  username: string;
-}

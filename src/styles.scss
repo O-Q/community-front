@@ -37,3 +37,15 @@ body {
     font-family: monospace;
   }
 }
+
+.ck.ck-input.ck-input-text {
+  text-align: left !important;
+}
+
+.ck.ck-toolbar {
+  border: none;
+
+  .ck.ck-toolbar__items .ck.ck-button {
+    margin-left: 0 !important;
+  }
+}

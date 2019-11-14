@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-widget-user-list',
@@ -8,10 +9,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class WidgetUserListComponent implements OnInit {
   // todo: must contain username and link to profile
   @Input()
-  users;
-  @Input()
-  title: string;
-  constructor() {}
+  inputs: { title: string, users: { url: string, name: string, value: string }[] };
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.inputs);
+
+  }
 }

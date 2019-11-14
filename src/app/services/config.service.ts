@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ConfigService {
-  constructor() {}
+  constructor() { }
   get DEFAULT_HTTP_OPTIONS() {
     return {
       headers: new HttpHeaders({
@@ -17,10 +17,10 @@ export class ConfigService {
 
   makeUrl(
     subUrl: string,
-    args?: {
+    args: {
       params?: { [_: string]: string | number };
       queries?: { [_: string]: string | number };
-    }
+    } = { params: {}, queries: {} }
   ) {
     const { params, queries } = args;
 

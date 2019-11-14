@@ -16,4 +16,9 @@
     margin-top: 20px;
     flex-direction: column;
   }
+
+  div.loading-module {
+    min-height: calc(100vh - #{$header-height} - #{$footer-height});
+    align-items: center;
+  }
 }
