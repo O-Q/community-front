@@ -4,7 +4,8 @@ import {
   OPEN_WINDOW_FEATURES_MINI,
   ShareURL
 } from '../../../../../utils/share.utils';
-import { MatBottomSheetRef, MatSnackBar } from '@angular/material';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-share-bottom-sheet',

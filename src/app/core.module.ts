@@ -5,11 +5,9 @@ import { HomeComponent } from './components/shared/home/home.component';
 import { MaterialBaseModule } from './material.module';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
-import {
-  MatProgressSpinnerModule,
-  MatSnackBarModule,
-  MatSidenavModule
-} from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './components/shared/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -51,7 +49,6 @@ export function appTokenGetter() {
     MatSidenavModule,
     JwtModule
   ],
-  entryComponents: [LoginComponent],
   providers: [
     { provide: LAZY_WIDGETS, useFactory: LoadWidgetMap }]
 })

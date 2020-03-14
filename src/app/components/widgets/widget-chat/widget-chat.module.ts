@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WidgetChatComponent } from './widget-chat.component';
-import { MatCardModule, MatIconModule, MatListModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ACCESS_TOKEN_KEY } from '../../../constants/local-storage.constant';
@@ -22,7 +26,6 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: { query:
     MatButtonModule,
     SocketIoModule.forRoot(config),
   ],
-  entryComponents: [WidgetChatComponent, WidgetChatMessageComponent]
 })
 export class WidgetChatModule {
   static entry = WidgetChatComponent;

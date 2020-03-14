@@ -14,7 +14,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterRuleComponent implements OnInit {
-  @ViewChild('rules', { static: false }) rulesContainer: ElementRef;
+  @ViewChild('rules') rulesContainer: ElementRef;
   isRuleOpen = false;
   constructor() {}
 

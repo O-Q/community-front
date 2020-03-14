@@ -18,7 +18,7 @@ import { ChatRoomMessage } from '../../../../../server/src/shared/chatroom.inter
   styleUrls: ['./widget-chat.component.scss']
 })
 export class WidgetChatComponent implements OnInit {
-  @ViewChild('messageContainer', { read: ViewContainerRef, static: false })
+  @ViewChild('messageContainer', { read: ViewContainerRef })
   messageContainer: ViewContainerRef;
   connected = false;
   auth$: Observable<fromAuth.State>;

@@ -7,7 +7,7 @@ import {
   FormGroupDirective,
   NgForm
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 /**
  * create `FormControl` for password which is `required` and `min length 6` and must contain `word` and `number`.

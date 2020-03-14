@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSlideToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ThemeService } from 'src/app/services/theme.service';

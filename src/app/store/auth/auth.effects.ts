@@ -13,7 +13,7 @@ import { ACCESS_TOKEN_KEY } from '../../constants/local-storage.constant';
 import { User } from '../../models/user.model';
 import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
 import { RegisterUser } from '../../models/register-user.model';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { decodeUser } from '../../utils/decode-user.util';
 
 @Injectable()

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForumNewPostComponent } from './forum-new-post.component';
-import { MatSelectModule, MatInputModule, MatMenuModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { MaterialBaseModule } from '../../../material.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';

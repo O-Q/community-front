@@ -19,7 +19,7 @@ import { Widget } from '../../../../interfaces/widgets.interface';
 export class ForumWidgetComponent implements OnInit, AfterViewInit {
   @Input()
   widgets: Widget[];
-  @ViewChild('widgetContainer', { read: ViewContainerRef, static: false })
+  @ViewChild('widgetContainer', { read: ViewContainerRef })
   widgetContainer: ViewContainerRef;
   notLoadedWidgets: number;
   constructor(private widgetLoader: WidgetLoaderService, private changeDetector: ChangeDetectorRef) { }

@@ -7,13 +7,11 @@ import { ForumDetailComponent } from './shared/forum-detail/forum-detail.compone
 import { PostCardComponent } from './shared/post-card/post-card.component';
 import { PostActionsComponent } from './shared/post-card/post-actions/post-actions.component';
 import { ForumWidgetComponent } from './forum-home/forum-widget/forum-widget.component';
-import {
-  MatListModule,
-  MatMenuModule,
-  MatBottomSheetModule,
-  MatInputModule,
-  MatSelectModule
-} from '@angular/material';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { ShareBottomSheetComponent } from './shared/post-card/share-bottom-sheet/share-bottom-sheet.component';
@@ -51,6 +49,5 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     SkeletonModule
 
   ],
-  entryComponents: [ShareBottomSheetComponent, ConfirmDialogComponent]
 })
 export class ForumModule { }
