@@ -15,6 +15,10 @@
   @extend %fw-bold; // Material DEFAULT
 }
 
+%f-blog-title {
+  font-size: 36px;
+}
+
 
 %f-medium-title {
   @extend %fs-14;

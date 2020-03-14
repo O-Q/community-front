@@ -11,7 +11,8 @@ import { Store } from '@ngrx/store';
 import {
   passwordControl,
   passwordMatchValidator,
-  requiredError
+  requiredError,
+  MyErrorStateMatcher
 } from 'src/app/utils/form.util';
 import * as AuthActions from './../../../../store/auth/auth.actions';
 import * as fromApp from './../../../../store/state';
@@ -31,6 +32,8 @@ export class RegisterComponent implements OnInit {
   visibilityIcon: 'visibility' | 'visibility_off';
   form: FormGroup;
   auth$: Observable<fromAuth.State>;
+  matcher = new MyErrorStateMatcher();
+
   constructor(private store: Store<fromApp.AppState>) {
     this.passwordFieldType = 'password';
     this.visibilityIcon = 'visibility_off';
@@ -45,7 +48,7 @@ export class RegisterComponent implements OnInit {
         passwordConfirm: passwordControl(),
         acceptRules: new FormControl('', [Validators.requiredTrue])
       },
-      passwordMatchValidator
+      { validators: passwordMatchValidator }
     );
   }
   ngOnInit() {
@@ -53,12 +56,12 @@ export class RegisterComponent implements OnInit {
   }
   register() {
     if (this.form.valid) {
-      const { username, phone, email, password } = this.form.value;
+      const { username, email, password } = this.form.value;
       this.store.dispatch(
-        AuthActions.signupStart({ username, password, email, phone })
+        AuthActions.signupStart({ username, password, email })
       );
     } else {
-      this.form.markAllAsTouched();
+      console.log(this.form.errors);
     }
   }
   onVisibilityClick() {

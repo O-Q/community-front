@@ -37,7 +37,7 @@ export class ConfigService {
       }
     }
 
-    if (queryParams) {
+    if (queryParams.length) {
       return `${environment.urls.baseUrl}/${subUrl}?${queryParams.join('&')}`;
     } else {
       return `${environment.urls.baseUrl}/${subUrl}`;

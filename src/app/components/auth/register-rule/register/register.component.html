@@ -19,30 +19,32 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-icon matSuffix (click)="onVisibilityClick()">{{visibilityIcon}}</mat-icon>
+            <mat-icon matSuffix class="hover-pointer" (click)="onVisibilityClick()">{{visibilityIcon}}</mat-icon>
             <input formControlName="password" #input matInput placeholder="گذرواژه" autocomplete="new-password"
               [type]="passwordFieldType">
-            <mat-error>
+            <mat-error *ngIf="form.get('password').hasError('required')">
               <!-- todo: weakness, letter, number -->
               {{ required('گذرواژه') }}
+            </mat-error>
+            <mat-error *ngIf="form.get('password').hasError('pattern')">
+              "گذرواژه" باید شامل حروف انگلیسی بزرگ و کوچک و عدد باشد
             </mat-error>
           </mat-form-field>
           <mat-form-field>
             <input formControlName="passwordConfirm" matInput placeholder="تکرار گذرواژه" autocomplete="new-password"
-              type="password">
-            <mat-error>
+              type="password" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="form.hasError('passwordMismatch')">
               "گذرواژه" با "تکرار گذرواژه" یکسان نیست
             </mat-error>
           </mat-form-field>
-          <mat-checkbox class="text-persian fs-normal" (click)="onCheckbox()" formControlName="acceptRules"><span><span
-                class="dotted-underline">قوانین
+          <mat-checkbox class="text-persian fs-normal mt-2" (click)="onCheckbox()" formControlName="acceptRules">
+            <span class="mr-1"><span class="dotted-underline hover-pointer">قوانین
                 و مقررات</span> سایت را
               می‌پذیرم.</span></mat-checkbox>
         </form>
       </mat-card-content>
       <mat-card-actions class="d-grid">
-        <button [disabled]="auth.loading" (click)="register()" class="btn register-btn" mat-raised-button
-          color="primary">
+        <button [disabled]="auth.loading" (click)="register()" class="btn mb-1" mat-raised-button color="primary">
           <span *ngIf="!auth.loading else loading">
             ثبت‌نام
           </span>

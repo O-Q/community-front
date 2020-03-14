@@ -17,9 +17,9 @@ export class ShareBottomSheetComponent implements OnInit {
     'https://www.reddit.com/r/Showerthoughts/comments/bg71oh/your_essential_guide_to_showerthoughts/';
   constructor(
     private bottomSheetRef: MatBottomSheetRef<ShareBottomSheetComponent>,
-    private snackbar: MatSnackBar
-  ) {}
-  ngOnInit() {}
+    private snackbar: MatSnackBar,
+  ) { }
+  ngOnInit() { }
   onCopy() {
     copyToClipboard(this.postUrl);
     this.bottomSheetRef.dismiss();

@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { Store } from '@ngrx/store';
-import { AppState } from './store/state';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router, RouterEvent, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 
@@ -11,20 +8,23 @@ import { Router, RouterEvent, RouteConfigLoadStart, RouteConfigLoadEnd } from '@
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  asyncLoadCount = 0;
-  showLoading = false;
+  asyncLoadingCount = 0;
+  showLoading$ = new EventEmitter(false);
   constructor(private authService: AuthService, private router: Router) {
     this.authService.loadUser();
   }
   ngOnInit() {
+    this._initLoadingIndicator();
+  }
+
+  private _initLoadingIndicator() {
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof RouteConfigLoadStart) {
-        this.asyncLoadCount += 1;
+        this.asyncLoadingCount += 1;
       } else if (event instanceof RouteConfigLoadEnd) {
-        this.asyncLoadCount -= 1;
+        this.asyncLoadingCount -= 1;
       }
-
-      this.showLoading = !!this.asyncLoadCount;
+      this.showLoading$.next(!!this.asyncLoadingCount);
     });
   }
 

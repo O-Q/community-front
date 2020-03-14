@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as BalloonBlockEditor from 'ckeditor-personal-build';
+import * as BalloonBlockEditor from '../../../../../libs/ckeditor-personal-build';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CKEDITOR_DEFAULT_CONFIG, CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE } from '../../../constants/ckeditor.constant';
 
 
 @Component({
@@ -13,10 +17,11 @@ export class ForumNewPostComponent implements OnInit {
   editor = BalloonBlockEditor;
   content = '';
   wordsCount = 0;
+  isXSmall$: Observable<boolean>;
   config = {
-    placeholder: 'چیزی بنویسید...',
+    ...CKEDITOR_DEFAULT_CONFIG,
     autosave: {
-      waitingTime: 4000, // after afk time in ms
+      ...CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE,
       save: editor => this.saveData(editor.getData())
     },
     wordCount: {
@@ -30,7 +35,9 @@ export class ForumNewPostComponent implements OnInit {
     // }
     // }
   };
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute, private bpo: BreakpointObserver) {
+    this.isXSmall$ = this.bpo.observe(Breakpoints.XSmall).pipe(map(is => is.matches));
+  }
 
   ngOnInit() {
     this.groupName = this.route.snapshot.params.name;

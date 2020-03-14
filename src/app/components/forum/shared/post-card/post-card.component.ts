@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-dialog.component';
+import { Post } from '../../../../interfaces/post.interface';
 
 @Component({
   selector: 'app-post-card',
@@ -9,11 +10,11 @@ import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-d
 })
 export class PostCardComponent implements OnInit {
   @Input()
-  post;
+  post: Post;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onDeletePost() {
     this.dialog

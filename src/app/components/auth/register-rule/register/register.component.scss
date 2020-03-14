@@ -2,18 +2,6 @@
 
 mat-icon[matSuffix] {
   user-select: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-mat-checkbox {
-  margin-top: 15px;
-
-  span {
-    margin-right: 5px;
-  }
 }
 
 .dotted-underline {
@@ -22,11 +10,6 @@ mat-checkbox {
   opacity: .8;
 
   &:hover {
-    cursor: pointer;
     opacity: 1;
   }
-}
-
-.register-btn {
-  margin-bottom: 5px;
 }

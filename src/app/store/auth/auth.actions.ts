@@ -29,7 +29,6 @@ interface SignupStartPayload {
   username: string;
   email: string;
   password: string;
-  phone: number;
 }
 
 interface AuthSuccessPayload {

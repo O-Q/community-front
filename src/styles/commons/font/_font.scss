@@ -34,6 +34,10 @@ mat-card-subtitle {
   @extend %fw-normal;
 }
 
+.f-blog-title {
+  @extend %f-blog-title;
+}
+
 .text-persian {
   direction: rtl;
   text-align: right;

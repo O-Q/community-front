@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-forum-post',
   templateUrl: './forum-post.component.html',
@@ -7,8 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForumPostComponent implements OnInit {
   backgroundImage = `url("https://material.angular.io/assets/img/examples/shiba1.jpg")`;
+  constructor() { }
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() { }
 }

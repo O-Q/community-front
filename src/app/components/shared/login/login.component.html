@@ -9,20 +9,20 @@
         <input formControlName="username" matInput placeholder="نام کاربری" autocomplete="username" type="text">
       </mat-form-field>
       <mat-form-field>
-        <mat-icon matPrefix (click)="onVisibilityClick()">{{visibilityIcon}}</mat-icon>
+        <mat-icon matPrefix class="hover-pointer" (click)="onVisibilityClick()">{{visibilityIcon}}</mat-icon>
         <input formControlName="password" (keyup.enter)="login()" #input matInput placeholder="گذرواژه"
           autocomplete="current-password" [type]="passwordFieldType">
       </mat-form-field>
     </form>
   </mat-card-content>
-  <mat-card-actions class="text-persian pt-0 fs-normal d-flex flex-dir-col">
-    <span class="forgot-password">رمز عبور خود را فراموش کرده‌اید؟
-      <b class="fp__action" (click)="navigateForgotPassword()">کلیک کنید</b>
+  <mat-card-actions class="text-persian pt-0 fs-normal d-flex flex-dir-col mb-1">
+    <span class="forgot-password mr-1 fs-small">رمز عبور خود را فراموش کرده‌اید؟
+      <b class="fp__action hover-pointer" (click)="navigateForgotPassword()">کلیک کنید</b>
     </span>
     <button (click)="login()" class="btn login-btn flex-center" mat-raised-button color="primary"
       [disabled]="auth.loading"><span *ngIf="!auth.loading else loading">ورود</span>
       <ng-template #loading>
-        <mat-spinner style="margin: 6px 0;" color="accent" [diameter]="25"></mat-spinner>
+        <mat-spinner class="my-1 mx-0" color="accent" [diameter]="25"></mat-spinner>
       </ng-template>
     </button>
     <span class="auth-error" *ngIf="auth.mode === 'signin'">
@@ -30,6 +30,6 @@
     </span>
   </mat-card-actions>
   <mat-divider [inset]="true"></mat-divider>
-  <button (click)="navigateRegister()" class="register-btn" mat-flat-button color="accent">ثبت‌نام کنید</button>
+  <button (click)="navigateRegister()" class="mt-2" mat-flat-button color="accent">ثبت‌نام کنید</button>
 
 </mat-card>

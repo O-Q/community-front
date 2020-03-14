@@ -3,7 +3,7 @@
 }
 
 %d-grid {
-  display: grid;
+  display: grid !important;
 }
 
 %flex-between {
@@ -44,4 +44,8 @@
 
 %scroll-auto-y {
   overflow-y: auto !important;
+}
+
+%cursor-pointer {
+  cursor: pointer;
 }

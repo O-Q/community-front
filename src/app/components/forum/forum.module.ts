@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { SkeletonWidgetComponent } from './forum-home/forum-widget/skeleton-widget/skeleton-widget.component';
 import { SkeletonModule } from '../skeleton/skeleton.module';
 import { ForumBaseComponent } from './forum-base/forum-base.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -43,11 +44,10 @@ import { ForumBaseComponent } from './forum-base/forum-base.component';
     AppCommonModule,
     FormsModule,
     MaterialBaseModule,
-    MatListModule,
-    MatMenuModule,
     MatBottomSheetModule,
     MatInputModule,
     MatSelectModule,
+    ScrollingModule,
     SkeletonModule
 
   ],

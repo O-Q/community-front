@@ -1,4 +1,4 @@
-<div class="socials">
+<div *ngIf="actionPost$ | async as actionPost" class="socials">
   <button (click)="openShareBottomSheet()" mat-button class="socials__button" color="primary">
     <mat-icon mat-font-icon class="fa fa-share-alt-square s__b__icon"></mat-icon>
     اشتراک‌گذاری
@@ -8,9 +8,9 @@
     <mat-icon mat-font-icon class="far fa-bookmark s__b__icon"></mat-icon>
     ذخیره
   </button>
-  <button mat-button class="socials__button" color="primary">
+  <button *ngIf="actionPost" [routerLink]="['p', actionPost.postId]" mat-button class="socials__button" color="primary">
     <mat-icon mat-font-icon class="far fa-comments s__b__icon"></mat-icon>
     نظرات
-    ({{"5"}})
+    ({{actionPost.commentCount}})
   </button>
 </div>

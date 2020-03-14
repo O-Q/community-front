@@ -3,21 +3,35 @@ import {
   MatCardModule,
   MatIconModule,
   MatButtonModule,
-  MatDividerModule,
   MatProgressSpinnerModule,
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
-  MatSnackBarConfig
+  MatSnackBarConfig,
+  MatSlideToggleModule,
+  MatMenuModule,
+  MatListModule,
+  MatDialogModule,
+  MatInputModule,
+  MatSidenavModule
 } from '@angular/material';
 
 const modules = [
   MatCardModule,
   MatIconModule,
   MatButtonModule,
-  MatDividerModule,
   MatProgressSpinnerModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSlideToggleModule,
+  MatMenuModule,
+  MatListModule,
+  MatDialogModule,
+  MatInputModule,
+  MatSidenavModule,
 ];
+
+/**
+ * It'll needed in core module. so feel free to use it
+ */
 @NgModule({
   imports: modules,
   exports: modules,
@@ -32,4 +46,4 @@ const modules = [
     }
   ]
 })
-export class MaterialBaseModule {}
+export class MaterialBaseModule { }

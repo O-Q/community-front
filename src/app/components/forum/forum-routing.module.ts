@@ -2,7 +2,6 @@ import { ForumHomeComponent } from './forum-home/forum-home.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { ForumPostComponent } from './forum-post/forum-post.component';
-import { ForumNewPostComponent } from './forum-new-post/forum-new-post.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },

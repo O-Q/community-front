@@ -2,9 +2,6 @@
   max-width: 70%;
 
   .post-container {
-
-    .p__card {}
-
     .comments {
       margin-top: 40px;
 
@@ -19,7 +16,7 @@
       .comments__new {
         margin-top: 16px;
 
-        .c__n__content__pic {
+        .content__pic {
           height: 40px;
           width: 40px;
           border-radius: 50%;
@@ -28,8 +25,7 @@
           background-size: cover;
         }
 
-
-        .c__n__content__field {
+        .content__field {
           margin-right: 10px;
 
           textarea {
@@ -37,16 +33,11 @@
           }
         }
 
-
-
         button {
           width: 6rem;
           margin-top: -10px;
         }
       }
-
     }
-
-
   }
 }

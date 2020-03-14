@@ -26,7 +26,7 @@
           Aut, amet.
         </mat-card-content>
         <mat-card-actions class="mb-0 p-0">
-          <app-post-actions></app-post-actions>
+          <app-post-actions postId="post"></app-post-actions>
         </mat-card-actions>
       </div>
     </mat-card>
@@ -34,16 +34,16 @@
     <mat-menu #menu="matMenu">
       <!-- if moderator or writer -->
       <button mat-menu-item class="mat-button mat-primary text-persian">
-        <mat-icon color="primary" mat-font-icon class="fa fa-edit m__b__icon"></mat-icon>
+        <mat-icon color="primary" mat-font-icon class="fa fa-edit"></mat-icon>
         ویرایش
       </button>
       <button mat-menu-item class="mat-button mat-warn text-persian">
-        <mat-icon color="warn" mat-font-icon class="far fa-flag m__b__icon"></mat-icon>
+        <mat-icon color="warn" mat-font-icon class="far fa-flag"></mat-icon>
         گزارش
       </button>
       <!-- if moderator or writer -->
       <button mat-menu-item class="mat-button mat-warn text-persian" (click)="onDeletePost()">
-        <mat-icon color="warn" mat-font-icon="fa-icon" class="fa fa-trash m__b__icon"></mat-icon>
+        <mat-icon color="warn" mat-font-icon="fa-icon" class="fa fa-trash"></mat-icon>
         حذف
       </button>
     </mat-menu>

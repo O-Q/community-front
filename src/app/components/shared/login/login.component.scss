@@ -3,31 +3,17 @@
 
 mat-icon[matPrefix] {
   user-select: none;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
-mat-card-actions {
-  margin-bottom: 8px;
 
-  .login-btn {
-    margin: 20px auto 0 auto;
-  }
-
-  .forgot-password {
-    margin-right: 8px;
-
-    .fp__action {
-      &:hover {
-        cursor: pointer;
-        opacity: .5;
-      }
-    }
-  }
+.login-btn {
+  margin: 20px auto 0 auto !important;
 }
 
-.register-btn {
-  margin-top: 10px;
+.forgot-password {
+  margin-top: -10px;
+
+  .fp__action:hover {
+    opacity: .5;
+  }
 }

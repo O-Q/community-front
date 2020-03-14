@@ -3,8 +3,11 @@ import {
   Validators,
   ValidatorFn,
   FormGroup,
-  ValidationErrors
+  ValidationErrors,
+  FormGroupDirective,
+  NgForm
 } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material';
 
 /**
  * create `FormControl` for password which is `required` and `min length 6` and must contain `word` and `number`.
@@ -28,11 +31,17 @@ export const passwordMatchValidator: ValidatorFn = (
   const password = control.get('password');
   const passwordConfirm = control.get('passwordConfirm');
 
-  return password && passwordConfirm && password.value === passwordConfirm.value
+  return password.value === passwordConfirm.value
     ? null
     : { passwordMismatch: true };
 };
 
 export function requiredError(fieldName: string) {
   return `وارد کردن "${fieldName}" الزامی است`;
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    return control.dirty && control.parent.errors && control.parent.errors['passwordMismatch'];
+  }
 }

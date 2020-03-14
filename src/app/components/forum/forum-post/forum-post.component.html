@@ -10,15 +10,17 @@
       </div>
       <div class="comments__new text-persian">
         <div class="d-flex">
-
           <div class="content__pic" [ngStyle]="{'background-image': backgroundImage }">
           </div>
-          <mat-form-field class="c__n__content__field fs-normal w-100">
-            <textarea matInput placeholder="نظر خود را بنویسید"></textarea>
+          <mat-form-field class="content__field fs-normal w-100">
+            <textarea #comment class="no-scroll" [maxLength]="150" cdkTextareaAutosize matInput
+              placeholder="نظر خود را بنویسید"></textarea>
           </mat-form-field>
         </div>
+        <span class="flex-end fs-small mb-2" style="margin-top:-1rem">{{ comment.textLength }}/150</span>
         <div class="flex-end">
-          <button color="primary" mat-button>
+          <button color="primary" mat-button [ngClass]="{'mat-raised-button': comment.textLength > 0 }"
+            [disabled]="!comment.textLength">
             ثبت نظر
           </button>
         </div>

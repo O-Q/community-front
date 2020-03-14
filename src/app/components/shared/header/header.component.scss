@@ -1,7 +1,7 @@
 @import '../../../../variables';
 
 :host {
-  position: fixed;
+  position: absolute; // before that was fixed
   background-color: cadetblue;
   top: 0;
   left: 0;

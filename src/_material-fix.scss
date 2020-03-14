@@ -31,3 +31,14 @@ mat-dialog-container {
     padding-right: 24px;
   }
 }
+
+
+button>mat-icon[mat-font-icon] {
+  width: auto;
+  height: auto;
+  font-size: 20px;
+}
+
+.mat-form-field-label {
+  padding-top: 2px; // input labels aren't seen well
+}

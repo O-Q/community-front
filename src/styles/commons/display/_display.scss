@@ -53,3 +53,7 @@
   @extend %scroll-auto-x;
   @extend %scroll-auto-y;
 }
+
+.hover-pointer:hover {
+  @extend %cursor-pointer;
+}
