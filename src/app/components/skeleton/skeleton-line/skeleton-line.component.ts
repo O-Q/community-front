@@ -2,10 +2,17 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-skeleton-line',
-  template: `<p style="background-color: #80808080; height: 16px; border-radius:1px; margin: 5px"
-  [ngStyle]="half ? {'width':'100px'} : { 'width': 'auto'}"></p>`,
+  template: `
+    <div style="background-color: #80808080; height: 16px;  margin: 5px"
+     [ngStyle]="{width: width ? width+'%' :'auto', height: height ? height+'px' : '16px', 'border-radius': radius ? radius+'px' : '1px'}"
+     ></div>`,
+
 })
 export class SkeletonLineComponent {
   @Input()
-  half: boolean;
+  width: number;
+  @Input()
+  height: number;
+  @Input()
+  radius: number;
 }

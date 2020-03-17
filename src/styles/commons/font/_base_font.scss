@@ -11,12 +11,12 @@
 }
 
 %f-large-title {
-  font-size: 20px; // Material DEFAULT 
+  font-size: 20px !important; // Material DEFAULT 
   @extend %fw-bold; // Material DEFAULT
 }
 
 %f-blog-title {
-  font-size: 36px;
+  font-size: 36px !important;
 }
 
 
@@ -27,11 +27,12 @@
 
 %f-large-subtitle {
   @extend %fw-normal;
-  font-size: 10px !important;
+  font-size: 12px !important;
 }
 
 %f-medium-subtitle {
-  @extend %f-large-subtitle;
+  @extend %fw-normal;
+  font-size: 10px !important;
 }
 
 %fs-normal {
@@ -39,5 +40,5 @@
 }
 
 %fs-small {
-  font-size: 12px;
+  font-size: 12px !important;
 }

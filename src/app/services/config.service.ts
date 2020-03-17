@@ -23,7 +23,6 @@ export class ConfigService {
     } = { params: {}, queries: {} }
   ) {
     const { params, queries } = args;
-
     for (const k in params) {
       if (params.hasOwnProperty(k)) {
         subUrl = subUrl.replace(`:${k}`, params[k].toString());

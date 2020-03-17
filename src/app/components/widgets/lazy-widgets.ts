@@ -24,6 +24,12 @@ export const lazyWidgets: {
       loadChildren: () => import('./widget-chat/widget-chat.module').then(
         m => m.WidgetChatModule
       )
+    },
+    {
+      path: WidgetNames.FLAIRS,
+      loadChildren: () => import('./widget-flairs/widget-flairs.module').then(
+        m => m.WidgetFlairsModule
+      )
     }
   ];
 

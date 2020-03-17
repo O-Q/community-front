@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>موضوعات</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="mt-1">
+    <mat-chip-list>
+      <!-- <a class="m-1"  routerLink="." [queryParams]="{flair: flair}"> -->
+      <mat-chip class="hover-pointer mx-auto" *ngFor="let flair of flairs$ | async" (click)="goToFlair(flair)">
+        {{flair}}
+      </mat-chip>
+      <!-- </a> -->
+
+    </mat-chip-list>
+  </mat-card-content>
+</mat-card>

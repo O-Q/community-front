@@ -41,4 +41,5 @@ button>mat-icon[mat-font-icon] {
 
 .mat-form-field-label {
   padding-top: 2px; // input labels aren't seen well
+  direction: rtl;
 }

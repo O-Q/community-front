@@ -11,10 +11,16 @@
           <mat-slide-toggle style="vertical-align: middle" (change)="onThemeChange($event)">پس‌زمینه تیره
           </mat-slide-toggle>
         </button>
-        <button *ngIf="!authState.user" (click)="onLogin()" mat-menu-item>
-          <span>ورود / ثبت‌نام</span>
-          <mat-icon>input</mat-icon>
-        </button>
+        <ng-container *ngIf="authState.user else notLoggedIn">
+          <a mat-menu-item [routerLink]="['c', 'new']">ساخت فروم</a>
+          <a mat-menu-item [routerLink]="['b', 'new']">ساخت بلاگ</a>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <button (click)="onLogin()" mat-menu-item>
+            <span>ورود / ثبت‌نام</span>
+            <mat-icon>input</mat-icon>
+          </button>
+        </ng-template>
       </mat-menu>
     </div>
   </header>

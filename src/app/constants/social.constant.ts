@@ -1,0 +1,1 @@
+export const FLAIR_MAX_COUNT = 20;

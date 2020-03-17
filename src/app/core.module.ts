@@ -11,33 +11,27 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './components/shared/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../environments/environment';
 import { ACCESS_TOKEN_KEY } from './constants/local-storage.constant';
 import { LoadWidgetMap } from './components/widgets/lazy-widgets';
 import { LAZY_WIDGETS } from './components/widgets/tokens';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/auth.interceptor';
 
-export function appTokenGetter() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
-}
+
 @NgModule({
   declarations: [
     ErrorComponent,
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,
+    RouterModule,
     MaterialBaseModule,
     ReactiveFormsModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: appTokenGetter,
-        whitelistedDomains: [environment.urls.baseUrl]
-      }
-    }),
   ],
   exports: [
     ErrorComponent,
@@ -47,9 +41,15 @@ export function appTokenGetter() {
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatSidenavModule,
-    JwtModule
   ],
   providers: [
-    { provide: LAZY_WIDGETS, useFactory: LoadWidgetMap }]
+    { provide: LAZY_WIDGETS, useFactory: LoadWidgetMap },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
+
 })
 export class CoreModule { }

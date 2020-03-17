@@ -7,7 +7,14 @@ const routes: Routes = [
   {
     path: 'c',
     loadChildren: () =>
-      import('./components/forum/forum.module').then(
+      import('./components/community/forum/forum.module').then(
+        m => m.ForumModule
+      )
+  },
+  {
+    path: 'b',
+    loadChildren: () =>
+      import('./components/community/forum/forum.module').then(
         m => m.ForumModule
       )
   },

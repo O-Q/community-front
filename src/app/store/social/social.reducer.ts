@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as socialActions from './social.actions';
-import { PostDetailed } from '../../interfaces/post.interface';
+import { PostDetailed, Post } from '../../interfaces/post.interface';
+import { Widget } from '../../interfaces/widgets.interface';
 
 export interface State {
   // TODO: type
@@ -9,13 +10,18 @@ export interface State {
   readonly loading: boolean;
   // TODO: type not completed
   readonly focusedPost: PostDetailed;
+  readonly filterPostsQuery: { flair: string };
+  readonly posts: Post[];
+
 }
 
 const INIT_STATE: State = {
   social: null,
   fetchError: null,
   loading: false,
-  focusedPost: null
+  filterPostsQuery: null,
+  focusedPost: null,
+  posts: null,
 };
 
 export const reducer = createReducer(
@@ -24,7 +30,9 @@ export const reducer = createReducer(
     ...state,
     loading: true,
     social: null,
-    fetchError: null
+    fetchError: null,
+    filterPostsQuery: null,
+    posts: null
   })),
   on(socialActions.SocialFetchFailed, (state, action) => ({
     ...state,
@@ -45,9 +53,35 @@ export const reducer = createReducer(
     focusedPost: action.post,
     loading: false
   })),
+  on(socialActions.PostDetailedFetchFailed, (state, action) => ({
+    ...state,
+    fetchError: action.message,
+    loading: false
+  })),
   on(socialActions.LeavePost, (state) => ({
     ...state,
     focusedPost: null,
     loading: false
+  })),
+  on(socialActions.PostsFetching, (state, action) => ({
+    ...state,
+    filterPostsQuery: action.query,
+    loading: true
+  })),
+  on(socialActions.PostsFetched, (state, action) => ({
+    ...state,
+    posts: action.posts,
+    loading: false,
+  })),
+  on(socialActions.PostsFetchFailed, (state, action) => ({
+    ...state,
+    loading: false,
+    fetchError: action.message
+  })),
+  on(socialActions.SocialCreating, (state) => ({
+    ...state,
+    loading: true,
+    fetchError: null,
+    social: null
   }))
 );

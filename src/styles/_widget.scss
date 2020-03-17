@@ -1,6 +1,11 @@
 mat-card {
   margin-top: 20px;
 
+  a {
+    text-decoration: none;
+
+  }
+
   mat-card-header {
     display: flex;
     justify-content: center;

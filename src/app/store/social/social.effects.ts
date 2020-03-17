@@ -7,6 +7,8 @@ import { ConfigService } from '../../services/config.service';
 import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
 import { environment } from '../../../environments/environment';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class SocialEffects {
@@ -14,30 +16,39 @@ export class SocialEffects {
   socialFetch = this.actions$.pipe(
     ofType(SocialActions.SocialFetching),
     switchMap(socialFetchingData => {
-      // TODO: incomplete body
-      const body = {
-        name: socialFetchingData.name
-      };
-
       switch (socialFetchingData.socialType) {
         case 'blog':
           return this.http.get(
             this.configService.makeUrl(environment.urls.blog.GET_BLOG, {
-              params: { sid: socialFetchingData.sid }
+              params: { sname: socialFetchingData.sname }
             }),
-            DEFAULT_HTTP_OPTION
-          );
-        case 'forum':
-          return this.http.get<any>(
-            this.configService.makeUrl(environment.urls.forum.GET_FORUM, { params: { sid: socialFetchingData.sid } }),
             DEFAULT_HTTP_OPTION
           ).pipe(map(resData => {
             return SocialActions.SocialFetched({
               social: resData
             });
           }), catchError((error: HttpErrorResponse) => {
+            if (error.status === 404) {
+              this.router.navigateByUrl('/error/404');
+            }
             const message = error.error.message;
             return of(SocialActions.SocialFetchFailed({ message }));
+          }));
+        case 'forum':
+          return this.http.get<any>(
+            this.configService.makeUrl(environment.urls.forum.GET_FORUM, { params: { sname: socialFetchingData.sname } }),
+            DEFAULT_HTTP_OPTION
+          ).pipe(map(resData => {
+            return SocialActions.SocialFetched({
+              social: resData
+            });
+          }), catchError((error: HttpErrorResponse) => {
+            if (error.status === 404) {
+              this.router.navigateByUrl('/error/404');
+            }
+            const message = error.error.message;
+            return of(SocialActions.SocialFetchFailed({ message }));
+
           }));
         default:
           console.error('invalid social type');
@@ -52,17 +63,80 @@ export class SocialEffects {
       return this.http.get(
         this.configService.makeUrl(environment.urls.post.GET_POST, {
           params: {
-            pid: postDetailedData.postId,
-            sid: postDetailedData.groupId
+            pid: postDetailedData.pid,
+            sid: postDetailedData.sid
           }
         }),
         DEFAULT_HTTP_OPTION
       );
     }));
 
+  @Effect()
+  postsFetch = this.actions$.pipe(
+    ofType(SocialActions.PostsFetching),
+    switchMap((postsFetchingData) => {
+      return this.http.get(
+        this.configService.makeUrl(environment.urls.post.GET_POSTS_BY_SID, {
+          params: {
+            sid: postsFetchingData.sid
+          },
+          queries: postsFetchingData.query
+        }),
+        DEFAULT_HTTP_OPTION
+      );
+    }));
+
+  @Effect()
+  socialCreate = this.actions$.pipe(
+    ofType(SocialActions.SocialCreating),
+    switchMap(socialCreatingData => {
+      const { name, description, subject, flairs, socialType } = socialCreatingData;
+      switch (socialType) {
+        case 'blog':
+          return this.http.post(
+            this.configService.makeUrl(environment.urls.blog.BASE),
+            { name, description, subject, flairs },
+            DEFAULT_HTTP_OPTION
+          ).pipe(map(resData => {
+            this.snackbar.open(`بلاگ ${name} با موفقیت ساخته شد`);
+            this.router.navigateByUrl(`/b/${name}`);
+            return SocialActions.SocialFetched({
+              social: resData
+            });
+          }), catchError((error: HttpErrorResponse) => {
+            const message = error.error.message;
+            return of(SocialActions.SocialFetchFailed({ message }));
+          }));
+
+        case 'forum':
+          return this.http.post<any>(
+            this.configService.makeUrl(environment.urls.forum.BASE),
+            { name, description, subject, flairs },
+            DEFAULT_HTTP_OPTION
+          ).pipe(map(resData => {
+            this.snackbar.open(`انجمن ${name} با موفقیت ساخته شد`);
+            this.router.navigateByUrl(`/c/${name}`);
+            return SocialActions.SocialFetched({
+              social: resData
+            });
+          }), catchError((error: HttpErrorResponse) => {
+            const message = error.error.message;
+            // TODO": NOT FETCHED. IT'S ABOUT CREATE
+            return of(SocialActions.SocialFetchFailed({ message }));
+          }));
+
+        default:
+          console.error('invalid social type');
+          break;
+      }
+    })
+  );
+
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private router: Router,
+    private snackbar: MatSnackBar
   ) { }
 }

@@ -1,6 +1,7 @@
-import * as fromSocial from './social.reducer';
-import { AppState } from '../state';
 import { createSelector } from '@ngrx/store';
+import { AppState } from '../state';
+
+import * as fromSocial from './social.reducer';
 import * as SocialState from './social.actions';
 export { fromSocial, SocialState };
 

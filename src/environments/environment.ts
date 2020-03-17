@@ -14,13 +14,16 @@ export const environment = {
       SIGN_UP: 'auth/signup'
     },
     blog: {
-      GET_BLOG: 'blog/:sid'
+      BASE: 'blog',
+      GET_BLOG: 'blog/:sname',
     },
     forum: {
-      GET_FORUM: 'forum/:sid'
+      BASE: 'forum',
+      GET_FORUM: 'forum/:sname',
     },
     post: {
-      GET_POST: 'post/:pid/social/:sid'
+      GET_POST: 'post/:pid/social/:sid',
+      GET_POSTS_BY_SID: 'post/social/:sid'
     }
   }
 };

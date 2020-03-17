@@ -10,6 +10,7 @@ import { SuccessComponent } from './success/success.component';
   imports: [CommonModule, MatDialogModule, MaterialBaseModule],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '250px' } }
-  ]
+  ],
+  exports: []
 })
 export class AppCommonModule { }

@@ -13,5 +13,5 @@ export interface AppState {
 export const rootReducer: ActionReducerMap<AppState> = {
   auth: fromAuth.reducer,
   loading: fromLoading.reducer,
-  social: fromSocial.reducer
+  social: fromSocial.reducer,
 };
