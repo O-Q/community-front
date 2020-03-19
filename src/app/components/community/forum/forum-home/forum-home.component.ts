@@ -3,10 +3,10 @@ import { Widget } from '../../../../interfaces/widgets.interface';
 import { WidgetNames } from './../../../../../../server/src/shared/widget-list.enum';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, first } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import * as fromApp from '../../../../store/state';
-import { SocialState } from '../../../../store/social';
+import { SocialState, selectAdmins } from '../../../../store/social';
 import { Store } from '@ngrx/store';
 import { ConfigService } from '../../../../services/config.service';
 import { getMergedRoute } from '../../../../store/router/router.selectors';
@@ -20,6 +20,8 @@ import { getMergedRoute } from '../../../../store/router/router.selectors';
 export class ForumHomeComponent implements OnInit {
   social$ = this.store.select('social');
   isXSmall$: Observable<boolean>;
+  admins$ = this.store.select(selectAdmins).pipe(first());
+  auth$ = this.store.select('auth');
   // posts = [1, 2, 3, 4, 5, 6];
   // widgets: Widget[] = [
   //   { name: WidgetNames.RULES },
@@ -49,10 +51,15 @@ export class ForumHomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const sname = this.activatedRoute.snapshot.params.name;
     this.store.dispatch(SocialState.SocialFetching({
-      socialType: 'forum', sname: this.activatedRoute.snapshot.params.name
+      socialType: 'forum', sname
+    }));
+    this.store.dispatch(SocialState.PostsFetching({
+      sname, query: {
+        page: 1,
+        itemsPerPage: 10
+      }
     }));
   }
-
-
 }

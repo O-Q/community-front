@@ -61,10 +61,10 @@ interface SocialFetchedPayload {
   social: any;
 }
 interface CommentPostPayload {
-  sid: string;
+  sname: string;
   pid: string;
 }
 interface PostsFetchingPayload {
-  sid: string;
+  sname: string;
   query: Params;
 }

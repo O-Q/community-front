@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Post, PostDetailed } from '../../interfaces/post.interface';
 
 @Injectable()
 export class SocialEffects {
@@ -60,14 +61,22 @@ export class SocialEffects {
   postDetailedFetch = this.actions$.pipe(
     ofType(SocialActions.PostDetailedFetching),
     switchMap((postDetailedData) => {
-      return this.http.get(
+      return this.http.get<PostDetailed>(
         this.configService.makeUrl(environment.urls.post.GET_POST, {
           params: {
             pid: postDetailedData.pid,
-            sid: postDetailedData.sid
+            sname: postDetailedData.sname
           }
         }),
         DEFAULT_HTTP_OPTION
+      ).pipe(
+        map(resData => {
+          return SocialActions.PostDetailedFetched({ post: resData });
+        }), catchError((error: HttpErrorResponse) => {
+          const message = error.error.message;
+          return of(SocialActions.PostDetailedFetchFailed({ message }));
+        })
+
       );
     }));
 
@@ -75,14 +84,22 @@ export class SocialEffects {
   postsFetch = this.actions$.pipe(
     ofType(SocialActions.PostsFetching),
     switchMap((postsFetchingData) => {
-      return this.http.get(
-        this.configService.makeUrl(environment.urls.post.GET_POSTS_BY_SID, {
+      return this.http.get<Post[]>(
+        this.configService.makeUrl(environment.urls.post.GET_POSTS_BY_SNAME, {
           params: {
-            sid: postsFetchingData.sid
+            sname: postsFetchingData.sname
           },
           queries: postsFetchingData.query
         }),
         DEFAULT_HTTP_OPTION
+      ).pipe(
+        map(resData => {
+          return SocialActions.PostsFetched({ posts: resData });
+        }), catchError((error: HttpErrorResponse) => {
+          const message = error.error.message;
+          return of(SocialActions.PostsFetchFailed({ message }));
+        })
+
       );
     }));
 

@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { PersianDatePipe } from './pipes/persian-date.pipe';
 
 const modules = [
   MatCardModule,
@@ -29,8 +30,11 @@ const modules = [
  * It'll needed in core module. so feel free to use it
  */
 @NgModule({
+  declarations: [
+    PersianDatePipe
+  ],
   imports: modules,
-  exports: modules,
+  exports: [...modules, PersianDatePipe],
   providers: [
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,

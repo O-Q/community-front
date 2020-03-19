@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
   copyToClipboard,
   OPEN_WINDOW_FEATURES_MINI,
   ShareURL
 } from '../../../../../../utils/share.utils';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-share-bottom-sheet',
@@ -19,7 +20,10 @@ export class ShareBottomSheetComponent implements OnInit {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<ShareBottomSheetComponent>,
     private snackbar: MatSnackBar,
-  ) { }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { pid: string, social: string }
+  ) {
+    this.postUrl = `${environment.BASE_FRONT_URL}/c/${data.social}/p/${data.pid}`;
+  }
   ngOnInit() { }
   onCopy() {
     copyToClipboard(this.postUrl);

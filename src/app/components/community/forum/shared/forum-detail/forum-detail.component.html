@@ -3,7 +3,7 @@
     <div mat-card-avatar class="d__image" [ngStyle]="{'background-image': forumImage}"></div>
     <mat-card-title>{{social?.name}}</mat-card-title>
     <mat-card-subtitle class="flex-between f-large-subtitle">
-      تاریخ تاسیس: {{toPersianDate(social?.createdAt)}}
+      تاریخ تاسیس: {{social?.createdAt | persianDate}}
     </mat-card-subtitle>
   </mat-card-header>
   <div class="d__member-stat f-medium-subtitle flex-evenly">
@@ -22,6 +22,7 @@
     </div>
 
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions class="flex-center">
+    <a mat-stroked-button routerLink="new">پست جدید</a>
   </mat-card-actions>
 </mat-card>

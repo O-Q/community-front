@@ -5,6 +5,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { rootReducer } from './state';
 import { AuthEffects } from './auth/auth.effects';
 import { SocialEffects } from './social/social.effects';
+import { UserEffects } from './user/user.effects';
+import { PostEffects } from './post/post.effects';
+
+
 import { RouterStoreModule } from './router/router-store.module';
 
 
@@ -12,7 +16,7 @@ import { RouterStoreModule } from './router/router-store.module';
   imports: [
     CommonModule,
     StoreModule.forRoot(rootReducer),
-    EffectsModule.forRoot([AuthEffects, SocialEffects]),
+    EffectsModule.forRoot([AuthEffects, SocialEffects, UserEffects, PostEffects]),
     RouterStoreModule
   ]
 })

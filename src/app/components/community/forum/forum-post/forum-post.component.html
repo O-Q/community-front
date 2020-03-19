@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" *ngIf="post$ | async as post">
   <app-forum-base></app-forum-base>
   <div class="post-container">
-    <app-post-card class="p__card" [post]="5"></app-post-card>
+    <app-post-card class="p__card" [post]="post" [admins]="post.social.admins"></app-post-card>
     <div class="comments">
       <div class="comments__title flex-between">
         <mat-divider> </mat-divider>

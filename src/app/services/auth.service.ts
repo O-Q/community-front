@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { ACCESS_TOKEN_KEY } from '../constants/local-storage.constant';
 import { Router } from '@angular/router';
 import { decodeUser } from '../utils/decode-user.util';
+import * as UserActions from './../store/user/user.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class AuthService {
     } else {
       this.logout();
     }
+    this.store.dispatch(UserActions.UserFetching());
   }
 
   logout() {

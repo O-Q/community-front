@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ErrorComponent } from './components/shared/error/error.component';
 import { HomeComponent } from './components/shared/home/home.component';
@@ -17,7 +17,6 @@ import { LoadWidgetMap } from './components/widgets/lazy-widgets';
 import { LAZY_WIDGETS } from './components/widgets/tokens';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/auth.interceptor';
-
 
 @NgModule({
   declarations: [

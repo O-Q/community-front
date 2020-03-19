@@ -25,11 +25,11 @@ export class ForumWidgetComponent implements OnInit, AfterViewInit {
   constructor(private widgetLoader: WidgetLoaderService, private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.notLoadedWidgets = this.widgets.length || 4;
+    this.notLoadedWidgets = this.widgets?.length || 4;
   }
   ngAfterViewInit(): void {
     // TODO: fetch widget list for this forum/blog
-    this.widgets.forEach((widget) => {
+    this.widgets?.forEach((widget) => {
       this.widgetLoader.load(widget.name, this.widgetContainer, widget.inputs).then(() => {
         this.notLoadedWidgets -= 1;
         this.changeDetector.detectChanges();

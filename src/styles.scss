@@ -51,11 +51,22 @@ body {
   }
 }
 
-.ck.ck-balloon-panel.ck-balloon-panel_visible {
-  // @media screen and (max-width: 500px) {
-  //   left: 0 !important;
-  // }
+// .ck.ck-balloon-panel.ck-balloon-panel_visible {
+// @media screen and (max-width: 500px) {
+//   left: 0 !important;
+// }
 
-  // display: flex !important;
-  // position: relative !important;
+// display: flex !important;
+// position: relative !important;
+// }
+
+blockquote {
+  border-left: 0;
+  border-right: 5px solid #ccc;
+  overflow: hidden;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
 }

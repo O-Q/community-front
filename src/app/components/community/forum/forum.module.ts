@@ -16,14 +16,13 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ShareBottomSheetComponent } from './shared/post-card/share-bottom-sheet/share-bottom-sheet.component';
 import { ForumPostComponent } from './forum-post/forum-post.component';
-import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
-import { AppCommonModule } from '../../common/common.module';
 import { FormsModule } from '@angular/forms';
 import { SkeletonWidgetComponent } from './forum-home/forum-widget/skeleton-widget/skeleton-widget.component';
 import { SkeletonModule } from '../../skeleton/skeleton.module';
 import { ForumBaseComponent } from './forum-base/forum-base.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SkeletonForumPostComponent } from './shared/post-card/skeleton-forum-post/skeleton-forum-post.component';
+import { PersianDatePipe } from '../../../pipes/persian-date.pipe';
 
 @NgModule({
   declarations: [
@@ -36,20 +35,18 @@ import { SkeletonForumPostComponent } from './shared/post-card/skeleton-forum-po
     PostCardComponent,
     ShareBottomSheetComponent,
     SkeletonWidgetComponent,
-    SkeletonForumPostComponent
+    SkeletonForumPostComponent,
   ],
   imports: [
     CommonModule,
     ForumRoutingModule,
-    AppCommonModule,
     FormsModule,
     MaterialBaseModule,
     MatBottomSheetModule,
     MatInputModule,
     MatSelectModule,
     ScrollingModule,
-    SkeletonModule
-
+    SkeletonModule,
   ],
 })
 export class ForumModule { }

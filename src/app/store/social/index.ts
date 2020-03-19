@@ -6,13 +6,13 @@ import * as SocialState from './social.actions';
 export { fromSocial, SocialState };
 
 export const selectFocusedPost = (state: AppState) => state.social.focusedPost;
-export const selectActionPost = createSelector(
-    selectFocusedPost,
-    (post) => ({
-        commentCount: post?.comments.length,
-        postId: post?.group
-    }));
-
+// export const selectActionPost = createSelector(
+//     selectFocusedPost,
+//     (post) => ({
+//         commentCount: post?.comments.length,
+//         postId: post?.so
+//     }));
+export const selectAdmins = (state: AppState) => state.social.social.admins;
 export interface IActionPost {
     commentCount: number;
     postId: string;

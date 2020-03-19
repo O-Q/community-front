@@ -7,11 +7,16 @@
 export const environment = {
   production: false,
   configPath: './assets/config/config.json',
+  BASE_FRONT_URL: 'http://localhost:4200',
   urls: {
     baseUrl: 'http://localhost:3000',
     auth: {
       SIGN_IN: 'auth/signin',
       SIGN_UP: 'auth/signup'
+    },
+    user: {
+      GET_USER: 'user',
+      SOCIALS: 'user/socials',
     },
     blog: {
       BASE: 'blog',
@@ -22,8 +27,9 @@ export const environment = {
       GET_FORUM: 'forum/:sname',
     },
     post: {
-      GET_POST: 'post/:pid/social/:sid',
-      GET_POSTS_BY_SID: 'post/social/:sid'
+      GET_POST: 'post/:pid/social/:sname',
+      GET_POSTS_BY_SNAME: 'post/social/:sname',
+      CREATE_POST_BY_SID: 'post/social/:sid'
     }
   }
 };

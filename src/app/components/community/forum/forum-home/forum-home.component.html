@@ -25,7 +25,7 @@
           <!-- posts -->
           <!-- <cdk-virtual-scroll-viewport itemSize="50"> -->
           <ng-container *ngIf="social.posts else noPosts">
-            <app-post-card *ngFor="let post of social.posts" [post]="post"></app-post-card>
+            <app-post-card *ngFor="let post of social.posts" [post]="post" [admins]="admins$| async"></app-post-card>
             <!-- </cdk-virtual-scroll-viewport> -->
           </ng-container>
           <ng-template #noPosts>

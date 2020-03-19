@@ -1,49 +1,50 @@
-    <mat-card class="post text-persian pr-0 pb-0 d-flex">
-      <div class="d-grid post__interact">
-        <button mat-icon-button>
-          <mat-icon mat-font-icon class="fa fa-angle-up"></mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon mat-font-icon class="fa fa-angle-down"></mat-icon>
-        </button>
+<mat-card class="post text-persian pr-0 pb-0 d-flex">
+  <div class="d-grid post__interact">
+    <button mat-icon-button>
+      <mat-icon mat-font-icon class="fa fa-angle-up"></mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon mat-font-icon class="fa fa-angle-down"></mat-icon>
+    </button>
+  </div>
+  <div class="d-grid w-100">
+    <mat-card-header class="flex-between">
+      <mat-card-title>{{ post.title }} </mat-card-title>
+      <mat-card-subtitle>
+        {{ post.subtitle }}
+      </mat-card-subtitle>
+
+      <button class="post__more" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content class="post__content" [innerHTML]="post.text">
+    </mat-card-content>
+    <mat-card-actions class="mb-0 p-0 d-flex">
+      <app-post-actions [post]="post"></app-post-actions>
+      <div class="f-medium-subtitle fw-bold italic my-auto mr-auto d-flex">
+        نوشته شده توسط {{ post.author }} در تاریخ
+        {{ post.createdAt | persianDate }}
       </div>
-      <div class="d-grid w-100">
+    </mat-card-actions>
+  </div>
+</mat-card>
 
-        <mat-card-header class="flex-between">
-          <mat-card-title class="post__title">پست {{post}}
-          </mat-card-title>
-          <mat-card-subtitle>
-            مهدی شیری - {{post}} ماه پیش
-          </mat-card-subtitle>
-          <button class="post__more" mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-
-        </mat-card-header>
-        <mat-card-content class="post__content d-flex">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum aperiam ipsam odio, molestias, laudantium
-          similique temporibus, commodi recusandae quidem corrupti maiores voluptatum ratione in quaerat unde soluta at.
-          Aut, amet.
-        </mat-card-content>
-        <mat-card-actions class="mb-0 p-0">
-          <app-post-actions postId="post"></app-post-actions>
-        </mat-card-actions>
-      </div>
-    </mat-card>
-
-    <mat-menu #menu="matMenu">
-      <!-- if moderator or writer -->
-      <button mat-menu-item class="mat-button mat-primary text-persian">
-        <mat-icon color="primary" mat-font-icon class="fa fa-edit"></mat-icon>
-        ویرایش
-      </button>
-      <button mat-menu-item class="mat-button mat-warn text-persian">
-        <mat-icon color="warn" mat-font-icon class="far fa-flag"></mat-icon>
-        گزارش
-      </button>
-      <!-- if moderator or writer -->
-      <button mat-menu-item class="mat-button mat-warn text-persian" (click)="onDeletePost()">
-        <mat-icon color="warn" mat-font-icon="fa-icon" class="fa fa-trash"></mat-icon>
-        حذف
-      </button>
-    </mat-menu>
+<mat-menu #menu="matMenu">
+  <!-- if moderator or writer -->
+  <button mat-menu-item class="mat-button mat-primary text-persian">
+    <mat-icon color="primary" mat-font-icon class="fa fa-edit" *ngIf="post.author === (auth$ | async).user.username">
+    </mat-icon>
+    ویرایش
+  </button>
+  <button mat-menu-item class="mat-button mat-warn text-persian">
+    <mat-icon color="warn" mat-font-icon class="far fa-flag"></mat-icon>
+    گزارش
+  </button>
+  <!-- if moderator or writer -->
+  <button mat-menu-item class="mat-button mat-warn text-persian"
+    *ngIf="isPermittedToRemove((auth$ | async).user.username)" (click)="onDeletePost()">
+    <mat-icon color="warn" mat-font-icon="fa-icon" class="fa fa-trash"></mat-icon>
+    حذف
+  </button>
+</mat-menu>

@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as socialActions from './social.actions';
 import { PostDetailed, Post } from '../../interfaces/post.interface';
-import { Widget } from '../../interfaces/widgets.interface';
 
 export interface State {
   // TODO: type

@@ -12,7 +12,5 @@ export class ForumDetailComponent {
 
   constructor() {
   }
-  toPersianDate(date: string) {
-    return new Date(date).toLocaleDateString('fa-IR');
-  }
+
 }
