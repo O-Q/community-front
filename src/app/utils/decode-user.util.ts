@@ -5,8 +5,6 @@ export function decodeUser(token: string) {
     if (token) {
         const helper = new JwtHelperService();
         const isExpired = helper.isTokenExpired(token);
-        console.log(isExpired);
-
         if (!isExpired) {
             const decodedToken: DecodedToken = helper.decodeToken(token);
             const { username, roles, id } = decodedToken;

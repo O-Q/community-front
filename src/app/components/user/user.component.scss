@@ -1,0 +1,13 @@
+@import './../../../variables.scss';
+
+.info-outlet-container {
+  @media screen and (max-width:$max-width) {
+    flex-direction: column;
+    max-width: unset !important;
+  }
+
+  @media screen and (min-width: 600px) {
+    justify-content: space-around;
+    max-width: 90%;
+  }
+}

@@ -4,6 +4,8 @@ import { fromSocial } from './social';
 import { fromLoading } from './loading';
 import { fromUser } from './user';
 import { fromPost } from './post';
+import { fromUserInfo } from './user-info';
+
 
 
 
@@ -14,6 +16,7 @@ export interface AppState {
   social: fromSocial.State;
   user: fromUser.State;
   post: fromPost.State;
+  userInfo: fromUserInfo.State;
 }
 
 export const rootReducer: ActionReducerMap<AppState> = {
@@ -22,4 +25,5 @@ export const rootReducer: ActionReducerMap<AppState> = {
   social: fromSocial.reducer,
   user: fromUser.reducer,
   post: fromPost.reducer,
+  userInfo: fromUserInfo.reducer,
 };

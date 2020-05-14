@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RuleGroup } from '../../../interfaces/widgets.interface';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -11,7 +11,11 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./widget-rules.component.scss']
 })
 export class WidgetRulesComponent implements OnInit {
-  rules$: Observable<RuleGroup[]> = this.store.select('social').pipe(map(x => x.social.rules));
+  @Input()
+  viewValue: string;
+  // rules$: Observable<RuleGroup[]> = this.store.select('social').pipe(map(x => x.social?.rules));
+  @Input()
+  inputs: any[];
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() { }

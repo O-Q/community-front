@@ -1,14 +1,15 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>موضوعات</mat-card-title>
+    <mat-card-title>{{ viewValue || 'موضوعات' }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content class="mt-1">
+  <mat-card-content class="mt-1" *ngIf="social$ | async as social">
     <mat-chip-list>
       <!-- <a class="m-1"  routerLink="." [queryParams]="{flair: flair}"> -->
-      <mat-chip class="hover-pointer mx-auto" *ngFor="let flair of flairs$ | async" (click)="goToFlair(flair)">
+      <a mat-chip [routerLink]="" [queryParams]="{flair: flair}" class="hover-pointer mx-auto"
+        *ngFor="let flair of social.flairs">
         {{flair}}
-      </mat-chip>
-      <!-- </a> -->
+      </a>
+      <a mat-chip routerLink="." class="hover-pointer mx-auto"> همه </a> <!-- </a> -->
 
     </mat-chip-list>
   </mat-card-content>

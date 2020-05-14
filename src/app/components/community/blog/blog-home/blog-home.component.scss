@@ -1,0 +1,39 @@
+@import './../../../../../variables.scss';
+
+:host {
+  margin-top: 15px !important;
+
+  @media screen and (max-width:$max-width) {
+    margin-top: 0 !important;
+  }
+}
+
+.tabs-container {
+  margin-right: 250px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  display: flex;
+  flex-direction: row-reverse;
+
+  @media screen and (max-width:$max-width) {
+    margin-right: 0;
+    position: absolute;
+    width: 100%;
+
+  }
+}
+
+.content-container {
+  @media screen and (max-width: $max-width) {
+    margin-top: 4rem !important;
+  }
+
+  .info-container {
+    width: 250px;
+    height: fit-content;
+
+    @media screen and (max-width: $max-width) {
+      display: none;
+    }
+  }
+}

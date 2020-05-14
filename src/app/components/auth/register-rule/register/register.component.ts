@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
         passwordConfirm: passwordControl(),
         acceptRules: new FormControl('', [Validators.requiredTrue])
       },
-      { validators: passwordMatchValidator }
+      { validators: passwordMatchValidator('password') }
     );
   }
   ngOnInit() {

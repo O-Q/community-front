@@ -1,0 +1,78 @@
+<!-- TODO: set options with registered groups of user which user access to write -->
+<ng-container *ngIf="selectedSocial$| async as selectedSocial">
+  <ng-container *ngIf="(user$ | async).user as user">
+    <div class="container m-auto">
+      <span class="fw-bold fs-small flex-end">کلمات: {{ wordsCount }}</span>
+      <div class="flex-between">
+        <mat-form-field>
+          <mat-select style="line-height: normal;" placeholder="انجمن یا بلاگ" [value]="selectedSocial"
+            [compareWith]="compareSocials" (selectionChange)="changeForum($event.value)">
+            <ng-container *ngFor="let social of user.socials">
+              <mat-option class="text-persian"
+                *ngIf="social.writeAccess && social.status === 'ACTIVE' && social.social as s"
+                [value]="{name: social.social.name, socialType: social.social.type, flairs: social.social.flairs}">
+                {{social.social.name}} ({{social.social.type === 'BLOG' ? 'بلاگ' : 'انجمن'}})</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <button *ngIf="isXSmall$ | async else notXSmall" class="post__more" mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+      <div>
+        <mat-form-field class="w-100 text-persian" appearance="outline">
+          <textarea [formControl]="title" matInput style="color: unset;" cdkTextareaAutosize cdkAutosizeMinRows="1.2"
+            type="text" class="d-flex w-100 f-blog-title editor__input" placeholder="موضوع"></textarea>
+          <mat-error class="mt-2">
+            "موضوع" حداقل باید سه حرف باشد
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-100 text-persian mb-2" [ngClass]="{'mt-2': title.invalid}" appearance="outline">
+          <textarea matInput [formControl]="subtitle" cdkTextareaAutosize cdkAutosizeMinRows="1.2" type="text"
+            class="d-flex w-100 mat-card-subtitle editor__input no-scroll" placeholder="زیرنویس (اختیاری)"></textarea>
+        </mat-form-field>
+        <ckeditor [editor]="editor" [config]="config" [(ngModel)]="text">
+        </ckeditor>
+        <mat-form-field class="d-flex mt-2">
+          <mat-label>زیرموضوعات</mat-label>
+          <mat-select [formControl]="flairs" multiple>
+            <mat-option *ngFor="let flair of selectedSocial?.flairs" [value]="flair">{{flair}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex-end mt-2" *ngIf="isXSmall$ | async">
+        <button class="w-100" mat-stroked-button color="primary" (click)="onPublish(selectedSocial)">انتشار</button>
+      </div>
+    </div>
+
+
+    <ng-template #notXSmall>
+      <div class="my-auto">
+        <button mat-stroked-button color="warn" class="ml-1">
+          حذف
+        </button>
+        <button mat-stroked-button color="accent" class="ml-1">
+          ذخیره
+        </button>
+        <button mat-stroked-button color="primary"
+          (click)="postId ? onUpdate(selectedSocial) : onPublish(selectedSocial)">
+          {{ postId ? 'بروزرسانی' : 'انتشار' }}
+        </button>
+      </div>
+    </ng-template>
+
+    <!-- little screen display -->
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item class="mat-button mat-primary text-persian">
+        <mat-icon color="primary" mat-font-icon class="far fa-save"></mat-icon>
+        ذخیره
+      </button>
+      <button mat-menu-item class="mat-button mat-warn text-persian">
+        <mat-icon color="warn" mat-font-icon class="fa fa-trash"></mat-icon>
+        حذف
+      </button>
+    </mat-menu>
+
+  </ng-container>
+</ng-container>

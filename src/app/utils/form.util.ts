@@ -25,16 +25,16 @@ export function phoneControl(initialValue = ''): FormControl {
   ]);
 }
 
-export const passwordMatchValidator: ValidatorFn = (
+export const passwordMatchValidator = (name: string) => ((
   control: FormGroup
 ): ValidationErrors | null => {
-  const password = control.get('password');
-  const passwordConfirm = control.get('passwordConfirm');
+  const password = control.get(name);
+  const passwordConfirm = control.get(`${name}Confirm`);
 
   return password.value === passwordConfirm.value
     ? null
     : { passwordMismatch: true };
-};
+});
 
 export function requiredError(fieldName: string) {
   return `وارد کردن "${fieldName}" الزامی است`;
@@ -44,4 +44,22 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     return control.dirty && control.parent.errors && control.parent.errors['passwordMismatch'];
   }
+}
+
+export function requiredFileType(types: string[]) {
+  return (control: FormControl) => {
+    const file = control.value;
+    if (file) {
+      const extension = file.name.split('.')[1].toLowerCase();
+      if (types.includes(extension.toLowerCase())) {
+        return {
+          requiredFileType: true
+        };
+      }
+
+      return null;
+    }
+
+    return null;
+  };
 }

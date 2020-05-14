@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "mimetype",
         "sname"
     ],
     "typescript.tsdk": "node_modules\\typescript\\lib"

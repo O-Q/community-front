@@ -8,6 +8,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FlairsAutoCompleteModule } from '../shared/flairs-auto-complete/flairs-auto-complete.module';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
     MatAutocompleteModule,
     MatChipsModule,
     MatSelectModule,
+    FlairsAutoCompleteModule
   ],
 })
 export class BaseCommunityModule { }

@@ -1,0 +1,26 @@
+<ng-container *ngIf="(social$ | async) as s">
+  <ng-container *ngIf="(posts$ | async) as p">
+    <nav mat-tab-nav-bar class="tabs-container">
+      <a mat-tab-link routerLink="." [active]="!flair"> صفحه اصلی </a>
+      <a mat-tab-link routerLink="." [queryParams]="{flair: f}" *ngFor="let f of s.social?.flairs"
+        [active]="flair == f"> {{f}} </a>
+    </nav>
+    <div class="flex-evenly mt-2 content-container">
+      <div style="width: 60%;">
+        <app-post-card [post]="post" [admins]="admins$ | async" *ngFor="let post of p.posts"></app-post-card>
+      </div>
+      <mat-card class="info-container">
+        <mat-card-header class="flex-center">
+          <mat-card-title>درباره</mat-card-title>
+          <mat-card-subtitle>subtitle</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="text-persian">
+          <p>یه توضیحی در مورد بلاگ و فرد نویسنده مثلا میتونه اینجا باشه.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a routerLink="new" mat-stroked-button>پست جدید</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,41 @@
+@import './../../../../variables.scss';
+
+mat-card {
+  max-width: 230px;
+
+  @media screen and (max-width: $max-width) {
+    max-width: unset;
+  }
+
+  .user__banner {
+    height: 7rem;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .user__box-container {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .user__box {
+      mat-icon {
+        font-size: 42px;
+        color: cadetblue;
+        border: 1.5px dashed;
+        width: fit-content;
+        border-radius: 4px;
+        padding: 1px;
+      }
+    }
+  }
+
+  mat-card-actions {
+    [mat-stroked-button] {
+      width: 100px;
+      margin: 0;
+    }
+  }
+}

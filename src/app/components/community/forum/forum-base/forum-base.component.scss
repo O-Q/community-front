@@ -1,0 +1,58 @@
+@import './../../../../../variables.scss';
+
+.forum-header {
+  height: 200px;
+  padding-bottom: 4rem;
+
+  @media screen and (max-width: $max-width) {
+    flex-direction: row-reverse;
+    justify-content: flex-end !important;
+  }
+
+  .banner {
+    width: 100vw;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .title-container {
+    z-index: 2;
+
+    @media screen and (max-width: $max-width) {
+      margin-right: 1rem;
+    }
+  }
+
+  .avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    height: 200px;
+    width: 200px;
+    margin-top: 3rem;
+    border: solid 5px;
+    z-index: 2;
+
+    @media screen and (max-width: $max-width) {
+      position: relative !important;
+      margin-top: 0;
+      height: 120px;
+      width: 120px;
+    }
+  }
+
+  .actions-phone {
+    display: none;
+
+    a,
+    button {
+      font-size: 38px;
+    }
+
+    @media screen and (max-width:$max-width) {
+      left: 20px;
+      top: 170px;
+      display: unset;
+    }
+  }
+
+}

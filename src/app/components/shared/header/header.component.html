@@ -1,26 +1,60 @@
-  <header *ngIf="authState$ | async as authState" class="flex-between">
-    <span class="header__title">پایگاه اجتماعات ایران</span>
-    <div class="header__user">
-      <button mat-button [matMenuTriggerFor]="menu">
-        <mat-icon>arrow_drop_down</mat-icon>
-        <mat-icon>person</mat-icon>
-        <span>{{ authState.user?.username }}</span>
+  <ng-container *ngIf="(user$ | async) as user">
+
+
+    <header class="flex-between">
+      <span class="header__title">
+        <span class="phone">پایگاه</span>
+        اجتماعات ایران</span>
+      <div class="header__user">
+        <!-- <button class="no-custom-theme" [matMenuTriggerFor]="menu" disableRipple> -->
+        <!-- <mat-icon>person</mat-icon> -->
+        <!-- <span>{{ user.user?.username }}</span> -->
+        <div class="menu">
+
+          <div class="box pos-abs">
+          </div>
+          <mat-icon [matMenuTriggerFor]="menu" class="pos-rel fa fa-chevron-down flex-center align-center icon-box">
+          </mat-icon>
+          <img class="pos-abs t-0 no-select  avatar-menu" [matMenuTriggerFor]="menu"
+            [src]="user.user?.avatar || '../../../../assets/avatar.png'">
+        </div>
+        <!-- <mat-icon>menu</mat-icon> -->
+        <!-- </button> -->
+
+      </div>
+    </header>
+    <mat-menu #menu="matMenu" class="no-custom-theme">
+      <button disableRipple mat-menu-item class="flex-center">
+        <mat-slide-toggle style="vertical-align: middle" [checked]="themeService.isDark"
+          (change)="onThemeChange($event)">پس‌زمینه تیره
+        </mat-slide-toggle>
       </button>
-      <mat-menu #menu="matMenu">
-        <button disableRipple mat-menu-item class="flex-center">
-          <mat-slide-toggle style="vertical-align: middle" (change)="onThemeChange($event)">پس‌زمینه تیره
-          </mat-slide-toggle>
+      <ng-container *ngIf="user.user else notLoggedIn">
+        <button *ngIf="user.user.socials?.length > 0" mat-menu-item [matMenuTriggerFor]="forums">بلاگ‌ و
+          فروم‌ها</button>
+        <a mat-menu-item [routerLink]="['c', 'new']">ساخت فروم</a>
+        <a mat-menu-item [routerLink]="['b', 'new']">ساخت بلاگ</a>
+        <a mat-menu-item [routerLink]="['settings']">تنظیمات کاربری</a>
+        <button mat-menu-item (click)="logout()">خروج</button>
+
+        <mat-menu #forums="matMenu" class="no-custom-theme">
+          <a mat-menu-item *ngFor="let social of user.user.socials"
+            [routerLink]="[social.social.type === 'FORUM' ? 'c' : 'b',social.social.name]" routerLinkActive="selected"
+            [routerLinkActiveOptions]="{exact:true}">
+            <div class="flex-between text-persian align-center">
+              <div>{{social.social.name}}</div>
+              <div class="notifications" *ngIf="social.notifications as notification">{{notification}}</div>
+            </div>
+          </a>
+        </mat-menu>
+      </ng-container>
+      <ng-template #notLoggedIn>
+        <button (click)="onLogin()" mat-menu-item>
+          <span>ورود / ثبت‌نام</span>
+          <mat-icon>input</mat-icon>
         </button>
-        <ng-container *ngIf="authState.user else notLoggedIn">
-          <a mat-menu-item [routerLink]="['c', 'new']">ساخت فروم</a>
-          <a mat-menu-item [routerLink]="['b', 'new']">ساخت بلاگ</a>
-        </ng-container>
-        <ng-template #notLoggedIn>
-          <button (click)="onLogin()" mat-menu-item>
-            <span>ورود / ثبت‌نام</span>
-            <mat-icon>input</mat-icon>
-          </button>
-        </ng-template>
-      </mat-menu>
-    </div>
-  </header>
+      </ng-template>
+    </mat-menu>
+
+
+  </ng-container>

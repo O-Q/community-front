@@ -1,13 +1,15 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>✍ قوانین انجمن ✍</mat-card-title>
+    <mat-card-title>
+      {{ viewValue || '📋 قوانین انجمن 📋' }}
+    </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let rule of rules$ | async; index as i">
+      <mat-list-item *ngFor="let rule of inputs[0].value; index as i;">
         <div class="d-grid">
-          <span class="f-medium-title">{{ i + 1  }}. {{ rule.subject }}</span>
-          <span class="fs-small">{{ rule.description }}</span>
+          <span class="fs-small text-persian">{{ i + 1  }}. {{ rule }}</span>
+          <!-- <span class="fs-small">{{ rule.description }}</span> -->
         </div>
         <mat-divider></mat-divider>
       </mat-list-item>

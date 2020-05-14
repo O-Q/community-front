@@ -1,0 +1,7 @@
+<span *ngIf="!isLoading else loading">
+  {{content}}
+</span>
+<ng-template #loading>
+  <mat-spinner style="margin: 6px auto;" color="accent" [diameter]="25">
+  </mat-spinner>
+</ng-template>

@@ -1,0 +1,26 @@
+.color-picker {
+  width: 117px;
+
+  .colors-card {
+    width: 117px;
+    height: 160px;
+    z-index: 2;
+
+    .color-container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+      padding-top: 4px;
+
+      .color-pick {
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        padding: 0;
+        min-width: unset;
+        margin: 1px;
+      }
+    }
+  }
+}

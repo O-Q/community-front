@@ -1,0 +1,21 @@
+            <div class="pos-abs t-0 color-picker">
+              <button class="picker-btn" color="primary" (click)="toggleColorPicker()" mat-mini-fab
+                [ngStyle]="{'background-color': selectedColor}">
+                <mat-icon>circle</mat-icon>
+              </button>
+              <mat-card *ngIf="showColorPicker" class="p-0 mt-1 colors-card d-flex align-center flex-dir-col">
+                <mat-card-content class="mb-0">
+                  <div class="color-container">
+                    <button (click)="changeColor(color)" *ngFor="let color of defaultColors" class="color-pick"
+                      mat-button [ngStyle]="{'background-color': color}"></button>
+                  </div>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-stroked-button>
+                    پالت رنگ
+                    <input [value]="selectedColor" (change)="changeColor($event.target.value)"
+                      class="input-upload p-0 m-0" type="color">
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            </div>

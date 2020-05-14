@@ -6,14 +6,28 @@
   display: grid !important;
 }
 
+%grid-center {
+  @extend %d-grid;
+  @extend %align-center;
+}
+
+%align-center {
+  align-items: center;
+}
+
 %flex-between {
   @extend %d-flex;
   justify-content: space-between;
 }
 
+%flex-around {
+  @extend %d-flex;
+  justify-content: space-around;
+}
+
 %flex-center {
   @extend %d-flex;
-  justify-content: center;
+  justify-content: center !important;
 }
 
 %flex-end {

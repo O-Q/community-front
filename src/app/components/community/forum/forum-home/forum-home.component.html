@@ -1,48 +1,50 @@
-<ng-container *ngIf="(social$ | async) as social">
-
-
-  <ng-container *ngIf="social.loading else showSocial">
+<ng-container *ngIf="social$ | async as social">
+  <ng-container *ngIf="!social.loading; else loadingSocial">
     <app-forum-base></app-forum-base>
     <div class="w-100 flex-center">
-      <div class="posts-container" [ngStyle]="{'margin-left': (isXSmall$ | async) ? '0' : '32px'}">
-        <app-skeleton-forum-post *ngFor="let _ of [].constructor(5)">
-        </app-skeleton-forum-post>
-        <div class="widgets-container">
-          <!-- TODO: must be skeleton -->
-          <app-forum-detail></app-forum-detail>
-          <app-skeleton-widget *ngFor="let _ of [].constructor(5)"></app-skeleton-widget>
-        </div>
+      <!-- Posts -->
+      <div class="posts-container" [ngStyle]="{ 'margin-left': (isXSmall$ | async) ? '0' : '32px' }">
+        <ng-container *ngIf="post$ | async as p">
+          <ng-container *ngIf="p.loading; else loadedPosts">
+            <!-- skeleton for load posts -->
+            <app-skeleton-forum-post *ngFor="let _ of [].constructor(5)">
+            </app-skeleton-forum-post>
+            <!-- END skeleton for load posts -->
+          </ng-container>
+          <ng-template #loadedPosts>
+            <ng-container *ngIf="p.posts.length">
+              <app-post-card *ngFor="let post of p.posts" [post]="post" [admins]="admins$ | async"></app-post-card>
+            </ng-container>
+          </ng-template>
+        </ng-container>
+        <!-- <ng-template #noPosts>
+          NoPosts
+        </ng-template> -->
+      </div>
+      <!-- END Posts -->
+      <div class="widgets-container">
+        <app-forum-detail [social]="social.social"></app-forum-detail>
+        <!-- widgets -->
+        <app-forum-widget [isRegistered]="social.social.isUserRegistered" [widgets]="social.social.widgets">
+        </app-forum-widget>
       </div>
     </div>
   </ng-container>
+</ng-container>
+<!-- skeleton for all social -->
 
-
-  <ng-template #showSocial>
-    <ng-container *ngIf="social.social else notFound">
-      <app-forum-base></app-forum-base>
-      <div class="w-100 flex-center">
-        <div class="posts-container" [ngStyle]="{'margin-left': (isXSmall$ | async) ? '0' : '32px'}">
-          <!-- posts -->
-          <!-- <cdk-virtual-scroll-viewport itemSize="50"> -->
-          <ng-container *ngIf="social.posts else noPosts">
-            <app-post-card *ngFor="let post of social.posts" [post]="post" [admins]="admins$| async"></app-post-card>
-            <!-- </cdk-virtual-scroll-viewport> -->
-          </ng-container>
-          <ng-template #noPosts>
-            NoPosts
-          </ng-template>
-        </div>
-        <div class="widgets-container">
-          <app-forum-detail [social]="social.social"></app-forum-detail>
-          <!-- widgets -->
-          <app-forum-widget [widgets]="social.social.widgets"></app-forum-widget>
-        </div>
+<ng-template #loadingSocial>
+  <app-forum-base></app-forum-base>
+  <div class="w-100 flex-center">
+    <div class="posts-container" [ngStyle]="{ 'margin-left': (isXSmall$ | async) ? '0' : '32px' }">
+      <app-skeleton-forum-post *ngFor="let _ of [].constructor(5)">
+      </app-skeleton-forum-post>
+      <div class="widgets-container">
+        <!-- TODO: must be skeleton -->
+        <app-forum-detail></app-forum-detail>
+        <app-skeleton-widget *ngFor="let _ of [].constructor(5)"></app-skeleton-widget>
       </div>
-    </ng-container>
-    <ng-template #notFound>
-      <div>
-        not found
-      </div>
-    </ng-template>
-
-  </ng-template>
+    </div>
+  </div>
+</ng-template>
+<!-- END skeleton for all social -->

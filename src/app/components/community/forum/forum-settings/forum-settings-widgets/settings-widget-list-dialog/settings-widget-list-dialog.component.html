@@ -1,0 +1,23 @@
+<mat-card class="flex-center flex-dir-col">
+  <button (click)="close()" mat-icon-button class="pos-abs t-0 r-0">
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-card-header class="m-auto">
+    <mat-card-title>لیست ویجت‌ها</mat-card-title>
+    <mat-card-subtitle>ویرایش لیست</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-selection-list (selectionChange)="onSelectionChange($event)">
+      <mat-list-option class="text-persian" [selected]="isActive(widget.name)" [value]="widget"
+        *ngFor="let widget of defaultWidgets">
+        {{widget.viewValue}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="accent" (click)="onSave()">
+      <app-button-content content="ذخیره تغییرات" [isLoading]="isLoading$ | async"></app-button-content>
+
+    </button>
+  </mat-card-actions>
+</mat-card>

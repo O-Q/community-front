@@ -1,0 +1,48 @@
+<mat-card style="width: 250px;">
+  <button (click)="close()" mat-icon-button class="pos-abs t-0 r-0">
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-card-header class="flex-center">
+    <mat-card-title>ویرایش ویجت</mat-card-title>
+    <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field class="text-persian w-100">
+      <input matInput #widgetName placeholder="نام ویجت" [value]="widget.viewValue">
+    </mat-form-field>
+    <div *ngFor="let input of widget.inputs">
+      <ng-container [ngSwitch]="input.type">
+        <ng-container *ngSwitchCase="'inputList'">
+          <!-- (selectionChange)="onSelectionChange($event)" -->
+          <div class="text-persian">
+            <mat-form-field class="w-100">
+              <textarea class="no-scroll" style="width: 240px;" [maxLength]="150" cdkTextareaAutosize
+                (keyup.enter)="addNew(input,textArea)" #textArea matInput
+                [placeholder]="input.title + ' جدید'"></textarea>
+            </mat-form-field>
+            <button (click)="addNew(input,textArea)" [matTooltip]="'اضافه کردن ' + input.title"
+              matTooltipPosition="before" color="primary" mat-icon-button class="pos-abs l-0">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <mat-list>
+            <mat-list-item class="text-persian fs-normal h-auto" *ngFor="let item of input.value">
+              <p style="margin-left: 25px; word-break: break-all;" class="my-auto">{{item}}</p>
+              <button (click)="onRemove(input, item)" color="warn" class="pos-abs l-0" mat-icon-button>
+                <mat-icon>remove</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          Coming Soon...
+        </ng-container>
+      </ng-container>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="onSave(widgetName.value)" color="accent" mat-raised-button>
+      ذخیره تغییرات
+    </button>
+  </mat-card-actions>
+</mat-card>

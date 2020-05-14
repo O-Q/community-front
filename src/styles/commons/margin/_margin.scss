@@ -127,6 +127,13 @@
   @extend %mb-2;
 }
 
+.m-2 {
+  @extend %mr-2;
+  @extend %ml-2;
+  @extend %mt-2;
+  @extend %mb-2;
+}
+
 .mr-3 {
   @extend %mr-3;
 }
@@ -149,6 +156,13 @@
 }
 
 .my-3 {
+  @extend %mt-3;
+  @extend %mb-3;
+}
+
+.m-3 {
+  @extend %mr-3;
+  @extend %ml-3;
   @extend %mt-3;
   @extend %mb-3;
 }

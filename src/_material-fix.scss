@@ -43,3 +43,24 @@ button>mat-icon[mat-font-icon] {
   padding-top: 2px; // input labels aren't seen well
   direction: rtl;
 }
+
+.unicorn-dark-theme .mat-checkbox-label {
+  // background: #424242;
+  color: white;
+}
+
+.mat-tab-link-container {
+  direction: rtl;
+  flex-direction: row-reverse;
+}
+
+.mat-paginator-range-label,
+.mat-paginator-page-size {
+  direction: rtl;
+
+
+}
+
+.mat-option-text {
+  text-align: right;
+}

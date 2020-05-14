@@ -10,13 +10,14 @@ import { PostEffects } from './post/post.effects';
 
 
 import { RouterStoreModule } from './router/router-store.module';
+import { UserInfoEffects } from './user-info/user-info.effects';
 
 
 @NgModule({
   imports: [
     CommonModule,
     StoreModule.forRoot(rootReducer),
-    EffectsModule.forRoot([AuthEffects, SocialEffects, UserEffects, PostEffects]),
+    EffectsModule.forRoot([AuthEffects, SocialEffects, UserEffects, PostEffects, UserInfoEffects]),
     RouterStoreModule
   ]
 })

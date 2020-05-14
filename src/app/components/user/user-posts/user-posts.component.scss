@@ -1,0 +1,14 @@
+@import './../../../../variables.scss';
+
+:host {
+  margin-right: 1rem;
+  margin-top: 0 !important;
+  min-width: 60%;
+  word-break: break-word;
+
+  @media screen and (max-width: $max-width) {
+    margin-top: 1.5rem !important;
+    margin-right: 0;
+
+  }
+}

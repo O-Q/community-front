@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ForumNewPostComponent } from './forum-new-post.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MaterialBaseModule } from '../../../../material.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+
+import { MaterialBaseModule } from '../../../../material.module';
+import { ForumNewPostComponent } from './forum-new-post.component';
 
 
 @NgModule({

@@ -1,0 +1,3 @@
+# do not run Prettier against TypeScript files
+# in "snapshots/" folders
+*/*.ts

@@ -1,0 +1,55 @@
+<mat-card class="post text-persian pr-0 pb-0 d-flex">
+  <div class="d-grid post__interact">
+    <button (click)="express('LIKE')" matTooltip="+1" mat-icon-button aria-label="like" matTooltipPosition="above">
+      <mat-icon [ngStyle]="{'color': post.liked ? 'orange' : null}" mat-font-icon class="fa fa-angle-up"></mat-icon>
+    </button>
+    <span class="text-center" dir="ltr">{{post.reaction}}</span>
+    <button (click)="express('DISLIKE')" mat-icon-button matTooltip="-1" aria-label="dislike">
+      <mat-icon [ngStyle]="{'color': post.liked  == false ? 'orange' : null}" mat-font-icon class="fa fa-angle-down">
+      </mat-icon>
+    </button>
+  </div>
+  <div class="d-grid w-100">
+    <mat-card-header class="flex-between">
+      <mat-card-title>{{ post.title }} </mat-card-title>
+      <mat-card-subtitle>
+        {{ post.subtitle }}
+      </mat-card-subtitle>
+
+      <button class="post__more" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content class="post__content" [innerHTML]="post.text">
+    </mat-card-content>
+    <mat-card-actions class="mb-0 p-0 d-flex">
+      <app-post-actions [post]="post" [sname]="post.social.name || post.social"></app-post-actions>
+      <a routerLink="/u/{{post.author}}"
+        class="f-medium-subtitle fw-bold italic my-auto mr-auto d-flex post__user-link">
+        نویسنده: {{ post.author }} | تاریخ:
+        {{ post.createdAt | persianDate }}
+      </a>
+    </mat-card-actions>
+  </div>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+  <!-- if moderator or writer -->
+  <a *ngIf="post.author === (auth$ | async).user?.username"
+    [routerLink]="[post.social.type === 'BLOG' ? '/b' : '/c',post.social.name || post.social,'p',post._id,'edit']"
+    mat-menu-item class="mat-button mat-primary text-persian w-100 d-flex align-center">
+    <mat-icon color="primary" mat-font-icon class="fa fa-edit">
+    </mat-icon>
+    ویرایش
+  </a>
+  <button mat-menu-item class="mat-button mat-warn text-persian">
+    <mat-icon color="warn" mat-font-icon class="far fa-flag"></mat-icon>
+    گزارش
+  </button>
+  <!-- if moderator or writer -->
+  <button mat-menu-item class="mat-button mat-warn text-persian"
+    *ngIf="isPermittedToRemove((auth$ | async).user?.username)" (click)="onDeletePost()">
+    <mat-icon color="warn" mat-font-icon="fa-icon" class="fa fa-trash"></mat-icon>
+    حذف
+  </button>
+</mat-menu>

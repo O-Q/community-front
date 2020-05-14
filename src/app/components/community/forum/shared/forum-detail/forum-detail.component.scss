@@ -1,6 +1,13 @@
-.group-detail {
+@import './../../../../../../variables.scss';
+
+.social-detail {
   direction: rtl;
   text-align: justify;
+
+  .d__more {
+    margin-left: -5px;
+
+  }
 
   .d__image {
     background-size: cover;
@@ -14,5 +21,4 @@
   .d__content {
     margin-top: 5px;
   }
-
 }

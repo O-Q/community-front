@@ -1,0 +1,13 @@
+<ng-container *ngIf="post$ | async as p">
+  <ng-container *ngIf="p.loading; else loadedPosts">
+    <!-- skeleton for load posts -->
+    <app-skeleton-forum-post *ngFor="let _ of [].constructor(5)">
+    </app-skeleton-forum-post>
+    <!-- END skeleton for load posts -->
+  </ng-container>
+  <ng-template #loadedPosts>
+    <ng-container *ngIf="p.posts?.length">
+      <app-post-card *ngFor="let post of p.posts" [post]="post"></app-post-card>
+    </ng-container>
+  </ng-template>
+</ng-container>

@@ -1,0 +1,15 @@
+@import './../../../../../variables.scss';
+
+:host {
+  width: 70%;
+  margin: auto;
+
+  @media screen and (max-width:$max-width) {
+    width: 95%;
+  }
+}
+
+[mat-tab-nav-bar] {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}

@@ -11,6 +11,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { PersianDatePipe } from './pipes/persian-date.pipe';
+import { ButtonContentComponent } from './components/shared/button-content/button-content.component';
+import { CommonModule } from '@angular/common';
+import { getPersianPaginatorIntl } from './components/intl/persian-paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 const modules = [
   MatCardModule,
@@ -31,10 +35,11 @@ const modules = [
  */
 @NgModule({
   declarations: [
-    PersianDatePipe
+    PersianDatePipe,
+    ButtonContentComponent,
   ],
-  imports: modules,
-  exports: [...modules, PersianDatePipe],
+  imports: [CommonModule, ...modules],
+  exports: [...modules, PersianDatePipe, ButtonContentComponent],
   providers: [
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
@@ -43,7 +48,8 @@ const modules = [
         direction: 'rtl',
         horizontalPosition: 'center'
       } as MatSnackBarConfig
-    }
+    },
+    { provide: MatPaginatorIntl, useValue: getPersianPaginatorIntl() }
   ]
 })
 export class MaterialBaseModule { }

@@ -35,7 +35,12 @@ mat-card-subtitle {
 }
 
 .f-blog-title {
-  @extend %f-blog-title;
+  @extend %f-community-title;
+}
+
+.f-forum-title {
+  @extend %f-community-title;
+  @extend %fw-bold;
 }
 
 .text-persian {
@@ -45,9 +50,13 @@ mat-card-subtitle {
 
 .text-english {
   direction: ltr;
-  text-align: left;
+  text-align: left !important;
 }
 
 .italic {
   font-style: italic;
+}
+
+.text-center {
+  text-align: center;
 }

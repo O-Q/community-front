@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import "../../../../variables";
 
 :host {
   position: absolute; // before that was fixed
@@ -20,6 +20,66 @@
 
     .header__user {
       align-self: center;
+
+      .avatar-menu {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        border: solid blue;
+        object-fit: cover;
+        left: 3rem;
+        margin-top: 11px;
+
+        &:hover {
+          cursor: pointer;
+          box-shadow: -3px 0px 5px 0px rgba(0, 0, 0, 0.75);
+        }
+      }
     }
   }
+}
+
+.selected {
+  background-color: gainsboro;
+}
+
+.menu {
+  padding: 0 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .box {
+    left: 20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: 40px 0px 0px -24px blue;
+  }
+
+  .icon-box {
+    color: white;
+    font-size: 10px;
+    margin-top: 4px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.phone {
+  @media screen and (max-width: $max-width) {
+    display: none;
+  }
+}
+
+.notifications {
+  background-color: cadetblue;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  line-height: 35px;
+  text-align: center;
+  margin-right: 5px;
 }

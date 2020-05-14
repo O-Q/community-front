@@ -12,11 +12,24 @@ const routes: Routes = [
       )
   },
   {
+    path: 'u',
+    loadChildren: () =>
+      import('./components/user/user.module').then(
+        m => m.UserModule
+      )
+  },
+  {
     path: 'b',
     loadChildren: () =>
-      import('./components/community/forum/forum.module').then(
-        m => m.ForumModule
+      import('./components/community/blog/blog.module').then(
+        m => m.BlogModule
       )
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./components/settings/settings.module').then(
+      m => m.SettingsModule
+    )
   },
   {
     path: 'auth',

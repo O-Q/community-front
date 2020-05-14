@@ -12,6 +12,10 @@
   @extend %flex-between;
 }
 
+.flex-around {
+  @extend %flex-around;
+}
+
 .flex-center {
   @extend %flex-center;
 }
@@ -56,4 +60,12 @@
 
 .hover-pointer:hover {
   @extend %cursor-pointer;
+}
+
+.grid-center {
+  @extend %grid-center;
+}
+
+.align-center {
+  @extend %align-center;
 }

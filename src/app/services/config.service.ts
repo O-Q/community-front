@@ -18,14 +18,14 @@ export class ConfigService {
   makeUrl(
     subUrl: string,
     args: {
-      params?: { [_: string]: string | number };
-      queries?: { [_: string]: string | number };
+      params?: { [_: string]: string | number | boolean };
+      queries?: { [_: string]: string | number | boolean };
     } = { params: {}, queries: {} }
   ) {
     const { params, queries } = args;
     for (const k in params) {
       if (params.hasOwnProperty(k)) {
-        subUrl = subUrl.replace(`:${k}`, params[k].toString());
+        subUrl = subUrl.replace(`:${k}`, params[k]?.toString());
       }
     }
 

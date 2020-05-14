@@ -1,5 +1,10 @@
 @import '../../../../styles/form';
 
+:host {
+  display: flex !important;
+  align-items: center;
+}
+
 .show-rule-btn {
   align-self: center;
 }

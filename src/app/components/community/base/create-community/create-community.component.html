@@ -11,6 +11,9 @@
           <mat-hint class="fs-small">توجه: این نام بعدا قابل تغییر نیست</mat-hint>
         </mat-form-field>
         <mat-form-field>
+          <input formControlName="title" matInput [placeholder]="'عنوان ' + type" required />
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>توضیحات</mat-label>
           <textarea formControlName="description" required #box matInput maxlength="250" cdkTextareaAutosize
             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="8"></textarea>
@@ -26,30 +29,16 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-
-        <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipList aria-label="انتخاب زیرموضوعات">
-            <mat-chip style="padding-top: 6px;padding-bottom: 5px;" *ngFor="let flair of selectedFlairs"
-              (removed)="removeFlair(flair)">
-              <mat-icon matChipRemove>cancel</mat-icon>
-              {{ flair }}
-            </mat-chip>
-            <input formControlName="flairs" placeholder="زیر موضوعات (اختیاری)" #flairInput [matAutocomplete]="auto"
-              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              (matChipInputTokenEnd)="addFlair($event)" />
-          </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="clickFlair($event)">
-            <mat-option class="text-persian fs-normal" *ngFor="let flair of filteredFlairs | async" [value]="flair">
-              {{ flair.viewValue }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+        <app-flairs-auto-complete placeholder="زیر موضوعات (اختیاری)" [selectedFlairs]="selectedFlairs"
+          [flairsControl]="form.get('flairs')">
+        </app-flairs-auto-complete>
       </form>
     </mat-card-content>
     <mat-card-actions>
       <ng-container *ngIf="social$ | async as social">
-        <button [disabled]="social.loading || form.invalid" (click)="onCreate(type === 'انجمن' ? 'forum' : 'blog')"
-          class="btn mb-1" mat-raised-button color="primary">
+        <button [disabled]="social.loading || form.invalid"
+          (click)="onCreate(type === 'انجمن' ? SocialType.FORUM : SocialType.BLOG)" class="btn mb-1" mat-raised-button
+          color="primary">
           <span *ngIf="!social.loading else loading">
             ساخت
             {{ type }}

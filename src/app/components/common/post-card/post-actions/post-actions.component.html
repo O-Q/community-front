@@ -1,0 +1,24 @@
+<div class="d-flex mr-3" style="flex-wrap: wrap;">
+  <button (click)="openShareBottomSheet()" mat-button class="socials__button" color="primary">
+    <mat-icon mat-font-icon class="fa fa-share-alt-square s__b__icon"></mat-icon>
+    <span class="res-phone">
+      اشتراک‌گذاری
+    </span>
+  </button>
+
+  <button mat-button class="socials__button" color="primary">
+
+    <mat-icon mat-font-icon class="far fa-bookmark s__b__icon"></mat-icon>
+    <span class="res-phone">
+      ذخیره
+    </span>
+  </button>
+  <a mat-button [routerLink]="[post.social.type === 'BLOG' ? '/b':'/c',sname|| post.social.name,'p', post._id]"
+    mat-button class="socials__button" color="primary">
+    <mat-icon mat-font-icon class="far fa-comments s__b__icon"></mat-icon>
+    <span class="res-phone">
+      نظرات
+    </span>
+    ({{post?.comment || 0}})
+  </a>
+</div>

@@ -1,0 +1,25 @@
+@import './base-position';
+
+.pos-abs {
+  @extend %pos-abs;
+}
+
+.pos-rel {
+  @extend %pos-rel;
+}
+
+.l-0 {
+  @extend %l-0;
+}
+
+.r-0 {
+  @extend %r-0;
+}
+
+.t-0 {
+  @extend %t-0;
+}
+
+.b-0 {
+  @extend %b-0;
+}

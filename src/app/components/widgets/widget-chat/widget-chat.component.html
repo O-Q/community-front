@@ -1,7 +1,7 @@
 <mat-card *ngIf="(auth$ | async).user as user" class="p-0">
   <mat-card-header>
     <mat-card-title>
-      اتاق گفتگو
+      {{ viewValue || 'اتاق گفتگو' }}
     </mat-card-title>
     <mat-card-subtitle class="pt-1" *ngIf="connected && onlineUsers$ | async as onlineUsers">
       افراد آنلاین: {{onlineUsers}}
@@ -27,7 +27,7 @@
   </mat-card-actions>
   <ng-template #join>
     <mat-card-actions class="mb-0">
-      <div style="padding-top: 24px; padding-bottom: 24px;">
+      <div class="flex-center py-3">
         <button (click)="connect()" mat-raised-button color="accent">
           پیوستن به گفتگو
         </button>

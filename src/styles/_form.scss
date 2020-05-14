@@ -1,36 +1,43 @@
-  mat-card {
-    margin: auto;
-    min-width: 300px;
-    min-height: 300px;
+@import './../variables.scss';
+
+mat-card {
+  margin: auto;
+  min-width: 300px;
+  min-height: 300px;
+  display: grid;
+
+  @media screen and (max-width: $max-width) {
+    min-width: 85%;
+
+  }
+
+  mat-card-header {
+    display: flex;
+    justify-content: center;
+  }
+
+  mat-card-content,
+  form {
     display: grid;
+    width: 100%;
 
-    mat-card-header {
-      display: flex;
-      justify-content: center;
-    }
-
-    mat-card-content,
-    form {
-      display: grid;
-      width: 100%;
-
-    }
   }
+}
 
-  mat-form-field {
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
+mat-form-field {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 
-  .btn {
-    min-width: 90px;
-  }
+.btn {
+  min-width: 90px;
+}
 
-  .auth-error {
-    text-align: center;
-    direction: rtl;
-    color: red;
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: .5rem;
-  }
+.auth-error {
+  text-align: center;
+  direction: rtl;
+  color: red;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: .5rem;
+}

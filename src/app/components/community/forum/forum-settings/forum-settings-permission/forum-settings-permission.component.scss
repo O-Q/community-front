@@ -1,0 +1,47 @@
+th,
+td {
+  text-align: center !important;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type {
+  padding-left: 0;
+}
+
+th.mat-header-cell:last-of-type {
+  padding-left: 12px;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+}
+
+.icon-fix {
+  margin-right: 2px;
+}
+
+.badge {
+  margin-right: -8px;
+  margin-top: 4px;
+  font-size: 20px;
+  height: 25px;
+  width: 25px;
+  background-color: darkgreen;
+  border-radius: 50%;
+}
+
+.fa-user-tie {
+  color: gold;
+}
+
+.fa-user-tag {
+  color: silver;
+}
+
+mat-paginator {
+  box-shadow: -6px 24px 43px -21px rgba(0, 0, 0, 0.45);
+
+}

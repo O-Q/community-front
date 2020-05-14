@@ -22,7 +22,7 @@ export class WidgetLoaderService {
     }
   ) {
   }
-  async load(name: string, container: ViewContainerRef, inputs?: any) {
+  async load(name: string, container: ViewContainerRef, inputs?: any, viewValue?: string) {
     const tempModule = await this.lazyWidgets[name]();
 
     let moduleFactory: NgModuleFactory<any>;
@@ -40,8 +40,12 @@ export class WidgetLoaderService {
     const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(
       entryComponent
     );
-
+    // TODO: ridiculous indexing for createComponent. if some component create sooner which have bigger index throw exception.
     const componentRef = container.createComponent<any>(compFactory);
     componentRef.instance.inputs = inputs;
+    componentRef.instance.viewValue = viewValue;
+
+
+
   }
 }

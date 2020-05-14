@@ -1,0 +1,26 @@
+<mat-card style="min-height: auto;">
+  <mat-card-header>
+    <mat-card-title>{{data.title}}</mat-card-title>
+    <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
+  </mat-card-header>
+  <mat-card-content class="mb-0">
+    <form [formGroup]="form">
+      <mat-form-field>
+        <input [formControlName]="this.data.viewValue" [type]="data.type || 'text'" class="text-english" matInput
+          [placeholder]="data.viewValue" [value]="data.value">
+      </mat-form-field>
+      <mat-form-field *ngIf="data.needConfirm">
+        <input [formControlName]="this.data.viewValue+'Confirm'" class="text-english" [type]="data.type || 'text'"
+          matInput [placeholder]="'تایید ' + data.viewValue">
+      </mat-form-field>
+      <mat-form-field (keyup.enter)="onChange()">
+        <input formControlName="currentPassword" class="text-english" type="password" matInput
+          placeholder="گذرواژه فعلی">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="ml-auto pb-1">
+    <button mat-stroked-button color="primary" (click)="onClose()">بیخیال</button>
+    <button mat-stroked-button (click)="onChange()">تغییر {{data.viewValue}}</button>
+  </mat-card-actions>
+</mat-card>

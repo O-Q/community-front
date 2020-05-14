@@ -10,29 +10,38 @@ export class ErrorHandlerService {
 
   constructor(private snackbar: MatSnackBar, private router: Router) { }
 
-  handleHttpError(error: HttpErrorResponse, { showSnackbar = false }) {
-    if (!showSnackbar) {
-      this._handleWithNavigate(error);
+  handleHttpError(r: HttpErrorResponse, _ = { showSnackbar: false }) {
+    if (!_.showSnackbar) {
+      this._handleWithNavigate(r);
     } else {
-      this._handleWithSnackbar(error);
+      this._handleWithSnackbar(r);
     }
   }
 
-  private _handleWithNavigate(error: HttpErrorResponse) {
-    switch (error.status) {
+  private _handleWithNavigate(r: HttpErrorResponse) {
+    switch (r.status) {
       case 404: {
         this.router.navigateByUrl('/error/404');
         break;
       }
       case 500: {
-        console.log(error);
+        console.log(r);
         this.router.navigateByUrl('/error/500');
+        break;
       }
     }
   }
 
-  private _handleWithSnackbar(error: HttpErrorResponse) {
-    // TODO
-    this.snackbar.open(error.error.message);
+  private _handleWithSnackbar(r: HttpErrorResponse) {
+    if (r.error.error) {
+      this.snackbar.open(r.error.error);
+    } else if (r.error.statusCode === 401) {
+      this.snackbar.open('شما خارج شدید.')
+    } else {
+      this.snackbar.open('خطای ناشناخته');
+      console.log(r);
+
+
+    }
   }
 }

@@ -2,6 +2,38 @@
   width: 100%;
 }
 
+.w-75 {
+  width: 75%;
+}
+
+.h-auto {
+  height: auto !important;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.input-upload {
+  opacity: 0;
+  font-size: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+.no-select {
+  user-select: none;
+}
+
 
 @import './commons/padding/padding';
 @import './commons/margin/margin';
@@ -9,3 +41,4 @@
 @import './commons/display/display';
 @import './commons/scrollbar/scrollbar';
 @import './commons/editor/editor';
+@import './commons/position/position';

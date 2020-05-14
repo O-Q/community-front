@@ -1,29 +1,47 @@
+<app-forum-base></app-forum-base>
 <div class="container" *ngIf="post$ | async as post">
-  <app-forum-base></app-forum-base>
   <div class="post-container">
-    <app-post-card class="p__card" [post]="post" [admins]="post.social.admins"></app-post-card>
+    <app-post-card class="p__card" [post]="post" [admins]="admins$ | async"></app-post-card>
     <div class="comments">
       <div class="comments__title flex-between">
         <mat-divider> </mat-divider>
         <span>بخش نظرات</span>
         <mat-divider> </mat-divider>
       </div>
-      <div class="comments__new text-persian">
+      <div *ngIf="(user$|async).user as user" class="comments__new text-persian">
         <div class="d-flex">
-          <div class="content__pic" [ngStyle]="{'background-image': backgroundImage }">
+          <div class="content__pic" [ngStyle]="{'background-image': 'url(' + user.avatar + ')' }">
           </div>
           <mat-form-field class="content__field fs-normal w-100">
-            <textarea #comment class="no-scroll" [maxLength]="150" cdkTextareaAutosize matInput
+            <textarea matInput [formControl]="comment" class="no-scroll" [maxLength]="150" cdkTextareaAutosize matInput
               placeholder="نظر خود را بنویسید"></textarea>
+            <mat-error>
+              "نظر" حداقل باید شامل پانزده حرف باشد
+            </mat-error>
           </mat-form-field>
         </div>
-        <span class="flex-end fs-small mb-2" style="margin-top:-1rem">{{ comment.textLength }}/150</span>
+        <span class="flex-end fs-small mb-2" style="margin-top:-1rem">{{ comment.value.length }}/150</span>
         <div class="flex-end">
-          <button color="primary" mat-button [ngClass]="{'mat-raised-button': comment.textLength > 0 }"
-            [disabled]="!comment.textLength">
+          <button (click)="onSendComment(post)" color="primary" mat-stroked-button
+            [ngClass]="{'mat-raised-button': comment.value.length > 0 }" [disabled]="!comment.value.length">
             ثبت نظر
           </button>
         </div>
+      </div>
+      <div class="pt-1">
+        <mat-card *ngFor="let comment of post.comments" class="mb-2">
+          <mat-card-header class="text-persian">
+            <mat-card-title>{{comment.author.username}} میگه:</mat-card-title>
+            <mat-card-subtitle>نوشته شده در تاریخ {{comment.createdAt | persianDate }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="text-persian mx-2">
+            {{comment.text}}
+          </mat-card-content>
+          <mat-card-actions>
+            <app-post-actions [post]="comment" [sname]="post.social.name"></app-post-actions>
+
+          </mat-card-actions>
+        </mat-card>
       </div>
     </div>
   </div>

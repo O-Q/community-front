@@ -8,6 +8,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { environment } from '../../../environments/environment';
 import * as AuthActions from './auth.actions';
+import * as UserActions from './../user/user.actions';
+
 import { ConfigService } from '../../services/config.service';
 import { ACCESS_TOKEN_KEY } from '../../constants/local-storage.constant';
 import { User } from '../../models/user.model';
@@ -15,6 +17,9 @@ import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
 import { RegisterUser } from '../../models/register-user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { decodeUser } from '../../utils/decode-user.util';
+import { Store } from '@ngrx/store';
+import { AppState } from '../state';
+import { ThemeService } from '../../services/theme.service';
 
 @Injectable()
 export class AuthEffects {
@@ -80,6 +85,7 @@ export class AuthEffects {
           map(resData => {
             const token = this._setSession(resData);
             const user = decodeUser(token);
+            this.store.dispatch(UserActions.UserFetching());
             return AuthActions.authenticateSuccess({
               payload: { mode: 'signin', user }
             });
@@ -114,12 +120,23 @@ export class AuthEffects {
     })
   );
 
+  @Effect({ dispatch: false })
+  authLogout = this.actions$.pipe(ofType(AuthActions.logout), tap(() => {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    // this.theme.changeToUserDefault();
+    this.store.dispatch(UserActions.UserLogout());
+    this.snackbar.open('برای این‌کار ابتدا وارد شوید.');
+    // this.router.navigateByUrl('/');
+  }));
+
   constructor(
     private actions$: Actions,
     private http: HttpClient,
     private router: Router,
     private configService: ConfigService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private store: Store<AppState>,
+    private theme: ThemeService
   ) { }
 
   private _setSession(payload: { accessToken: string }) {

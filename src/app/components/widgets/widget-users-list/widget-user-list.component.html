@@ -1,10 +1,11 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>{{ inputs?.title }}</mat-card-title>
+    <mat-card-title>{{ viewValue || 'بهترین کاربران' }}</mat-card-title>
   </mat-card-header>
   <mat-card-content class="mb-0">
     <mat-nav-list>
-      <a mat-list-item *ngFor="let user of inputs.users; index as i" class="user__item fs-small" [href]="user.url">
+      <a mat-list-item *ngFor="let user of [{name: 'mahdi', url: 'https://google.com', value: 23}]; index as i"
+        class="user__item fs-small" [href]="user.url">
         <div class="ml-auto">{{ i + 1  }}. {{ user.name }}</div>
         <div *ngIf="user.value" class="mr-auto"> {{ user.value }}</div>
       </a>

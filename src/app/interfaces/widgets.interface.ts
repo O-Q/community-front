@@ -7,4 +7,5 @@ export interface Widget {
   name: string;
   inputs?: any;
   registeredToShow?: boolean;
+  viewValue?: string;
 }

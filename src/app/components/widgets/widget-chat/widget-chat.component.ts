@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -6,27 +6,32 @@ import * as fromAuth from './../../../store/auth/auth.reducer';
 import * as fromApp from './../../../store/state';
 import { Socket } from 'ngx-socket-io';
 import { ServerEvent, ClientEvent } from '../../../../../server/src/shared/socket-events.enum';
-import { first, map } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { WidgetChatMessageComponent } from './widget-chat-message/widget-chat-message.component';
 import { ChatRoomMessage } from '../../../../../server/src/shared/chatroom.interface';
-
 
 
 @Component({
   selector: 'app-widget-chat',
   templateUrl: './widget-chat.component.html',
-  styleUrls: ['./widget-chat.component.scss']
+  styleUrls: ['./widget-chat.component.scss'],
 })
 export class WidgetChatComponent implements OnInit {
+  @Input()
+  viewValue: string;
+
+
   @ViewChild('messageContainer', { read: ViewContainerRef })
   messageContainer: ViewContainerRef;
   connected = false;
   auth$: Observable<fromAuth.State>;
   onlineUsers$ = this._fromOnlineChat();
   message: string;
-
-  constructor(private store: Store<fromApp.AppState>, private socket: Socket,
-    private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(
+    private store: Store<fromApp.AppState>,
+    private socket: Socket,
+    private componentFactoryResolver: ComponentFactoryResolver,
+  ) { }
 
   ngOnInit() {
     this.auth$ = this.store.select('auth');

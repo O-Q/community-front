@@ -20,15 +20,11 @@ export class AuthService {
     const user = decodeUser(token);
     if (user) {
       this.store.dispatch(authActions.loadUser({ payload: user }));
-    } else {
-      this.logout();
+      this.store.dispatch(UserActions.UserFetching());
     }
-    this.store.dispatch(UserActions.UserFetching());
-  }
+    // else {
+    //   this.store.dispatch(authActions.logout());
 
-  logout() {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    this.store.dispatch(authActions.logout());
-    // this.router.navigateByUrl('http://localhost:4200');
+    // }
   }
 }
