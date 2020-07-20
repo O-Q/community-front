@@ -4,18 +4,17 @@ import { Injectable } from '@angular/core';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { ConfigService } from '../../services/config.service';
-import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
+import { ConfigService } from '@app/services/config.service';
+import { DEFAULT_HTTP_OPTION } from '@app/constants/http-headers.constant';
 import * as PostActions from './post.actions';
-import * as SocialActions from './../social/social.actions';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import { Router } from '@angular/router';
-import { ErrorHandlerService } from '../../services/error-handler.service';
+import { ErrorHandlerService } from '@app/services/error-handler.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../state';
-import { PostDetailed, Post } from '../../interfaces/post.interface';
-import { SocialType } from '../../../../server/dist/user/interfaces/user.interface';
+import { AppState } from '@store/state';
+import { PostDetailed, Post } from '@app/interfaces/post.interface';
+import { SocialType } from '@app/models/user.model';
 
 @Injectable()
 export class PostEffects {
@@ -23,14 +22,14 @@ export class PostEffects {
     postsFetch = this.actions$.pipe(
         ofType(PostActions.PostsFetching),
         switchMap((postsFetchingData) => {
-            return this.http.get<Post[]>(
+            return this.http.get<{ posts: Post[], length: number }>(
                 this.configService.makeUrl(environment.urls.post.GET_POSTS_BY_SNAME, {
                     queries: { ...postsFetchingData.query, n: postsFetchingData.sname }
                 }),
                 DEFAULT_HTTP_OPTION
             ).pipe(
                 map(resData => {
-                    return PostActions.PostsFetched({ posts: resData });
+                    return PostActions.PostsFetched({ posts: resData.posts, length: resData.length });
                 }), catchError((error: HttpErrorResponse) => {
                     const message = error.error.message;
                     return of(PostActions.PostsFetchFailed({ message }));
@@ -103,15 +102,13 @@ export class PostEffects {
     postReplyPublish = this.actions$.pipe(
         ofType(PostActions.PostReplyPublishing),
         switchMap(postReplyPublishingData => {
-            const { pid, sid, comment, sname } = postReplyPublishingData;
-            console.log('bb');
-
+            const { pid, sid, comment, sname, socialType } = postReplyPublishingData;
             return this.http.post(
                 this.configService.makeUrl(environment.urls.post.CREATE_REPLAY_POST_BY_SID, { params: { sid, pid } }),
                 { comment },
                 DEFAULT_HTTP_OPTION
             ).pipe(map(() => {
-                this.router.navigateByUrl(`/c/${sname}`);
+                // this.router.navigateByUrl(`/${socialType === SocialType.BLOG ? 'b' : 'c'}/${sname}/p/${pid}`);
                 return PostActions.PostPublished();
             }), catchError((error: HttpErrorResponse) => {
                 this.errorHandler.handleHttpError(error, { showSnackbar: true });
@@ -132,11 +129,22 @@ export class PostEffects {
                     DEFAULT_HTTP_OPTION
                 ).pipe(map(() => {
                     console.log(postDeletingData.socialType);
+                    if (postDeletingData.socialType) {
+                        this.router.navigate([postDeletingData.socialType === 'BLOG' ? '/b' : '/c', sname]);
+                        const posts = postState.posts.filter(p => p._id !== pid);
+                        this.store.dispatch(PostActions.PostsFetched({ posts, length: postState.length - 1 }));
+                    } else { // comments
+                        const comments = postState.post.comments.filter(c => c._id !== pid);
+                        this.store.dispatch(PostActions.PostDetailedFetched({
+                            post: {
+                                ...postState.post,
+                                comments,
+                                comment: postState.post.comment - 1
+                            }
+                        }));
 
-                    this.router.navigate([postDeletingData.socialType === 'BLOG' ? '/b' : '/c', sname]);
-                    const posts = postState.posts.filter(p => p._id !== pid);
+                    }
 
-                    this.store.dispatch(PostActions.PostsFetched({ posts }));
                     return PostActions.PostDeleted();
                 }), catchError((error: HttpErrorResponse) => {
                     console.log(error);

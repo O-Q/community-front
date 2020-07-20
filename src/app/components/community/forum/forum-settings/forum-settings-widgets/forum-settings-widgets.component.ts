@@ -1,17 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef, ViewContainerRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, ViewContainerRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { AppState } from '../../../../../store/state';
+import { AppState } from '@store/state';
 import { Store } from '@ngrx/store';
 import { skipWhile, first, } from 'rxjs/operators';
-import { WidgetLoaderService } from '../../../../widgets/widget-loader.service';
-import { Widget } from '../../../../../interfaces/widgets.interface';
-import * as SocialActions from './../../../../../store/social/social.actions';
-import { SocialType } from './../../../../../models/user.model';
+import { WidgetLoaderService } from '@app/components/widgets/widget-loader.service';
+import { Widget } from '@app/interfaces/widgets.interface';
+import * as SocialActions from '@store/social/social.actions';
+import { SocialType } from '@app/models/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsWidgetListDialogComponent } from './settings-widget-list-dialog/settings-widget-list-dialog.component';
 import { EditWidgetDialogComponent } from './edit-widget-dialog/edit-widget-dialog.component';
-import { enableSaveGuard } from '../../../../../utils/unsave-guard';
+import { enableSaveGuard } from '@app/utils/unsave-guard';
 @Component({
   selector: 'app-forum-settings-widgets',
   templateUrl: './forum-settings-widgets.component.html',

@@ -3,4 +3,15 @@ import { routerStateConfig } from './router-store.module';
 import { MergedRouteReducerState } from './merged-route-serializer';
 
 export const getRouterReducerState = createFeatureSelector<MergedRouteReducerState>(routerStateConfig.stateKey);
-export const getMergedRoute = createSelector(getRouterReducerState, (routerReducerState) => routerReducerState.state);
+let prevUrl = '';
+export const getMergedRoute = createSelector(getRouterReducerState, (routerReducerState) => {
+    const temp = prevUrl;
+    if (routerReducerState.state.url !== prevUrl) {
+        prevUrl = routerReducerState.state.url;
+    }
+    return { ...routerReducerState.state, prevUrl: temp };
+});
+
+export const getPrevUrl = createSelector(getMergedRoute, (routerReducerState) => {
+    return routerReducerState.prevUrl;
+});

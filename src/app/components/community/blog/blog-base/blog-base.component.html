@@ -1,17 +1,35 @@
 <div id="title-color" *ngIf="social.social as blog">
-  <a *ngIf="isModerator(userRole$ | async)" [routerLink]="[blog.name,'settings']" matTooltip="تنظیمات"
-    matTooltipPosition="right" class="pos-abs t-0 l-0 mt-1" mat-icon-button>
+  <a
+    *ngIf="isModerator(userRole$ | async)"
+    [routerLink]="[blog.name, 'settings']"
+    matTooltip="تنظیمات"
+    matTooltipPosition="right"
+    class="pos-abs t-0 l-0 mt-1"
+    mat-icon-button
+  >
     <mat-icon>settings</mat-icon>
   </a>
+
   <div class="blog-info-container">
-    <img class="blog-banner pos-abs l-0 t-0" [src]="blog.banner || '../../../../../assets/banner.png'" alt="بنر">
+    <img
+      class="blog-banner pos-abs l-0 t-0"
+      [src]="blog.banner || '../../../../../assets/banner.png'"
+      alt="بنر"
+    />
     <div class="flex-center align-center" style="margin-top: 10px;">
-      <img [routerLink]="['/b', blog.name]" class="mr-3 mt-3 blog-avatar pos-abs r-0 t-0 hover-pointer"
-        [src]="blog.avatar || '../../../../../assets/avatar.png'" alt="آواتار">
+      <img
+        [routerLink]="['/b', blog.name]"
+        class="mr-3 mt-3 blog-avatar pos-abs r-0 t-0 hover-pointer"
+        [src]="blog.avatar || '../../../../../assets/avatar.png'"
+        alt="آواتار"
+      />
     </div>
+
     <div class="flex-center flex-dir-col blog-title">
-      <span class="f-blog-title fw-bold blog-name">{{blog.title}}</span>
-      <sub>{{blog.description}}</sub>
+      <span id="blogTitle" class="f-blog-title fw-bold blog-name">{{
+        blog.title
+      }}</span>
+      <sub>{{ blog.description }}</sub>
     </div>
   </div>
 </div>

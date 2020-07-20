@@ -1,19 +1,44 @@
 <ng-container *ngIf="(user$ | async).user as user">
-  <button mat-raised-button class="mr-auto my-2" color="primary" (click)="onSave()">ذخیره تغییرات</button>
+  <button
+    mat-raised-button
+    class="mr-auto my-2"
+    color="primary"
+    (click)="onSave()"
+  >
+    ذخیره تغییرات
+  </button>
   <form [formGroup]="form">
     <div class="flex-between">
       <mat-list class="w-100">
         <mat-list-item>
           <div class="flex-between align-center my-1 w-100 fs-normal">
-            <div>
-              <div mat-line class="fw-bold text-persian">نمایش پروفایل من به:</div>
-              <div class="fs-small">نکته: دیگر بقیه‌ی افراد اطلاعات شما را نخواهند دید و قادر به دنبال کردن شما هم
-                نیستند.</div>
+            <div class="privacy-profile">
+              <div mat-line class="fw-bold text-persian">
+                نمایش پروفایل من به:
+              </div>
+              <div class="fs-small phone-hidden">
+                نکته: دیگر بقیه‌ی افراد اطلاعات شما را نخواهند دید و قادر به
+                دنبال کردن شما هم نیستند.
+              </div>
+              <a
+                class="pos-abs"
+                style="right: -15px;"
+                matTooltip="دیگر بقیه‌ی افراد اطلاعات شما را نخواهند دید و قادر به
+                دنبال کردن شما هم نیستند"
+              >
+                <mat-icon
+                  mat-font-icon="fa-icon"
+                  class="fa fa-info-circle"
+                ></mat-icon>
+              </a>
             </div>
             <mat-form-field>
               <mat-select formControlName="profile">
-                <mat-option *ngFor="let item of userConnection" [value]="item.value">
-                  {{item.viewValue}}
+                <mat-option
+                  *ngFor="let item of userConnection"
+                  [value]="item.value"
+                >
+                  {{ item.viewValue }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -22,11 +47,14 @@
         <mat-divider class="my-2"></mat-divider>
         <mat-list-item>
           <div class="flex-between align-center my-1 w-100 fs-normal">
-            <div mat-line class="fw-bold"> نمایش ایمیل به: </div>
+            <div mat-line class="fw-bold">نمایش ایمیل به:</div>
             <mat-form-field>
               <mat-select formControlName="email">
-                <mat-option *ngFor="let item of userConnection" [value]="item.value">
-                  {{item.viewValue}}
+                <mat-option
+                  *ngFor="let item of userConnection"
+                  [value]="item.value"
+                >
+                  {{ item.viewValue }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -36,18 +64,20 @@
 
         <mat-list-item>
           <div class="flex-between align-center my-1 w-100 fs-normal">
-            <div mat-line class="fw-bold"> نمایش پست‌ها به: </div>
+            <div mat-line class="fw-bold">نمایش پست‌ها به:</div>
             <mat-form-field>
               <mat-select formControlName="posts">
-                <mat-option *ngFor="let item of userConnection" [value]="item.value">
-                  {{item.viewValue}}
+                <mat-option
+                  *ngFor="let item of userConnection"
+                  [value]="item.value"
+                >
+                  {{ item.viewValue }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </mat-list-item>
       </mat-list>
-
     </div>
   </form>
 </ng-container>

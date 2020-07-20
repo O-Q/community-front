@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { Post, PostDetailed } from '../../interfaces/post.interface';
+import { Post, PostDetailed } from '@app/interfaces/post.interface';
 import { Params } from '@angular/router';
-import { SocialType } from '../../models/user.model';
+import { SocialType } from '@app/models/user.model';
 
 export const PostsFetching = createAction('[Post] Posts Fetching', props<PostsFetchingPayload>());
-export const PostsFetched = createAction('[Post] Posts Fetched', props<{ posts: Post[] }>());
+export const PostsFetched = createAction('[Post] Posts Fetched', props<{ posts: Post[], length: number }>());
 export const PostsFetchFailed = createAction(
     '[Post] Posts Fetch Failed',
     props<{ message: string }>()
@@ -21,7 +21,7 @@ export const PostPublishing = createAction('[POST] Post Publish Start', props<{ 
 export const PostPublished = createAction('[POST] Post Published Successfully');
 export const PostPublishFailed = createAction('[POST] Post Publish Failed', props<{ message: string }>());
 
-export const PostReplyPublishing = createAction('[POST] Post Reply Publish Start', props<{ comment: string, sid: string, pid: string, sname: string }>());
+export const PostReplyPublishing = createAction('[POST] Post Reply Publish Start', props<{ comment: string, sid: string, pid: string, sname: string, socialType: 'BLOG' | 'FORUM' }>());
 export const PostReplyPublished = createAction('[POST] Post Reply Publish Successfully', props<{ comment: Post }>());
 export const PostReplyPublishFailed = createAction('[POST] Post Reply Publish Failed', props<{ message: string }>());
 

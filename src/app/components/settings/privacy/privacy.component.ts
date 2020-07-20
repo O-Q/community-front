@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AppState } from '../../../store/state';
+import { AppState } from '@store/state';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { first, skipWhile } from 'rxjs/operators';
 
-import * as UserActions from './../../../store/user/user.actions';
+import * as UserActions from '@store/user/user.actions';
 
 @Component({
   selector: 'app-privacy',

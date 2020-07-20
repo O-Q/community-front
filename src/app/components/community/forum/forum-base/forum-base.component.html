@@ -1,21 +1,41 @@
-<header class="forum-header flex-center align-center flex-dir-col pos-rel" *ngIf="(social$ | async).social as s"
-  id="title-color">
-  <img class="pos-abs l-0 banner" [src]="s.banner || './../../../../assets/banner.png'" alt="بنر انجمن">
+<header
+  class="forum-header flex-center align-center flex-dir-col pos-rel"
+  *ngIf="(social$ | async).social as s"
+  id="title-color"
+>
+  <img
+    class="pos-abs l-0 banner"
+    [src]="s.banner || './../../../../assets/banner.png'"
+    alt="بنر انجمن"
+  />
   <div class="d-grid title-container">
-    <span class="f-forum-title">{{s.title}}</span>
-    <span class="f-large-subtitle">c/{{s.name}}</span>
+    <span class="f-forum-title" style="overflow: auto;">{{ s.title }}</span>
+    <span class="f-large-subtitle" style="overflow: auto;">c/{{ s.name }}</span>
   </div>
 
-
-  <img [routerLink]="['/c', s.name]" [ngStyle]="{'border-color': s.colors?.accent}"
-    class="pos-abs r-0 mr-3 avatar hover-pointer" [src]="s.avatar || './../../../../assets/avatar.png'"
-    alt="آواتار انجمن">
-  <a *ngIf="isModerator(userRole$ | async)" [routerLink]="['/c', s.name, 'settings']" mat-mini-fab
-    class="pos-abs l-0 t-0 mt-2 ml-2" matTooltip="تنظیمات">
+  <img
+    [routerLink]="['/c', s.name]"
+    [ngStyle]="{ 'border-color': s.colors?.accent }"
+    class="pos-abs r-0 mr-3 avatar hover-pointer"
+    [src]="s.avatar || './../../../../assets/avatar.png'"
+    alt="آواتار انجمن"
+  />
+  <a
+    *ngIf="isModerator(userRole$ | async)"
+    [routerLink]="['/c', s.name, 'settings']"
+    mat-mini-fab
+    class="pos-abs l-0 t-0 mt-2 ml-2"
+    matTooltip="تنظیمات"
+  >
     <mat-icon>settings</mat-icon>
   </a>
-  <div class="pos-abs actions-phone">
-    <button *ngIf="!s.isUserRegistered else registered" mat-mini-fab matTooltip="عضویت" (click)="onJoin(s._id)">
+  <div *ngIf="(user$ | async).user" class="pos-abs actions-phone">
+    <button
+      *ngIf="!s.isUserRegistered; else registered"
+      mat-mini-fab
+      matTooltip="عضویت"
+      (click)="onJoin(s._id)"
+    >
       <mat-icon inline>group_add</mat-icon>
     </button>
 
@@ -23,12 +43,14 @@
       <a mat-fab routerLink="new" matTooltip="پست جدید" class="ml-2">
         <mat-icon inline>post_add</mat-icon>
       </a>
-      <button color="warn" mat-fab matTooltip="خروج از انجمن" (click)="onLeave(s._id, s.name)">
+      <button
+        color="warn"
+        mat-fab
+        matTooltip="خروج از انجمن"
+        (click)="onLeave(s._id, s.name)"
+      >
         <mat-icon inline>exit_to_app</mat-icon>
       </button>
-
     </ng-template>
-
   </div>
-
 </header>

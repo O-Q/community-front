@@ -5,37 +5,56 @@
         <div class="flex-between mb-1 w-100 fs-normal">
           <div mat-line class="fw-bold">نام کاربری</div>
           <div>
-            {{user.username}}
+            {{ user.username }}
           </div>
         </div>
       </mat-list-item>
       <mat-list-item>
-        <a routerLink="../account" mat-mini-fab class="pos-abs t-0" style="right: -30px;">
+        <a
+          routerLink="../account"
+          mat-mini-fab
+          class="pos-abs t-0"
+          style="right: 50px;"
+        >
           <mat-icon class="fa fa-edit"></mat-icon>
         </a>
         <div class="flex-between mb-1 w-100 fs-normal">
           <div mat-line class="fw-bold">ایمیل</div>
           <div>
-            {{user.email}}
+            {{ user.email }}
           </div>
         </div>
       </mat-list-item>
       <mat-list-item>
         <div class="flex-between mb-1 w-100 fs-normal">
-          <div mat-line class="text-persian fw-bold ">تاریخ عضویت</div>
-          <div>{{user.createdAt | persianDate}}</div>
+          <div mat-line class="text-persian fw-bold">تاریخ عضویت</div>
+          <div>{{ user.createdAt | persianDate }}</div>
         </div>
       </mat-list-item>
     </mat-list>
     <div class="d-flex flex-dir-col align-center mr-2">
-      <button *ngIf="user.avatar" (click)="onRemovePhoto('avatar')" mat-mini-fab style="top: 1rem;" color="warn">
+      <button
+        *ngIf="user.avatar"
+        (click)="onRemovePhoto('avatar')"
+        mat-mini-fab
+        style="top: 1rem;"
+        color="warn"
+      >
         <mat-icon>clear</mat-icon>
       </button>
-      <img class="avatar" [src]="user.avatar || './../../../../assets/avatar.png'" alt="تصویر پروفایل" />
+      <img
+        class="avatar"
+        [src]="user.avatar || './../../../../assets/avatar.png'"
+        alt="تصویر پروفایل"
+      />
       <button color="accent" mat-stroked-button class="mt-2">
         انتخاب تصویر
         <!-- (change)="onChangeImage($event)" -->
-        <input (change)="onChangeAvatar($event)" class="input-upload" type="file" />
+        <input
+          (change)="onChangeAvatar($event)"
+          class="input-upload"
+          type="file"
+        />
       </button>
     </div>
   </div>
@@ -46,7 +65,13 @@
         درباره (اختیاری)
       </div>
       <mat-form-field mat-line style="width: 70%;">
-        <textarea class="no-scroll" [maxLength]="150" cdkTextareaAutosize #textArea matInput></textarea>
+        <textarea
+          class="no-scroll"
+          [maxLength]="150"
+          cdkTextareaAutosize
+          #textArea
+          matInput
+        ></textarea>
       </mat-form-field>
     </mat-list-item>
   </mat-list>
@@ -55,20 +80,33 @@
     <div mat-subheader>پیشرفته</div>
     <mat-list-item class="h-auto">
       <div class="w-100">
-
         <div mat-line class="text-persian fw-bold mb-1">
           بنر
         </div>
-        <div class="d-flex flex-dir-col align-center mr-2">
-          <button *ngIf="user.banner" (click)="onRemovePhoto('banner')" mat-mini-fab class="pos-abs l-0"
-            style="top: 1rem;" color="warn">
+        <div class="d-flex flex-dir-col align-center mr-2 mb-1">
+          <button
+            *ngIf="user.banner"
+            (click)="onRemovePhoto('banner')"
+            mat-mini-fab
+            class="pos-abs l-0"
+            style="top: 1rem;"
+            color="warn"
+          >
             <mat-icon>clear</mat-icon>
           </button>
 
-          <img class="banner" [src]="user.banner || './../../../../assets/avatar.png'" alt="تصویر پروفایل" />
+          <img
+            class="banner"
+            [src]="user.banner || './../../../../assets/avatar.png'"
+            alt="تصویر پروفایل"
+          />
           <button color="accent" mat-stroked-button class="mt-2">
             انتخاب بنر
-            <input (change)="onChangeBanner($event)" class="input-upload" type="file" />
+            <input
+              (change)="onChangeBanner($event)"
+              class="input-upload"
+              type="file"
+            />
           </button>
         </div>
       </div>

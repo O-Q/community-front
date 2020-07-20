@@ -129,6 +129,7 @@
   },
   "defaultProject": "forum",
   "cli": {
-    "analytics": "7e0d457b-3a59-4c17-8068-36c50dac27ea"
+    "analytics": "7e0d457b-3a59-4c17-8068-36c50dac27ea",
+    "defaultCollection": "@ngrx/schematics"
   }
 }

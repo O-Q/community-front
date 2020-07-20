@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { AppState } from '../../../../../store/state';
+import { AppState } from '@store/state';
 import { Store } from '@ngrx/store';
-import { getUserSocialRole } from '../../../../../store/user';
-import { SocialType } from '../../../../../models/user.model';
-import * as  SocialActions from './../../../../../store/social/social.actions';
+import { SocialType } from '@app/models/user.model';
+import * as  SocialActions from '@store/social/social.actions';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../../common/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-forum-detail',

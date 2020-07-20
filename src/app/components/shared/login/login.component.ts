@@ -1,21 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { passwordControl } from 'src/app/utils/form.util';
 import { Store } from '@ngrx/store';
-import * as fromApp from './../../../store/state';
-import * as AuthActions from './../../../store/auth/auth.actions';
-import * as fromAuth from './../../../store/auth/auth.reducer';
+import * as fromApp from '@store/state';
+import * as AuthActions from '@store/auth/auth.actions';
+import * as fromAuth from '@store/auth/auth.reducer';
 
 import { Subscription, Observable } from 'rxjs';
+import { MatInput } from '@angular/material/input';
+import { selectUser } from '../../../store/auth';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('username') nameInput: MatInput;
   passwordFieldType: 'password' | 'text';
   visibilityIcon: 'visibility' | 'visibility_off';
   form: FormGroup;
@@ -24,7 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private dialogRef: MatDialogRef<LoginComponent>,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private change: ChangeDetectorRef
   ) {
     this.passwordFieldType = 'password';
     this.visibilityIcon = 'visibility_off';
@@ -34,12 +38,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: new FormControl('', [Validators.required]),
       password: passwordControl()
     });
-    this.auth$ = this.store.select('auth');
+    this.auth$ = this.store.select(selectUser);
     this.authSubscription = this.auth$.subscribe(state => {
       if (state.user) {
-        this.dialogRef.close();
+        this.onClose();
       }
     });
+  }
+  ngAfterViewInit() {
+    this.nameInput.focus();
+    this.change.detectChanges();
   }
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
@@ -55,6 +63,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
   login() {
+    console.log(this.form.valid);
+
     if (this.form.valid) {
       const { username, password } = this.form.value;
       this.store.dispatch(AuthActions.loginStart({ username, password }));
@@ -69,5 +79,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   navigateForgotPassword() {
     this.dialogRef.close();
     this.router.navigate(['auth', 'forgot-password']);
+  }
+  onClose() {
+    this.dialogRef.close();
   }
 }

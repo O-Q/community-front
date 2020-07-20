@@ -1,14 +1,13 @@
 import { Component, OnInit, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/state';
-import { first } from 'rxjs/operators';
-import * as UserActions from './../../../store/user/user.actions';
-import { enableSaveGuard } from '../../../utils/unsave-guard';
+import { AppState } from '@store/state';
+import * as UserActions from '@store/user/user.actions';
+import { enableSaveGuard } from '@app/utils/unsave-guard';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush 
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements OnInit {
   user$ = this.store.select('user');

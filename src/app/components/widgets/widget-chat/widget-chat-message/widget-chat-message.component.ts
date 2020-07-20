@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, ComponentRef } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ChatRoomMessage } from '../../../../../../server/src/shared/chatroom.interface';
-import * as fromAuth from '../../../../store/auth/auth.reducer';
+import * as fromAuth from '@store/auth/auth.reducer';
 
 @Component({
   selector: 'app-widget-chat-message',
@@ -11,7 +10,7 @@ import * as fromAuth from '../../../../store/auth/auth.reducer';
 })
 export class WidgetChatMessageComponent {
   @Input()
-  chatMessage: ChatRoomMessage;
+  chatMessage: { username: string, message: string };
 
   @Input()
   selfRef: ComponentRef<WidgetChatMessageComponent>;

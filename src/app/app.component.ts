@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '@app/services/auth.service';
 import { Router, RouterEvent, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
-import { ThemeService } from './services/theme.service';
+import { ThemeService } from '@app/services/theme.service';
 
 @Component({
   selector: 'app-root',

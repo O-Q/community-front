@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Effect, Actions, ofType, createEffect } from '@ngrx/effects';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import * as SocialActions from './social.actions';
-import * as UserActions from './../user/user.actions';
-import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
-import { ConfigService } from '../../services/config.service';
-import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
-import { environment } from '../../../environments/environment';
+import * as SocialActions from '@store/social/social.actions';
+import * as UserActions from '@store/user/user.actions';
+import { switchMap, map, catchError, withLatestFrom, throttleTime } from 'rxjs/operators';
+import { ConfigService } from '@app/services/config.service';
+import { DEFAULT_HTTP_OPTION } from '@app/constants/http-headers.constant';
+import { environment } from '@env/environment';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorHandlerService } from '../../services/error-handler.service';
-import { Widget } from '../../interfaces/widgets.interface';
-import { disableSaveGuard } from '../../utils/unsave-guard';
-import { SocialType } from '../../models/user.model';
-import { ThemeService } from '../../services/theme.service';
+import { ErrorHandlerService } from '@app/services/error-handler.service';
+import { Widget } from '@app/interfaces/widgets.interface';
+import { disableSaveGuard } from '@app/utils/unsave-guard';
+import { SocialType } from '@app/models/user.model';
+import { ThemeService } from '@app/services/theme.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../state';
+import { AppState } from '@store/state';
 
 @Injectable()
 export class SocialEffects {
@@ -45,47 +45,45 @@ export class SocialEffects {
     })
   );
 
-  @Effect()
-  socialCreate = this.actions$.pipe(
-    ofType(SocialActions.SocialCreating),
-    switchMap(socialCreatingData => {
-      const { name, title, description, subject, flairs, socialType } = socialCreatingData;
-      const url = socialType === SocialType.BLOG ? environment.urls.blog.BASE : environment.urls.forum.BASE;
-      const type = socialType === SocialType.BLOG ? 'بلاگ' : 'انجمن';
-      const address = socialType === SocialType.BLOG ? 'b' : 'c';
-      console.log('sending');
-
-      return this.http.post(
-        this.configService.makeUrl(url),
-        { name, title, description, subject, flairs },
-      ).pipe(map(resData => {
-        console.log('no error');
-        this.snackbar.open(`${type} ${name} با موفقیت ساخته شد`);
-        this.router.navigateByUrl(`/${address}/${name}`);
-        return UserActions.UserSocialCreated({
-          social: {
-            notifications: 0,
-            role: 'CREATOR',
-            social: { flairs, _id: resData, name, type: socialType },
-            status: 'ACTIVE',
-            writeAccess: true,
-          }
-        });
-      }), catchError((error: HttpErrorResponse) => {
-        console.log('error');
-        this.errorHandler.handleHttpError(error, { showSnackbar: true });
-        const message = error.error.message;
-        return of(SocialActions.SocialError({ message }));
-      }));
-    })
-  );
+  socialCreate = createEffect(() => (
+    this.actions$.pipe(
+      ofType(SocialActions.SocialCreating), throttleTime(2000),
+      switchMap(socialCreatingData => {
+        const { name, title, description, subject, flairs, socialType } = socialCreatingData;
+        const url = socialType === SocialType.BLOG ? environment.urls.blog.BASE : environment.urls.forum.BASE;
+        const type = socialType === SocialType.BLOG ? 'بلاگ' : 'انجمن';
+        const address = socialType === SocialType.BLOG ? 'b' : 'c';
+        return this.http.post<any>(
+          this.configService.makeUrl(url),
+          { name, title, description, subject, flairs },
+        ).pipe(switchMap(resData => {
+          this.snackbar.open(`${type} ${name} با موفقیت ساخته شد`);
+          this.router.navigateByUrl(`/${address}/${name}`);
+          return [UserActions.UserSocialCreated({
+            social: {
+              notifications: 0,
+              role: 'CREATOR',
+              social: { flairs, _id: resData._id, name, type: socialType },
+              status: 'ACTIVE',
+              writeAccess: true,
+            }
+          }), SocialActions.SocialFetched({ social: resData })];
+        }), catchError((error: HttpErrorResponse) => {
+          console.log('error');
+          this.errorHandler.handleHttpError(error, { showSnackbar: true });
+          const message = error.error.message;
+          return of(SocialActions.SocialError({ message }));
+        }));
+      })
+    )
+  ));
 
 
   @Effect()
   socialWidgets = this.actions$.pipe(
     ofType(SocialActions.SocialWidgetsUpdating),
-    switchMap((socialCreatingData) => {
-      const { sname, widgets, socialType } = socialCreatingData;
+    switchMap((socialWidgetData) => {
+      const { sname, widgets, socialType } = socialWidgetData;
       const url = socialType === SocialType.BLOG ? environment.urls.blog.UPDATE_WIDGETS : environment.urls.forum.UPDATE_WIDGETS;
       return this.http.patch(
         this.configService.makeUrl(url, { queries: { n: sname } }),
@@ -106,8 +104,8 @@ export class SocialEffects {
   @Effect()
   socialWidget = this.actions$.pipe(
     ofType(SocialActions.SocialWidgetUpdating),
-    switchMap((socialCreatingData) => {
-      const { sname, widget, socialType } = socialCreatingData;
+    switchMap((socialWidgetData) => {
+      const { sname, widget, socialType } = socialWidgetData;
       const url = socialType === SocialType.BLOG ? environment.urls.blog.UPDATE_WIDGET : environment.urls.forum.UPDATE_WIDGET;
       return this.http.patch(
         this.configService.makeUrl(url, { queries: { n: sname } }),
@@ -170,8 +168,8 @@ export class SocialEffects {
   @Effect()
   socialInfo = this.actions$.pipe(
     ofType(SocialActions.SocialInfoUpdating),
-    switchMap((socialCreatingData) => {
-      const { sname, description, flairs, isPrivate, status, socialType, title, colors } = socialCreatingData;
+    switchMap((socialInfoData) => {
+      const { sname, description, flairs, isPrivate, status, socialType, title, colors } = socialInfoData;
       const body = { title, description, flairs, isPrivate, status, colors };
       const successMessage = 'اطلاعات انجمن با موفقیت به روزرسانی شد';
       const url = socialType === SocialType.FORUM ? environment.urls.forum.UPDATE_INFO : environment.urls.blog.UPDATE_INFO;
@@ -196,8 +194,8 @@ export class SocialEffects {
   @Effect()
   socialImageUpdating = this.actions$.pipe(
     ofType(SocialActions.SocialImageUpdating),
-    switchMap((socialCreatingData) => {
-      const { socialType, imageType, file, sname } = socialCreatingData;
+    switchMap((socialImageData) => {
+      const { socialType, imageType, file, sname } = socialImageData;
       const imageTypePersian = imageType === 'avatar' ? 'آواتار' : 'بنر';
       const socialTypePersian = socialType === SocialType.FORUM ? 'انجمن' : 'بلاگ';
       const successMessage = `${imageTypePersian} ${socialTypePersian} با موفقیت به روزرسانی شد`;
@@ -237,8 +235,8 @@ export class SocialEffects {
   @Effect()
   socialImageDeleting = this.actions$.pipe(
     ofType(SocialActions.SocialImageDeleting),
-    switchMap((socialCreatingData) => {
-      const { socialType, imageType, sname } = socialCreatingData;
+    switchMap((socialImageData) => {
+      const { socialType, imageType, sname } = socialImageData;
       const imageTypePersian = imageType === 'avatar' ? 'آواتار' : 'بنر';
       const socialTypePersian = socialType === SocialType.FORUM ? 'انجمن' : 'بلاگ';
       const successMessage = `${imageTypePersian} ${socialTypePersian} با موفقیت به حذف شد`;
@@ -333,7 +331,9 @@ export class SocialEffects {
   socialUsersUpdate = this.actions$.pipe(
     ofType(SocialActions.SocialUsersUpdating),
     switchMap((payload) => {
-      const url = payload.socialType === SocialType.FORUM ? environment.urls.forum.UPDATE_SOCIAL_USERS : environment.urls.blog.UPDATE_SOCIAL_USERS;
+      const url = payload.socialType === SocialType.FORUM ?
+        environment.urls.forum.UPDATE_SOCIAL_USERS :
+        environment.urls.blog.UPDATE_SOCIAL_USERS;
       return this.http.patch<any>(
         this.configService.makeUrl(url, { params: { sid: payload.sid } }),
         payload.updatedUsers,

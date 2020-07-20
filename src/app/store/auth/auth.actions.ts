@@ -1,15 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../models/user.model';
+import { User } from '@app/models/user.model';
 
 
-export const loadUser = createAction('[Auth] Load User', props<{ payload: User }>());
+export const loadUser = createAction('[Auth] Load User', props<{ user: User, mode?: 'signin' | 'signup' }>());
 export const loginStart = createAction(
   '[Auth] Login Start',
   props<SigninStartPayload>()
-);
-export const authenticateSuccess = createAction(
-  '[Auth] Authenticate Success',
-  props<{ payload: AuthSuccessPayload }>()
 );
 export const authenticateFail = createAction(
   '[Auth] Authenticate Fail',
@@ -19,7 +15,7 @@ export const signupStart = createAction(
   '[Auth] Signup Start',
   props<SignupStartPayload>()
 );
-export const logout = createAction('[Auth] Logout');
+export const logout = createAction('[Auth] Logout', props<{ silent: boolean, message?: string }>());
 
 interface SigninStartPayload {
   username: string;

@@ -11,6 +11,7 @@ import { AccountComponent } from './account/account.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ChangeDialogComponent } from './account/change-dialog/change-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [ProfileComponent, SettingsComponent, AccountComponent, PrivacyComponent, ChangeDialogComponent],
@@ -20,7 +21,8 @@ import { MatSelectModule } from '@angular/material/select';
     MaterialBaseModule,
     ReactiveFormsModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule,
   ]
 })
 export class SettingsModule { }

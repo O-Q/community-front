@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { Effect, ofType, Actions } from '@ngrx/effects';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ConfigService } from '../../services/config.service';
+import { ConfigService } from '@app/services/config.service';
 
 import * as UserActions from './user.actions';
-import { environment } from '../../../environments/environment';
-import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
+import { environment } from '@env/environment';
+import { DEFAULT_HTTP_OPTION } from '@app/constants/http-headers.constant';
 import { of, Observable } from 'rxjs';
-import { IUser } from '../../models/user.model';
+import { IUser } from '@app/models/user.model';
 import { Store, Action } from '@ngrx/store';
-import { AppState } from '../state';
+import { AppState } from '@store/state';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorHandlerService } from '../../services/error-handler.service';
+import { ErrorHandlerService } from '@app/services/error-handler.service';
 
 @Injectable()
 export class UserEffects {

@@ -1,179 +1,257 @@
-  <div class="flex-around settings-container">
-    <mat-card style="min-width: 150px; height: fit-content;" class="mt-3">
-      <mat-card-header>
-        <mat-card-title>شاخه‌ها</mat-card-title>
-        <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
-      </mat-card-header>
-      <mat-card-content>
-        <mat-action-list>
-          <button (click)="selectedBranch = 'subjects'" [ngStyle]="changeBranchStyle('subjects')"
-            mat-list-item>موضاعات</button>
-          <button (click)="selectedBranch = 'images'" [ngStyle]="changeBranchStyle('images')"
-            mat-list-item>تصاویر</button>
-          <button (click)="selectedBranch = 'colors'" [ngStyle]="changeBranchStyle('colors')"
-            mat-list-item>رنگ‌ها</button>
-          <button (click)="selectedBranch = 'advanced'" [ngStyle]="changeBranchStyle('advanced')"
-            mat-list-item>پیشرفته</button>
-        </mat-action-list>
-      </mat-card-content>
-    </mat-card>
-    <ng-container *ngIf="social$ | async as s">
-      <form [formGroup]="form">
-        <button (click)="onSave()" mat-raised-button color="primary" class="mr-auto d-flex ml-3 mt-2">
-          <app-button-content [isLoading]="s.loading" content="ذخیره تغییرات"></app-button-content>
+<div class="flex-around settings-container">
+  <mat-card style="min-width: 150px; height: fit-content;" class="mt-3 mx-2">
+    <mat-card-header>
+      <mat-card-title>شاخه‌ها</mat-card-title>
+      <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+      <mat-action-list>
+        <button
+          (click)="selectedBranch = 'subjects'"
+          [ngStyle]="changeBranchStyle('subjects')"
+          mat-list-item
+        >
+          موضاعات
         </button>
-        <mat-list>
-          <ng-container [ngSwitch]="selectedBranch">
-            <ng-container *ngSwitchCase="'subjects'">
-              <!-- subjects -->
-              <div mat-subheader class="fw-bold">عمومی
-              </div>
-              <mat-divider class="mb-3 w-75"></mat-divider>
-              <div class="d-flex general-container">
-                <div class="w-100">
-                  <mat-list-item class="h-auto">
-                    <div class="w-100">
-                      <div class="grid-center">
-                        <div mat-line class="d-flex">
-                          <mat-icon class="ml-1">title</mat-icon>
-                          عنوان
-                        </div>
-                      </div>
-                      <div class="d-flex">
-                        <mat-form-field class="w-75">
-                          <input formControlName="title" matInput>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                  </mat-list-item>
-                  <mat-list-item class="h-auto my-2">
-                    <div class="w-100">
-                      <div class="grid-center">
-                        <div mat-line class="d-flex">
-                          <mat-icon class="ml-1">subject</mat-icon>
-                          زیرموضوعات
-                        </div>
-                      </div>
-                      <app-flairs-auto-complete class="d-flex w-75" [selectedFlairs]="selectedFlairs"
-                        [flairsControl]="form.get('flairs')">
-                      </app-flairs-auto-complete>
-                    </div>
-                  </mat-list-item>
-                  <mat-list-item class="h-auto">
-                    <div class="w-100">
-                      <div class="grid-center">
-                        <div mat-line class="d-flex ">
-                          <mat-icon class="ml-1">description</mat-icon>
-                          درباره انجمن
-                        </div>
-                      </div>
-                      <div class="d-flex">
-                        <mat-form-field class="w-75">
-                          <textarea formControlName="description" class="no-scroll" [maxLength]="150"
-                            cdkTextareaAutosize #textArea matInput></textarea>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                  </mat-list-item>
-                </div>
-              </div>
-            </ng-container>
-            <!-- END subjects -->
-            <ng-container *ngSwitchCase="'images'">
-              <div mat-subheader class="fw-bold">تصاویر
-              </div>
-              <mat-divider class="mb-3 w-75"></mat-divider>
-              <div class="ml-2" class="flex-center align-center pos-rel">
-                <button (click)="onRemoveImage('avatar')" *ngIf="s.social?.avatar" color="warn" mat-mini-fab
-                  class="pos-abs t-0">
-                  <mat-icon>clear</mat-icon>
-                </button>
-                <img class="avatar ml-3" [src]="s.social?.avatar || './../../../../../../assets/avatar.png'"
-                  alt="تصویر بلاگ" />
-                <button color="accent" mat-stroked-button class="mt-2">
-                  انتخاب آواتار
-                  <input accept="image/*" (change)="onChangeImage($event, 'avatar')" class="input-upload" type="file" />
-                </button>
-              </div>
-              <mat-divider class="my-3"></mat-divider>
-              <div class="ml-2 mb-2" class="d-flex align-center flex-dir-col pos-rel">
-                <button (click)="onRemoveImage('banner')" *ngIf="s.social?.banner" color="warn" mat-mini-fab
-                  class="pos-abs t-0 l-0" style="margin:-15px">
-                  <mat-icon>clear</mat-icon>
-                </button>
-                <img class="banner" [src]="s.social?.banner || './../../../../../../assets/banner.png'"
-                  alt="بنر بلاگ" />
-                <button color="accent" mat-stroked-button class="mt-2">
-                  انتخاب بنر
-                  <input accept="image/*" (change)="onChangeImage($event, 'banner')" class="input-upload" type="file" />
-                </button>
-              </div>
-            </ng-container>
-            <ng-container *ngSwitchCase="'advanced'">
-              <div mat-subheader class="fw-bold">پیشرفته</div>
-              <mat-divider class="mb-3 w-75"></mat-divider>
-
-              <mat-list-item class="h-auto">
-                <div class="w-75">
-                  <div class="flex-between mb-1 status">
+        <button
+          (click)="selectedBranch = 'images'"
+          [ngStyle]="changeBranchStyle('images')"
+          mat-list-item
+        >
+          تصاویر
+        </button>
+        <button
+          (click)="selectedBranch = 'colors'"
+          [ngStyle]="changeBranchStyle('colors')"
+          mat-list-item
+        >
+          رنگ‌ها
+        </button>
+        <button
+          (click)="selectedBranch = 'advanced'"
+          [ngStyle]="changeBranchStyle('advanced')"
+          mat-list-item
+        >
+          پیشرفته
+        </button>
+      </mat-action-list>
+    </mat-card-content>
+  </mat-card>
+  <ng-container *ngIf="social$ | async as s">
+    <form [formGroup]="form">
+      <button
+        (click)="onSave()"
+        mat-raised-button
+        color="primary"
+        class="mr-auto d-flex ml-3 mt-2"
+      >
+        <app-button-content
+          [isLoading]="s.loading"
+          content="ذخیره تغییرات"
+        ></app-button-content>
+      </button>
+      <mat-list>
+        <ng-container [ngSwitch]="selectedBranch">
+          <ng-container *ngSwitchCase="'subjects'">
+            <!-- subjects -->
+            <div mat-subheader class="fw-bold">عمومی</div>
+            <mat-divider class="mb-3 w-75"></mat-divider>
+            <div class="d-flex general-container">
+              <div class="w-100">
+                <mat-list-item class="h-auto">
+                  <div class="w-100">
                     <div class="grid-center">
                       <div mat-line class="d-flex">
-                        <mat-icon class="ml-1">traffic</mat-icon>
-                        وضعیت گروه
+                        <mat-icon class="ml-1">title</mat-icon>
+                        عنوان
                       </div>
-
                     </div>
-                    <div>
-                      <mat-form-field>
-                        <mat-label>وضعیت گروه</mat-label>
-                        <mat-select formControlName="status">
-                          <mat-option *ngFor="let s of SocialStatus" [value]="s.value">
-                            {{ s.viewValue }}
-                          </mat-option>
-                        </mat-select>
+                    <div class="d-flex">
+                      <mat-form-field class="w-75">
+                        <input formControlName="title" matInput />
                       </mat-form-field>
                     </div>
                   </div>
-                </div>
-              </mat-list-item>
-
-              <mat-list-item class="text-english flex-end">
-                <div class="w-100">
-                  <div mat-line class="flex-between">
-                    <mat-slide-toggle class="w-100" formControlName="isPrivate">گروه خصوصی
-                    </mat-slide-toggle>
-                    <mat-icon class="ml-1 m-auto">lock</mat-icon>
+                </mat-list-item>
+                <mat-list-item class="h-auto my-2">
+                  <div class="w-100">
+                    <div class="grid-center">
+                      <div mat-line class="d-flex">
+                        <mat-icon class="ml-1">subject</mat-icon>
+                        زیرموضوعات
+                      </div>
+                    </div>
+                    <app-flairs-auto-complete
+                      class="d-flex w-75"
+                      [selectedFlairs]="selectedFlairs"
+                      [flairsControl]="form.get('flairs')"
+                    >
+                    </app-flairs-auto-complete>
                   </div>
-                </div>
-              </mat-list-item>
-              <mat-list-item class="text-persian">
-                <div class="w-75 flex-between">
-                  <div mat-line style="color: #ff5722;">
-                    <mat-icon class="ml-1 m-auto">delete</mat-icon>
-                    <span class="m-auto">حذف بلاگ</span>
+                </mat-list-item>
+                <mat-list-item class="h-auto">
+                  <div class="w-100">
+                    <div class="grid-center">
+                      <div mat-line class="d-flex">
+                        <mat-icon class="ml-1">description</mat-icon>
+                        درباره انجمن
+                      </div>
+                    </div>
+                    <div class="d-flex">
+                      <mat-form-field class="w-75">
+                        <textarea
+                          formControlName="description"
+                          class="no-scroll"
+                          [maxLength]="150"
+                          cdkTextareaAutosize
+                          #textArea
+                          matInput
+                        ></textarea>
+                      </mat-form-field>
+                    </div>
                   </div>
-                  <button (click)="onRemoveBlog(s.social._id)" mat-raised-button color="warn">حذف</button>
-                </div>
-              </mat-list-item>
-            </ng-container>
-            <ng-container *ngSwitchCase="'colors'">
-              <div mat-subheader class="fw-bold">رنگ‌ها</div>
-              <mat-divider class="w-75"></mat-divider>
-              <mat-list>
-                <ng-container *ngIf="s.social">
-                  <mat-list-item *ngFor="let c of colorTypes">
-                    <span class="color-title">{{c.viewValue}}</span>
-                    <app-color-picker [initialColor]="colors[c.value]" (colorChange)="onChangeColor($event, c.value)">
-                    </app-color-picker>
-                  </mat-list-item>
-                </ng-container>
-              </mat-list>
-            </ng-container>
-
+                </mat-list-item>
+              </div>
+            </div>
           </ng-container>
+          <!-- END subjects -->
+          <ng-container *ngSwitchCase="'images'">
+            <div mat-subheader class="fw-bold">تصاویر</div>
+            <mat-divider class="mb-3 w-75"></mat-divider>
+            <div class="ml-2" class="flex-center align-center pos-rel">
+              <button
+                (click)="onRemoveImage('avatar')"
+                *ngIf="s.social?.avatar"
+                color="warn"
+                mat-mini-fab
+                class="pos-abs t-0"
+              >
+                <mat-icon>clear</mat-icon>
+              </button>
+              <img
+                class="avatar ml-3"
+                [src]="
+                  s.social?.avatar || './../../../../../../assets/avatar.png'
+                "
+                alt="تصویر بلاگ"
+              />
+              <button color="accent" mat-stroked-button class="mt-2">
+                انتخاب آواتار
+                <input
+                  accept="image/*"
+                  (change)="onChangeImage($event, 'avatar')"
+                  class="input-upload"
+                  type="file"
+                />
+              </button>
+            </div>
+            <mat-divider class="my-3"></mat-divider>
+            <div
+              class="ml-2 mb-2"
+              class="d-flex align-center flex-dir-col pos-rel"
+            >
+              <button
+                (click)="onRemoveImage('banner')"
+                *ngIf="s.social?.banner"
+                color="warn"
+                mat-mini-fab
+                class="pos-abs t-0 l-0"
+                style="margin: -15px;"
+              >
+                <mat-icon>clear</mat-icon>
+              </button>
+              <img
+                class="banner"
+                [src]="
+                  s.social?.banner || './../../../../../../assets/banner.png'
+                "
+                alt="بنر بلاگ"
+              />
+              <button color="accent" mat-stroked-button class="mt-2">
+                انتخاب بنر
+                <input
+                  accept="image/*"
+                  (change)="onChangeImage($event, 'banner')"
+                  class="input-upload"
+                  type="file"
+                />
+              </button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'advanced'">
+            <div mat-subheader class="fw-bold">پیشرفته</div>
+            <mat-divider class="mb-3 w-75"></mat-divider>
 
+            <mat-list-item class="h-auto">
+              <div class="w-75">
+                <div class="flex-between mb-1 status">
+                  <div class="grid-center">
+                    <div mat-line class="d-flex">
+                      <mat-icon class="ml-1">traffic</mat-icon>
+                      وضعیت گروه
+                    </div>
+                  </div>
+                  <div>
+                    <mat-form-field>
+                      <mat-label>وضعیت گروه</mat-label>
+                      <mat-select formControlName="status">
+                        <mat-option
+                          *ngFor="let s of SocialStatus"
+                          [value]="s.value"
+                        >
+                          {{ s.viewValue }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </mat-list-item>
 
-        </mat-list>
-      </form>
-    </ng-container>
-  </div>
+            <mat-list-item class="text-english flex-end">
+              <div class="w-100">
+                <div mat-line class="flex-between">
+                  <mat-slide-toggle class="w-100" formControlName="isPrivate"
+                    >گروه خصوصی
+                  </mat-slide-toggle>
+                  <mat-icon class="ml-1 m-auto">lock</mat-icon>
+                </div>
+              </div>
+            </mat-list-item>
+            <mat-list-item class="text-persian">
+              <div class="w-75 flex-between">
+                <div mat-line style="color: #ff5722;">
+                  <mat-icon class="ml-1 m-auto">delete</mat-icon>
+                  <span class="m-auto">حذف بلاگ</span>
+                </div>
+                <button
+                  (click)="onRemoveBlog(s.social._id)"
+                  mat-raised-button
+                  color="warn"
+                >
+                  حذف
+                </button>
+              </div>
+            </mat-list-item>
+          </ng-container>
+          <ng-container *ngSwitchCase="'colors'">
+            <div mat-subheader class="fw-bold">رنگ‌ها</div>
+            <mat-divider class="w-75"></mat-divider>
+            <mat-list>
+              <ng-container *ngIf="s.social">
+                <mat-list-item *ngFor="let c of colorTypes">
+                  <span class="color-title">{{ c.viewValue }}</span>
+                  <app-color-picker
+                    [initialColor]="colors[c.value]"
+                    (colorChange)="onChangeColor($event, c.value)"
+                  >
+                  </app-color-picker>
+                </mat-list-item>
+              </ng-container>
+            </mat-list>
+          </ng-container>
+        </ng-container>
+      </mat-list>
+    </form>
+  </ng-container>
+</div>

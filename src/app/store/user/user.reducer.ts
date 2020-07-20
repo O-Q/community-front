@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import * as userActions from './user.actions';
-import { IUser } from '../../models/user.model';
+import { IUser } from '@app/models/user.model';
 
 export interface State {
     // TODO: type
@@ -21,7 +21,7 @@ export const reducer = createReducer(
     on(userActions.UserFetching, state => ({
         ...state,
         loading: true,
-        socials: null,
+        user: null,
         fetchError: null,
     })),
     on(userActions.UserFetched, (state, action) => ({
@@ -29,11 +29,17 @@ export const reducer = createReducer(
         loading: false,
         user: action.user
     })),
-    on(userActions.UserSocialCreated, (state, action) => ({
-        ...state,
-        loading: false,
-        user: { ...state.user, socials: [...state.user.socials, action.social] }
-    })),
+    on(userActions.UserSocialCreated, (state, action) => {
+        let socials = [action.social];
+        if (state.user.social) {
+            socials = socials.concat(state.user.social);
+        }
+        return {
+            ...state,
+            loading: false,
+            user: { ...state.user, socials }
+        };
+    }),
     on(userActions.UserSocialsFetched, (state, action) => ({
         ...state,
         user: { ...state.user, socials: action.socials }
@@ -131,17 +137,23 @@ export const reducer = createReducer(
         ...state,
         loading: false,
         user: { ...state.user, privacy: action.privacy }
-    })), on(userActions.UserSocialNotification, (state, action) => ({
-        ...state,
-        user: {
-            ...state.user,
-            socials: state.user?.socials
-                .map(s => (
-                    s.social.name === action.sname ?
-                        { ...s, notifications: action.notifications } : s
-                ))
+    })), on(userActions.UserSocialNotification, (state, action) => {
+        if (state.user) {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    socials: state.user?.socials
+                        ?.map(s => (
+                            s.social.name === action.sname ?
+                                { ...s, notifications: action.notifications } : s
+                        ))
+                }
+            };
+        } else {
+            return { ...state };
         }
-    })),
+    }),
 
 
 );

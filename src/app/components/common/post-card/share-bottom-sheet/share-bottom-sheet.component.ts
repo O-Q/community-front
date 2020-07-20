@@ -3,10 +3,10 @@ import {
   copyToClipboard,
   OPEN_WINDOW_FEATURES_MINI,
   ShareURL
-} from '../../../../utils/share.utils';
+} from '@app/utils/share.utils';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-share-bottom-sheet',

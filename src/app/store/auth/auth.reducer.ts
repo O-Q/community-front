@@ -9,7 +9,7 @@ export interface State {
   readonly mode: 'signin' | 'signup';
 }
 
-const INIT_STATE: State = {
+export const INIT_STATE: State = {
   user: null,
   authError: null,
   loading: false,
@@ -20,18 +20,15 @@ export const reducer = createReducer(
   INIT_STATE,
   on(credentialActions.loadUser, (state, action) => ({
     ...state,
-    user: action.payload
+    user: action.user,
+    mode: action.mode,
+    authError: null,
+    loading: false,
   })),
   on(credentialActions.loginStart, state => ({
     ...state,
     authError: null,
     loading: true
-  })),
-  on(credentialActions.authenticateSuccess, (state, action) => ({
-    ...state,
-    user: action.payload.user,
-    authError: null,
-    loading: false
   })),
   on(credentialActions.authenticateFail, (state, action) => ({
     ...state,

@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../../store/state';
+import { AppState } from '@store/state';
 import { Subscription } from 'rxjs';
-import { getMergedRoute } from '../../../../store/router/router.selectors';
-import * as PostActions from './../../../../store/post/post.actions';
-import { selectAdmins } from '../../../../store/social';
+import { getMergedRoute } from '@store/router/router.selectors';
+import * as PostActions from '@store/post/post.actions';
+import { selectAdmins } from '@store/social';
+import { makeQuery } from '@app/utils/paginator.func';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       const URLArray = r.url.split('/');
       const socialType = URLArray[1] === 'c' ? 'FORUM' : 'BLOG';
       if (socialType === 'BLOG' && !URLArray?.[3]) {
-        const query = this.makeQuery(r.queryParams.flair);
+        const query = makeQuery(r.queryParams.flair);
         if (this.sname !== r.params.name) {
           this.sname = r.params.name;
         }
@@ -42,19 +43,10 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-  private makeQuery(flair: string) {
-    if (flair) {
-      return {
-        page: 1,
-        itemsPerPage: 10,
-        flair
-      };
-    } else {
-      return {
-        page: 1,
-        itemsPerPage: 10,
-      };
-    }
+  onChangePage(event) {
+    const page = event.pageIndex + 1;
+    const itemsPerPage = event.pageSize;
+    const query = makeQuery(this.flair, page, itemsPerPage);
+    this.store.dispatch(PostActions.PostsFetching({ sname: this.sname, query }));
   }
-
 }

@@ -1,7 +1,23 @@
-  <nav mat-tab-nav-bar>
-    <a [active]="rla.isActive" *ngFor="let link of navLinks" mat-tab-link [routerLink]="link.path" routerLinkActive
-      #rla="routerLinkActive">
-      {{link.title}}
-    </a>
-  </nav>
-  <router-outlet></router-outlet>
+<nav mat-tab-nav-bar>
+  <a
+    [active]="rla.isActive"
+    *ngFor="let link of navLinks"
+    mat-tab-link
+    [routerLink]="link.path"
+    routerLinkActive
+    #rla="routerLinkActive"
+  >
+    {{ link.title }}
+  </a>
+</nav>
+<button
+  (click)="onBack()"
+  class="pos-abs l-0"
+  matTooltip="بازگشت به بلاگ"
+  style="top: 50px;"
+  mat-icon-button
+  color="accent"
+>
+  <mat-icon class="fa fa-chevron-circle-left"></mat-icon>
+</button>
+<router-outlet></router-outlet>

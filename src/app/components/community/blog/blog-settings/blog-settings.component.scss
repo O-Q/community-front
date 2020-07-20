@@ -1,4 +1,4 @@
-@import './../../../../../variables.scss';
+@import "./../../../../../variables";
 
 :host {
   margin-top: 5px !important;
@@ -9,20 +9,13 @@
   }
 }
 
-::ng-deep app-blog-settings>router-outlet+* {
-  margin-left: 2rem;
-  margin-right: 2rem;
-
-}
-
 [mat-tab-nav-bar] {
   margin-right: 250px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 
-  @media screen and (max-width:$max-width) {
+  @media screen and (max-width: $max-width) {
     margin-right: 0;
     border-radius: 0;
-
   }
 }

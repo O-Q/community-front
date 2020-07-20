@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppState } from '@store/state';
+import { Store } from '@ngrx/store';
+import { getMergedRoute } from '@store/router/router.selectors';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-settings',
   templateUrl: './blog-settings.component.html',
-  styleUrls: ['./blog-settings.component.scss']
+  styleUrls: ['./blog-settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogSettingsComponent {
   navLinks = [
@@ -20,6 +26,12 @@ export class BlogSettingsComponent {
     },
 
   ];
-  constructor() { }
+  constructor(private router: Router, private store: Store<AppState>) {
+  }
+
+  async onBack() {
+    const route = await this.store.select(getMergedRoute).pipe(first()).toPromise();
+    this.router.navigate(['b', route.params.name]);
+  }
 
 }

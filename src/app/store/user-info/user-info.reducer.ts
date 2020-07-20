@@ -1,4 +1,4 @@
-import { IUser } from '../../models/user.model';
+import { IUser } from '@app/models/user.model';
 import { createReducer, on } from '@ngrx/store';
 import * as UserInfoActions from './user-info.actions';
 export interface State {

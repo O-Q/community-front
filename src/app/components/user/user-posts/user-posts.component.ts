@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/state';
+import { AppState } from '@store/state';
 
 @Component({
   selector: 'app-user-posts',

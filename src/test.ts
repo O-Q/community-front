@@ -16,5 +16,10 @@ getTestBed().initTestEnvironment(
 );
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
+afterEach(() => {
+  window.document
+    .querySelectorAll('style')
+    .forEach((style: HTMLStyleElement) => style.remove());
+});
 // And load the modules.
 context.keys().map(context);

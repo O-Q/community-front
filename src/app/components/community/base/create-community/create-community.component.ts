@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../../../store/state';
-import * as SocialActions from '../../../../store/social/social.actions';
-
-import { getMergedRoute } from '../../../../store/router/router.selectors';
+import * as fromApp from '@store/state';
+import * as SocialActions from '@store/social/social.actions';
+import { requiredError } from '@app/utils/form.util';
+import { getMergedRoute } from '@store/router/router.selectors';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { SocialType } from '../../../../models/user.model';
+import { SocialType } from '@app/models/user.model';
 
 @Component({
   selector: 'app-create-community',
@@ -15,6 +15,7 @@ import { SocialType } from '../../../../models/user.model';
 })
 export class CreateCommunityComponent implements OnInit {
   SocialType = SocialType;
+  required = requiredError;
   currentRoute$ = this.store.select(getMergedRoute);
   social$ = this.store.select('social');
   selectedFlairs: Set<string> = new Set();

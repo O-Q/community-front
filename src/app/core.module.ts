@@ -1,8 +1,7 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ErrorComponent } from './components/shared/error/error.component';
 import { HomeComponent } from './components/shared/home/home.component';
-import { MaterialBaseModule } from './material.module';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,12 +10,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './components/shared/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { environment } from '../environments/environment';
-import { ACCESS_TOKEN_KEY } from './constants/local-storage.constant';
 import { LoadWidgetMap } from './components/widgets/lazy-widgets';
 import { LAZY_WIDGETS } from './components/widgets/tokens';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/auth.interceptor';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AppCommonModule } from './components/common/common.module';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -29,8 +32,12 @@ import { TokenInterceptor } from './services/auth.interceptor';
   imports: [
     CommonModule,
     RouterModule,
-    MaterialBaseModule,
     ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatListModule,
+    AppCommonModule,
+    MatDividerModule,
+    MatButtonToggleModule,
   ],
   exports: [
     ErrorComponent,

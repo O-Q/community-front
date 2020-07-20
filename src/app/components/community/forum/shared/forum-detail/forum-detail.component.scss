@@ -1,4 +1,4 @@
-@import './../../../../../../variables.scss';
+@import "./../../../../../../variables";
 
 .social-detail {
   direction: rtl;
@@ -6,7 +6,6 @@
 
   .d__more {
     margin-left: -5px;
-
   }
 
   .d__image {

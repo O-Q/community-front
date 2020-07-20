@@ -2,15 +2,15 @@ import { Effect, ofType, Actions } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Store, Action } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
-import { ConfigService } from '../../services/config.service';
+import { ConfigService } from '@app/services/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
 import * as UserInfoActions from './user-info.actions';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
-import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
-import { AppState } from '../state';
-import { IUser } from '../../models/user.model';
+import { environment } from '@env/environment';
+import { DEFAULT_HTTP_OPTION } from '@app/constants/http-headers.constant';
+import { AppState } from '@store/state';
+import { IUser } from '@app/models/user.model';
 
 
 @Injectable()

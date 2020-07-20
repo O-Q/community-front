@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareBottomSheetComponent } from '../share-bottom-sheet/share-bottom-sheet.component';
 import { Store } from '@ngrx/store';
-import { AppState } from './../../../../store/state';
-import { Post } from '../../../../interfaces/post.interface';
+import { AppState } from '@store/state';
+import { Post } from '@app/interfaces/post.interface';
 
 
 @Component({

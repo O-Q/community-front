@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, first } from 'rxjs/operators';
 import { Observable, Subscription, } from 'rxjs';
-import { selectAdmins } from '../../../../store/social';
+import { selectAdmins } from '@store/social';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../../store/state';
-import { getMergedRoute } from '../../../../store/router/router.selectors';
-import * as PostActions from './../../../../store/post/post.actions';
+import { AppState } from '@store/state';
+import { getMergedRoute } from '@store/router/router.selectors';
+import * as PostActions from '@store/post/post.actions';
+import { makeQuery } from '@app/utils/paginator.func';
 @Component({
   selector: 'app-forum-home',
   templateUrl: './forum-home.component.html',
@@ -38,7 +39,7 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
       const URLArray = r.url.split('/');
       const socialType = URLArray[1] === 'c' ? 'FORUM' : 'BLOG';
       if (socialType === 'FORUM' && !URLArray?.[3]) {
-        const query = this.makeQuery(r.queryParams.flair);
+        const query = makeQuery(r.queryParams.flair);
         if (this.sname !== r.params.name) {
           this.sname = r.params.name;
         }
@@ -53,18 +54,11 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-  private makeQuery(flair: string) {
-    if (flair) {
-      return {
-        page: 1,
-        itemsPerPage: 10,
-        flair
-      };
-    } else {
-      return {
-        page: 1,
-        itemsPerPage: 10,
-      };
-    }
+  onChangePage(event) {
+    const page = event.pageIndex + 1;
+    const itemsPerPage = event.pageSize;
+    const query = makeQuery(this.flair, page, itemsPerPage);
+    this.store.dispatch(PostActions.PostsFetching({ sname: this.sname, query }));
   }
+
 }

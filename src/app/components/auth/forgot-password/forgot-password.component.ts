@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { phoneControl } from '../../../utils/form.util';
+import { phoneControl } from '@app/utils/form.util';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-forgot-password',

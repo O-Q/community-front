@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/state';
+import { AppState } from '@store/state';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeDialogComponent, IChangeDialogData } from './change-dialog/change-dialog.component';
-import { passwordControl, passwordMatchValidator } from '../../../utils/form.util';
-import * as UserActions from './../../../store/user/user.actions';
+import { passwordControl, passwordMatchValidator } from '@app/utils/form.util';
+import * as UserActions from '@store/user/user.actions';
 
 @Component({
   selector: 'app-account',

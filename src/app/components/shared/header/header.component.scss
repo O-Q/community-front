@@ -12,7 +12,27 @@
   header {
     height: 100%;
     margin: auto 20px;
+    .search-form {
+      width: fit-content;
+      max-width: 100%;
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+    #header__search {
+      max-width: 80%;
+      width: 200px;
+      background-color: cadetblue;
+      border-radius: 0 0 10px 10px;
+      animation: none;
+      &.search_unfocused {
+        animation: closeSearch 1s forwards;
+      }
 
+      &.search_focused {
+        animation: openSearch 1s forwards;
+      }
+    }
     .header__title {
       font-size: 1.5rem;
       align-self: center;
@@ -26,13 +46,12 @@
         width: 50px;
         border-radius: 50%;
         border: solid blue;
+        border-bottom: blue solid 15px;
         object-fit: cover;
-        left: 3rem;
-        margin-top: 11px;
+        transition: box-shadow 0.2s;
 
         &:hover {
-          cursor: pointer;
-          box-shadow: -3px 0px 5px 0px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.75);
         }
       }
     }
@@ -44,33 +63,11 @@
 }
 
 .menu {
-  padding: 0 75px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .box {
-    left: 20px;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    box-shadow: 40px 0px 0px -24px blue;
-  }
-
-  .icon-box {
-    color: white;
-    font-size: 10px;
-    margin-top: 4px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.phone {
   @media screen and (max-width: $max-width) {
-    display: none;
+    margin-left: 0;
   }
 }
 
@@ -82,4 +79,45 @@
   line-height: 35px;
   text-align: center;
   margin-right: 5px;
+}
+
+@keyframes closeSearch {
+  0% {
+    margin-top: 145px;
+    padding: 0 10px;
+    width: 400px;
+    border-top: thick rgb(112, 186, 189) solid;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+  50% {
+    margin-top: 145px;
+    padding: 0 10px;
+    width: 200px;
+    box-shadow: 5px 5px 2.5px 0px rgba(0, 0, 0, 0.33);
+  }
+  60% {
+    border-radius: 0 0 10px 10px;
+  }
+  100% {
+    margin-top: 0;
+    padding: 0;
+    box-shadow: 0;
+    border-top: 0 rgb(112, 186, 189) solid;
+    border-radius: 0;
+  }
+}
+
+@keyframes openSearch {
+  50% {
+    margin-top: 145px;
+    padding: 0 10px;
+    width: 200px;
+  }
+  100% {
+    border-top: thick rgb(112, 186, 189) solid;
+    margin-top: 145px;
+    padding: 0 10px;
+    width: 400px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  }
 }

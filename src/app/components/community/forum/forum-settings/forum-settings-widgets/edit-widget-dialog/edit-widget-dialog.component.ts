@@ -1,10 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Widget } from '../../../../../../interfaces/widgets.interface';
-import { suggestedFlairs, WIDGETS, WidgetNames } from './../../../../../../constants/social.constant';
-import { AppState } from '../../../../../../store/state';
-import { Store } from '@ngrx/store';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Widget } from '@app/interfaces/widgets.interface';
 @Component({
   selector: 'app-edit-widget-dialog',
   templateUrl: './edit-widget-dialog.component.html',

@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { enableSaveGuard } from '../../../../utils/unsave-guard';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
-import { AppItem } from '../../../../interfaces/item.interface';
-import { FLAIR_MAX_COUNT, suggestedFlairs } from '../../../../constants/social.constant';
+import { AppItem } from '@app/interfaces/item.interface';
+import { FLAIR_MAX_COUNT, suggestedFlairs } from '@app/constants/social.constant';
 import { ENTER } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';

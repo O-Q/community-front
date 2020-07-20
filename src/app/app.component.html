@@ -2,9 +2,12 @@
 <mat-sidenav-container class="layout-container">
   <mat-sidenav-content class="layout-content">
     <router-outlet></router-outlet>
-    <div *ngIf="showLoading$ | async" class="loading-module flex-center flex-dir-col">
+    <div
+      *ngIf="showLoading$ | async"
+      class="loading-module flex-center flex-dir-col"
+    >
       <mat-spinner [strokeWidth]="8" [diameter]="90"></mat-spinner>
-      <span class="mt-1 pt-1 fw-bold"> در حال بارگذاری </span>
+      <span id="loading" class="mt-1 pt-1 fw-bold"> در حال بارگذاری </span>
     </div>
     <app-footer></app-footer>
   </mat-sidenav-content>

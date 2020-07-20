@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/shared/home/home.component';
 import { ErrorComponent } from './components/shared/error/error.component';
+import { AuthGuard } from './guards/auth.guard';
+import { NotAuthGuard } from './guards/not-auth.guard';
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   {
@@ -29,12 +31,13 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./components/settings/settings.module').then(
       m => m.SettingsModule
-    )
+    ), canLoad: [AuthGuard]
   },
   {
     path: 'auth',
     loadChildren: () =>
-      import('./components/auth/auth.module').then(m => m.AuthModule)
+      import('./components/auth/auth.module').then(m => m.AuthModule),
+    canLoad: [NotAuthGuard]
   },
   {
     path: 'error/:code',

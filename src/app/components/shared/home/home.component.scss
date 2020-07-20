@@ -1,0 +1,33 @@
+@import "./../../../../variables";
+.container {
+  flex-wrap: wrap;
+  .right-side {
+    max-width: 300px;
+    width: 25%;
+    @media screen and (max-width: $max-width) {
+      width: 100%;
+      max-width: unset;
+    }
+    mat-card:last-child {
+      margin-bottom: 1rem;
+    }
+  }
+  .post-container {
+    width: 60vw;
+    @media screen and (max-width: $max-width) {
+      width: 100%;
+    }
+  }
+  mat-card {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      mat-card-title {
+        font-size: 12px !important;
+      }
+    }
+  }
+}

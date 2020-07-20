@@ -1,4 +1,4 @@
-@import './../../../../variables.scss';
+@import "./../../../../variables";
 
 :host {
   margin-right: 1rem;
@@ -9,6 +9,5 @@
   @media screen and (max-width: $max-width) {
     margin-top: 1.5rem !important;
     margin-right: 0;
-
   }
 }

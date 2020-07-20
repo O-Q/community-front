@@ -1,37 +1,74 @@
-          <button class="mr-auto" mat-raised-button color="primary" (click)="onSave()">
-            <app-button-content content="ذخیره تغییرات" [isLoading]="(social$ | async).loading">
-            </app-button-content>
-          </button>
-          <button mat-stroked-button (click)="onOpenWidgetLists()" color="accent" class="mx-auto mb-auto mt-1">اضافه
-            کردن
-            ویجت</button>
-          <div cdkDropList class="example-list w-auto flex-dir-col d-flex mx-auto my-2"
-            (cdkDropListDropped)="drop($event)">
-            <div class="example-box mat-card" [id]=" widget.name" *ngFor="let widget of widgets" cdkDrag>
-              <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-              <div class="flex-between">
-                <mat-checkbox class="d-flex align-center" [checked]="widget.registeredToShow"
-                  (change)="onChangeShow($event.checked, widget.name)">
-                  <span class="mr-1">فقط اعضا ببینند</span>
-                </mat-checkbox>
-                <div>
-                  <button (click)="onDelete(widget)" matTooltip="حذف" matTooltipPosition="above" mat-mini-fab
-                    color="warn">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                  <button class="mr-1" (click)="onEdit(widget)" matTooltip="ویرایش" matTooltipPosition="before"
-                    mat-mini-fab color="primary">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                </div>
-              </div>
+<button class="mr-auto" mat-raised-button color="primary" (click)="onSave()">
+  <app-button-content
+    content="ذخیره تغییرات"
+    [isLoading]="(social$ | async).loading"
+  >
+  </app-button-content>
+</button>
+<button
+  mat-stroked-button
+  (click)="onOpenWidgetLists()"
+  color="accent"
+  class="mx-auto mb-auto mt-1"
+>
+  اضافه کردن ویجت
+</button>
+<span class="ml-auto fs-small d-flex align-center">
+  <mat-icon class="fa fa-info-circle ml-1"></mat-icon>
+  برای عوض‌کردن ترتیب، ویجت‌ها را بکشید.
+</span>
+<div
+  cdkDropList
+  class="example-list w-auto flex-dir-col d-flex mx-auto my-2"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div
+    class="example-box mat-card"
+    [id]="widget.name"
+    *ngFor="let widget of widgets"
+    cdkDrag
+  >
+    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+    <div class="flex-between">
+      <mat-checkbox
+        class="d-flex align-center"
+        [checked]="widget.registeredToShow"
+        (change)="onChangeShow($event.checked, widget.name)"
+      >
+        <span class="mr-1">فقط اعضا ببینند</span>
+      </mat-checkbox>
+      <div>
+        <button
+          (click)="onDelete(widget)"
+          matTooltip="حذف"
+          matTooltipPosition="above"
+          mat-mini-fab
+          color="warn"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button
+          class="mr-1"
+          (click)="onEdit(widget)"
+          matTooltip="ویرایش"
+          matTooltipPosition="before"
+          mat-mini-fab
+          color="primary"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+    </div>
 
-              <ng-template #widgetContainers></ng-template>
+    <ng-template #widgetContainers></ng-template>
 
-              <!-- {{widget}} -->
-            </div>
-          </div>
+    <!-- {{widget}} -->
+  </div>
+</div>
 
-          <button class="m-auto" mat-raised-button color="primary" (click)="onSave()">
-            <app-button-content content="ذخیره تغییرات" [isLoading]="(social$ | async).loading"></app-button-content>
-          </button>
+<button class="m-auto" mat-raised-button color="primary" (click)="onSave()">
+  <app-button-content
+    content="ذخیره تغییرات"
+    [isLoading]="(social$ | async).loading"
+  ></app-button-content>
+</button>

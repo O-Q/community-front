@@ -1,17 +1,17 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { AppState } from '../../../../../store/state';
+import { AppState } from '@store/state';
 import { Store } from '@ngrx/store';
-import * as SocialActions from './../../../../../store/social/social.actions';
-import { SocialType } from '../../../../../models/user.model';
-import { getMergedRoute } from '../../../../../store/router/router.selectors';
+import * as SocialActions from '@store/social/social.actions';
+import { SocialType } from '@app/models/user.model';
+import { getMergedRoute } from '@store/router/router.selectors';
 import { first, map, skipWhile, throttleTime } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { SocialUserRole, SocialUserStatus } from '../../../../../constants/social.constant';
+import { SocialUserRole, SocialUserStatus } from '@app/constants/social.constant';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../../common/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({

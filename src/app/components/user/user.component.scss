@@ -1,7 +1,7 @@
-@import './../../../variables.scss';
+@import "./../../../variables";
 
 .info-outlet-container {
-  @media screen and (max-width:$max-width) {
+  @media screen and (max-width: $max-width) {
     flex-direction: column;
     max-width: unset !important;
   }

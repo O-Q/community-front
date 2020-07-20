@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Widget } from '../../interfaces/widgets.interface';
-import { SocialType } from '../../models/user.model';
+import { Widget } from '@app/interfaces/widgets.interface';
+import { SocialType } from '@app/models/user.model';
 
 export const SocialFetching = createAction(
   '[Social] Social Fetch Start',

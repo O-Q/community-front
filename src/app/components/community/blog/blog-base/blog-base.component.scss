@@ -1,4 +1,4 @@
-@import './../../../../../variables.scss';
+@import "./../../../../../variables";
 
 .blog-info-container {
   .blog-banner {
@@ -31,11 +31,10 @@
     height: 200px;
 
     @media screen and (max-width: $max-width) {
-
-
       .blog-name {
         font-size: 24px !important;
-
+        word-break: break-word;
+        overflow: auto;
       }
     }
 

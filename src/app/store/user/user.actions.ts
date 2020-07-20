@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IUser } from '../../models/user.model';
+import { IUser } from '@app/models/user.model';
 
 export const UserFetching = createAction('[User]  User Fetch Start');
 

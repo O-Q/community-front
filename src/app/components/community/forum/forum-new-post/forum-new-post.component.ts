@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CKEDITOR_DEFAULT_CONFIG, CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE } from '../../../../constants/ckeditor.constant';
-import { AppState } from '../../../../store/state';
-import { getSelectedSocial } from '../../../../store/user';
+import { CKEDITOR_DEFAULT_CONFIG, CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE } from '@app/constants/ckeditor.constant';
+import { AppState } from '@store/state';
+import { getSelectedSocial } from '@store/user';
 import * as BalloonBlockEditor from '../../../../../../libs/ckeditor-personal-build';
-import * as PostActions from './../../../../store/post/post.actions';
-import { SocialType } from '../../../../models/user.model';
+import * as PostActions from '@store/post/post.actions';
+import { SocialType } from '@app/models/user.model';
 
 
 

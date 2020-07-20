@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AppState } from '../../store/state';
+import { AppState } from '@store/state';
 import { Store } from '@ngrx/store';
-import { getMergedRoute } from '../../store/router/router.selectors';
-import * as UserInfoActions from './../../store/user-info/user-info.actions';
-import * as PostActions from './../../store/post/post.actions';
-import { throttleTime, skip, skipWhile } from 'rxjs/operators';
+import { getMergedRoute } from '@store/router/router.selectors';
+import * as UserInfoActions from '@store/user-info/user-info.actions';
+import * as PostActions from '@store/post/post.actions';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',

@@ -8,10 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { ACCESS_TOKEN_KEY } from '../../../constants/local-storage.constant';
+import { ACCESS_TOKEN_KEY } from '@app/constants/local-storage.constant';
 import { WidgetChatMessageComponent } from './widget-chat-message/widget-chat-message.component';
+import { environment } from '@env/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:8080', options: { query: { token: localStorage.getItem(ACCESS_TOKEN_KEY) } } };
+const config: SocketIoConfig = {
+  url: `${environment.urls.baseUrl}:8080`,
+  options: { query: { token: localStorage.getItem(ACCESS_TOKEN_KEY) } }
+};
 
 
 @NgModule({
@@ -24,7 +28,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: { query:
     MatListModule,
     MatInputModule,
     MatButtonModule,
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
   ],
 })
 export class WidgetChatModule {

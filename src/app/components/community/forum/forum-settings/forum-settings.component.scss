@@ -1,10 +1,10 @@
-@import './../../../../../variables.scss';
+@import "./../../../../../variables";
 
 :host {
   width: 70%;
   margin: auto;
 
-  @media screen and (max-width:$max-width) {
+  @media screen and (max-width: $max-width) {
     width: 95%;
   }
 }

@@ -14,7 +14,7 @@ export class ThemeService {
   backgroundStyleNode;
   adaptColorWithBackgroundNode;
   // '.mat-button-base'
-  textClassLists = ['#background-color .mat-card', '.mat-list-item', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
+  textClassLists = ['#background-color .mat-card', '.mat-list-item', 'p', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
   noCustomBackground = ['.mat-select-panel',
     '.mat-menu-panel:not(.no-custom-theme)',
     '.mat-autocomplete-panel',
@@ -51,28 +51,62 @@ export class ThemeService {
       bcEl.classList.remove('ct');
       document.getElementById('background-color').style.backgroundColor = null;
     }
-    const head = document.getElementsByTagName('head')[0];
-    if (this.backgroundStyleNode) {
-      head.removeChild(this.backgroundStyleNode);
-      this.backgroundStyleNode = null;
-    }
-    if (this.textStyleNode) {
-      head.removeChild(this.textStyleNode);
-      this.textStyleNode = null;
-    }
-    if (this.primaryStyleNode) {
-      head.removeChild(this.primaryStyleNode);
-      this.primaryStyleNode = null;
-    }
-    if (this.accentStyleNode) {
-      head.removeChild(this.accentStyleNode);
-      this.accentStyleNode = null;
-    }
+    this._removeAdaptColor();
+    this._removeAccentColor();
+    this._removePrimaryColor();
+    this._removeBackgroundColor();
+    this._removeTextColor();
+    this._removeTitleColor();
+  }
+  private _removeAdaptColor() {
     if (this.adaptColorWithBackgroundNode) {
+      const head = document.getElementsByTagName('head')[0];
       head.removeChild(this.adaptColorWithBackgroundNode);
       this.adaptColorWithBackgroundNode = null;
     }
   }
+
+  private _removePrimaryColor() {
+    if (this.primaryStyleNode) {
+      const head = document.getElementsByTagName('head')[0];
+      head.removeChild(this.primaryStyleNode);
+      this.primaryStyleNode = null;
+    }
+
+  }
+
+  private _removeAccentColor() {
+    if (this.accentStyleNode) {
+      const head = document.getElementsByTagName('head')[0];
+      head.removeChild(this.accentStyleNode);
+      this.accentStyleNode = null;
+    }
+  }
+  private _removeTitleColor() {
+    if (this.titleStyleNode) {
+      const head = document.getElementsByTagName('head')[0];
+      this.titleStyleNode = head.removeChild(this.titleStyleNode);
+      this.titleStyleNode = null;
+    }
+  }
+
+
+  private _removeTextColor() {
+    if (this.textStyleNode) {
+      const head = document.getElementsByTagName('head')[0];
+      head.removeChild(this.textStyleNode);
+      this.textStyleNode = null;
+    }
+
+  }
+  private _removeBackgroundColor() {
+    if (this.backgroundStyleNode) {
+      const head = document.getElementsByTagName('head')[0];
+      head.removeChild(this.backgroundStyleNode);
+      this.backgroundStyleNode = null;
+    }
+  }
+
   changeColors(colors) {
     if (colors) {
       this._changeTitleColor(colors);
@@ -105,17 +139,15 @@ export class ThemeService {
   }
 
   private _changeTitleColor(colors) {
+    this._removeTitleColor();
     const style = document.createElement('style');
-
     style.innerHTML = `#title-color {
       color: ${colors.title} !important;
     }`;
-    if (this.titleStyleNode) { // remove Node if exist
-      this.titleStyleNode = document.getElementsByTagName('head')[0].removeChild(this.titleStyleNode);
-    }
     this.titleStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
   }
   private _changeBackgroundColor(colors) {
+    this._removeBackgroundColor();
     const style = document.createElement('style');
     style.innerHTML = `#background-color .mat-card, #background-color .mat-chip, #background-color .mat-table,#background-color .mat-paginator, ${this.noCustomBackground}{
       background-color: ${colors.background} !important; filter: brightness(85%);
@@ -124,53 +156,51 @@ export class ThemeService {
       background-color: ${colors.background};
     }
     `;
-    if (this.backgroundStyleNode) { // remove Node if exist
-      this.backgroundStyleNode = document.getElementsByTagName('head')[0].removeChild(this.backgroundStyleNode);
-    }
     this.backgroundStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
     this._adaptColor(colors);
   }
 
   private _changePrimaryColor(colors) {
+    this._removePrimaryColor();
     const style = document.createElement('style');
     style.innerHTML = `
-    #background-color .mat-primary:not(.picker-btn):not(.mat-form-field):not(.mat-button):not(.mat-stroked-button):not(.mat-icon) {
+      #background-color .mat-primary:not(.picker-btn):not(.mat-form-field):not(.mat-button):not(.mat-stroked-button):not(.mat-icon):not(.mat-icon-button) {
        background-color: ${colors.primary} !important;
-      };`;
-    if (this.primaryStyleNode) { // remove Node if exist
-      this.primaryStyleNode = document.getElementsByTagName('head')[0].removeChild(this.primaryStyleNode);
-    }
+      }
+      #background-color .mat-primary.mat-icon-button {
+          color: ${colors.primary} !important;
+      }`;
     this.primaryStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
     this._adaptColor(colors);
   }
   private _changeAccentColor(colors) {
+    this._removeAccentColor();
     const style = document.createElement('style');
     style.innerHTML =
-      `#background-color .mat-accent:not(.mat-checkbox):not(.mat-slide-toggle):not(.mat-spinner):not(.mat-stroked-button)  {
+      `#background-color .mat-accent:not(.mat-checkbox):not(.mat-icon-button):not(.mat-slide-toggle):not(.mat-spinner):not(.mat-stroked-button)  {
         background-color: ${colors.accent} !important;
        }
        .cdk-overlay-container .mat-accent.mat-raised-button {
           background-color: ${colors.accent} !important;
         }
+        #background-color .mat-accent.mat-icon-button {
+          color: ${colors.accent} !important;
+        }
        `;
-    if (this.accentStyleNode) { // remove Node if exist
-      this.accentStyleNode = document.getElementsByTagName('head')[0].removeChild(this.accentStyleNode);
-    }
     this.accentStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
     this._adaptColor(colors);
   }
 
   private _changeTextColor(colors) {
+    this._removeTextColor();
     const style = document.createElement('style');
     style.innerHTML = `${this.textClassLists.join(', #background-color ')} { color: ${colors.text} !important; }`;
-    if (this.textStyleNode) { // remove Node if exist
-      this.textStyleNode = document.getElementsByTagName('head')[0].removeChild(this.textStyleNode);
-    }
     this.textStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
     this._adaptColor(colors);
   }
 
   private _adaptColor(colors) {
+    this._removeAdaptColor();
     const { text, primary, accent, background } = colors;
     const style = document.createElement('style');
     style.innerHTML = `
@@ -184,9 +214,6 @@ export class ThemeService {
       color: ${getTextColor(background, text)} !important;
     }
     `;
-    if (this.adaptColorWithBackgroundNode) { // remove Node if exist
-      this.adaptColorWithBackgroundNode = document.getElementsByTagName('head')[0].removeChild(this.adaptColorWithBackgroundNode);
-    }
     this.adaptColorWithBackgroundNode = document.getElementsByTagName('head')[0].appendChild(style);
   }
 }

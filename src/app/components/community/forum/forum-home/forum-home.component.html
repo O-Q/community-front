@@ -3,7 +3,10 @@
     <app-forum-base></app-forum-base>
     <div class="w-100 flex-center">
       <!-- Posts -->
-      <div class="posts-container" [ngStyle]="{ 'margin-left': (isXSmall$ | async) ? '0' : '32px' }">
+      <div
+        class="posts-container"
+        [ngStyle]="{ 'margin-left': (isXSmall$ | async) ? '0' : '32px' }"
+      >
         <ng-container *ngIf="post$ | async as p">
           <ng-container *ngIf="p.loading; else loadedPosts">
             <!-- skeleton for load posts -->
@@ -12,20 +15,36 @@
             <!-- END skeleton for load posts -->
           </ng-container>
           <ng-template #loadedPosts>
-            <ng-container *ngIf="p.posts.length">
-              <app-post-card *ngFor="let post of p.posts" [post]="post" [admins]="admins$ | async"></app-post-card>
+            <ng-container *ngIf="p.length; else noPost">
+              <app-post-card
+                *ngFor="let post of p.posts"
+                [post]="post"
+                [admins]="admins$ | async"
+              ></app-post-card>
+              <mat-paginator
+                class="text-english mb-2"
+                [length]="p.length"
+                pageSize="10"
+                (page)="onChangePage($event)"
+                [pageSizeOptions]="[5, 10, 20]"
+              ></mat-paginator>
             </ng-container>
           </ng-template>
         </ng-container>
-        <!-- <ng-template #noPosts>
-          NoPosts
-        </ng-template> -->
+        <ng-template #noPost>
+          <div class="flex-center align-center">
+            <span>هنوز پستی منتشر نشده است.</span>
+          </div>
+        </ng-template>
       </div>
       <!-- END Posts -->
-      <div class="widgets-container">
+      <div class="widgets-container phone-hidden">
         <app-forum-detail [social]="social.social"></app-forum-detail>
         <!-- widgets -->
-        <app-forum-widget [isRegistered]="social.social.isUserRegistered" [widgets]="social.social.widgets">
+        <app-forum-widget
+          [isRegistered]="social.social?.isUserRegistered"
+          [widgets]="social.social?.widgets"
+        >
         </app-forum-widget>
       </div>
     </div>
@@ -36,13 +55,18 @@
 <ng-template #loadingSocial>
   <app-forum-base></app-forum-base>
   <div class="w-100 flex-center">
-    <div class="posts-container" [ngStyle]="{ 'margin-left': (isXSmall$ | async) ? '0' : '32px' }">
+    <div
+      class="posts-container"
+      [ngStyle]="{ 'margin-left': (isXSmall$ | async) ? '0' : '32px' }"
+    >
       <app-skeleton-forum-post *ngFor="let _ of [].constructor(5)">
       </app-skeleton-forum-post>
       <div class="widgets-container">
         <!-- TODO: must be skeleton -->
         <app-forum-detail></app-forum-detail>
-        <app-skeleton-widget *ngFor="let _ of [].constructor(5)"></app-skeleton-widget>
+        <app-skeleton-widget
+          *ngFor="let _ of [].constructor(5)"
+        ></app-skeleton-widget>
       </div>
     </div>
   </div>

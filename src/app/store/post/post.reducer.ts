@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import * as postActions from './post.actions';
-import { Post } from '../../interfaces/post.interface';
+import { Post } from '@app/interfaces/post.interface';
 export interface State {
     readonly post: Post;
     readonly posts: Post[];
+    readonly length: number;
     readonly fetchError: string;
     readonly loading: boolean;
 }
@@ -12,6 +13,7 @@ const INIT_STATE: State = {
     post: null,
     posts: null,
     fetchError: null,
+    length: null,
     loading: false,
 };
 
@@ -25,6 +27,7 @@ export const reducer = createReducer(
     on(postActions.PostsFetched, (state, action) => ({
         ...state,
         posts: action.posts,
+        length: action.length,
         loading: false,
     })),
     on(postActions.PostsFetchFailed, (state, action) => ({
@@ -120,13 +123,13 @@ export const reducer = createReducer(
         }
         return {
             ...state,
-            posts: state.posts.map(p => p._id === action.pid ? { ...p, liked } : p),
+            posts: state.posts?.map(p => p._id === action.pid ? { ...p, liked } : p),
             post: { ...state.post, liked }
         };
     }),
     on(postActions.PostExpressed, (state, action) => ({
         ...state,
-        posts: state.posts.map(p => p._id === action.pid ? { ...p, reaction: action.reaction } : p),
+        posts: state.posts?.map(p => p._id === action.pid ? { ...p, reaction: action.reaction } : p),
         post: { ...state.post, reaction: action.reaction }
     })),
     on(postActions.PostExpressFailed, (state, action) => ({

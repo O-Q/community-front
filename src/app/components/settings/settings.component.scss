@@ -1,5 +1,9 @@
+@import "./../../../variables";
 :host {
   width: 80%;
   margin-right: auto;
   margin-left: auto;
+  @media screen and (max-width: $max-width) {
+    width: 90%;
+  }
 }

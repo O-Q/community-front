@@ -4,7 +4,7 @@ import { ForumSettingsComponent } from './forum-settings.component';
 import { ForumSettingsWidgetsComponent } from './forum-settings-widgets/forum-settings-widgets.component';
 import { ForumSettingsGeneralComponent } from './forum-settings-general/forum-settings-general.component';
 import { ForumSettingsPermissionComponent } from './forum-settings-permission/forum-settings-permission.component';
-import { CanSaveDeactivateGuard } from '../../../../utils/unsave-guard';
+import { CanSaveDeactivateGuard } from '@app/utils/unsave-guard';
 
 
 const routes: Routes = [

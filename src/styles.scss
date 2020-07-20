@@ -1,16 +1,29 @@
-@import './themes';
-@import './styles/common';
+@import "./themes";
+@import "./styles/common";
+@import "./variables";
 /* You can add global styles to this file, and also import other style files */
 
 @font-face {
-  font-family: 'IRANSans';
+  font-family: "IRANSans";
   font-style: normal;
-  src: url('assets/fonts/IRANSans.ttf');
+  src: url("assets/fonts/IRANSans.ttf");
 }
 
 html,
 body {
   height: 100%;
+}
+
+router-outlet + * {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  > #background-color {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - #{$header-height} - #{$footer-height}) !important;
+  }
 }
 
 body {
@@ -51,6 +64,11 @@ body {
   }
 }
 
+.phone-hidden {
+  @media screen and (max-width: $max-width) {
+    display: none;
+  }
+}
 // .ck.ck-balloon-panel.ck-balloon-panel_visible {
 // @media screen and (max-width: 500px) {
 //   left: 0 !important;
@@ -69,4 +87,8 @@ blockquote {
   margin-left: 0;
   margin-right: 0;
   font-style: italic;
+}
+
+.ck .ck-editor__nested-editable:focus {
+  background-color: transparent !important;
 }

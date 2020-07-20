@@ -10,11 +10,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { PersianDatePipe } from './pipes/persian-date.pipe';
-import { ButtonContentComponent } from './components/shared/button-content/button-content.component';
+import { PersianDatePipe } from '@app/pipes/persian-date.pipe';
+import { ButtonContentComponent } from '@app/components/shared/button-content/button-content.component';
 import { CommonModule } from '@angular/common';
 import { getPersianPaginatorIntl } from './components/intl/persian-paginator';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 
 const modules = [
   MatCardModule,
@@ -28,6 +28,7 @@ const modules = [
   MatDialogModule,
   MatInputModule,
   MatSidenavModule,
+  MatPaginatorModule,
 ];
 
 /**

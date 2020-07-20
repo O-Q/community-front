@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
-import { passwordControl, passwordMatchValidator } from '../../../../utils/form.util';
+import { passwordControl, passwordMatchValidator } from '@app/utils/form.util';
 
 @Component({
   selector: 'app-change-dialog',

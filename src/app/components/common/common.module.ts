@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { MaterialBaseModule } from '../../material.module';
+import { MaterialBaseModule } from '@app/material.module';
 import { SuccessComponent } from './success/success.component';
 import { PostCardComponent } from './post-card/post-card.component';
 import { ShareBottomSheetComponent } from './post-card/share-bottom-sheet/share-bottom-sheet.component';
 import { SkeletonForumPostComponent } from './post-card/skeleton-forum-post/skeleton-forum-post.component';
 import { PostActionsComponent } from './post-card/post-actions/post-actions.component';
 import { RouterModule } from '@angular/router';
-import { SkeletonModule } from '../skeleton/skeleton.module';
+import { SkeletonModule } from '@app/components/skeleton/skeleton.module';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatTooltipModule } from '@angular/material/tooltip';
 

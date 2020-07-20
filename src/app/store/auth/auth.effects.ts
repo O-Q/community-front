@@ -4,22 +4,19 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
-
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import * as AuthActions from './auth.actions';
-import * as UserActions from './../user/user.actions';
+import * as UserActions from '@store/user/user.actions';
 
-import { ConfigService } from '../../services/config.service';
-import { ACCESS_TOKEN_KEY } from '../../constants/local-storage.constant';
-import { User } from '../../models/user.model';
-import { DEFAULT_HTTP_OPTION } from '../../constants/http-headers.constant';
-import { RegisterUser } from '../../models/register-user.model';
+import { ConfigService } from '@app/services/config.service';
+import { ACCESS_TOKEN_KEY } from '@app/constants/local-storage.constant';
+import { DEFAULT_HTTP_OPTION } from '@app/constants/http-headers.constant';
+import { RegisterUser } from '@app/models/register-user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { decodeUser } from '../../utils/decode-user.util';
+import { decodeUser } from '@app/utils/decode-user.util';
 import { Store } from '@ngrx/store';
-import { AppState } from '../state';
-import { ThemeService } from '../../services/theme.service';
+import { AppState } from '@store/state';
+import { ThemeService } from '@app/services/theme.service';
 
 @Injectable()
 export class AuthEffects {
@@ -42,10 +39,10 @@ export class AuthEffects {
           map(resData => {
             const token = this._setSession(resData);
             const user = decodeUser(token);
-
-            return AuthActions.authenticateSuccess({
-              payload: { mode: 'signup', user }
-            });
+            this.store.dispatch(UserActions.UserFetching());
+            this.router.navigate(['/']);
+            this.snackbar.open('شما با موفقیت ثبت‌نام شدید🎉');
+            return AuthActions.loadUser({ mode: 'signup', user });
           }),
           catchError((error: HttpErrorResponse) => {
             let message: string;
@@ -73,6 +70,8 @@ export class AuthEffects {
       const headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
       };
+      console.log(signinData);
+
       const { username, password } = signinData;
       const body = `username=${username}&password=${password}`;
       return this.http
@@ -86,12 +85,11 @@ export class AuthEffects {
             const token = this._setSession(resData);
             const user = decodeUser(token);
             this.store.dispatch(UserActions.UserFetching());
-            return AuthActions.authenticateSuccess({
-              payload: { mode: 'signin', user }
-            });
+            return AuthActions.loadUser({ mode: 'signin', user });
           }),
           catchError((error: HttpErrorResponse) => {
             let message: string;
+
             if (error.status === 401) {
               message = 'نام کاربری یا گذرواژه اشتباه است.';
             } else {
@@ -109,23 +107,28 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   authSuccess = this.actions$.pipe(
-    ofType(AuthActions.authenticateSuccess),
+    ofType(AuthActions.loadUser),
     tap(actionData => {
-      this.router.navigateByUrl('/');
-      const message =
-        actionData.payload.mode === 'signin'
-          ? 'شما با موفقیت وارد شدید 😀'
-          : 'ثبت‌نام با موفقیت انجام شد 😊';
-      this.snackbar.open(message);
+      let message;
+      if (actionData.mode === 'signin') {
+        message = 'شما با موفقیت وارد شدید 😀';
+      } else if (actionData.mode === 'signup') {
+        message = 'ثبت‌نام با موفقیت انجام شد 😊';
+      }
+      if (message) {
+        this.router.navigateByUrl('/');
+        this.snackbar.open(message);
+      }
     })
   );
 
   @Effect({ dispatch: false })
-  authLogout = this.actions$.pipe(ofType(AuthActions.logout), tap(() => {
+  authLogout = this.actions$.pipe(ofType(AuthActions.logout), tap((payload) => {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    // this.theme.changeToUserDefault();
     this.store.dispatch(UserActions.UserLogout());
-    this.snackbar.open('برای این‌کار ابتدا وارد شوید.');
+    if (!payload.silent) {
+      this.snackbar.open(payload.message);
+    }
     // this.router.navigateByUrl('/');
   }));
 

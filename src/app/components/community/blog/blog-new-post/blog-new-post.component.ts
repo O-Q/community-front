@@ -3,15 +3,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+import { map, takeWhile, first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CKEDITOR_DEFAULT_CONFIG, CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE } from '../../../../constants/ckeditor.constant';
-import { AppState } from '../../../../store/state';
-import { getSelectedSocial } from '../../../../store/user';
+import { CKEDITOR_DEFAULT_CONFIG, CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE } from '@app/constants/ckeditor.constant';
+import { AppState } from '@app/store/state';
+import { getSelectedSocial } from '@store/user';
 import * as BalloonBlockEditor from '../../../../../../libs/ckeditor-personal-build';
-import * as PostActions from './../../../../store/post/post.actions';
-import { SocialType } from '../../../../models/user.model';
+import * as PostActions from '@store/post/post.actions';
+import { SocialType } from '@app/models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { getMergedRoute } from '../../../../store/router/router.selectors';
 
 @Component({
   selector: 'app-blog-new-post',
@@ -48,15 +51,18 @@ export class BlogNewPostComponent implements OnInit {
   selectedSocial$ = this.store.select(getSelectedSocial);
   user$ = this.store.select('user');
   postId = null;
+  sname: string;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private bpo: BreakpointObserver,
-    private store: Store<AppState>) {
+    private store: Store<AppState>,
+    private dialog: MatDialog) {
     this.isXSmall$ = this.bpo.observe(Breakpoints.XSmall).pipe(map(is => is.matches));
     const { name, pid } = this.route.snapshot.params;
     if (pid) { // edit post
       this.store.dispatch(PostActions.PostDetailedFetching({ sname: name, pid }));
+      this.sname = name;
       this.store.select('post').pipe(takeWhile((v) => !v.post, true)).subscribe(v => {
         if (v.post) {
           this.text = v.post.text;
@@ -64,7 +70,6 @@ export class BlogNewPostComponent implements OnInit {
           this.subtitle.setValue(v.post.subtitle);
           this.flairs.setValue(v.post.flairs);
           this.postId = v.post._id;
-          this.socialType = v.post.type;
         }
       });
 
@@ -72,10 +77,12 @@ export class BlogNewPostComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const route = await this.store.select(getMergedRoute).pipe(first()).toPromise();
+    this.socialType = route.url.split('/')[1] === 'b' ? SocialType.BLOG : SocialType.FORUM;
   }
-  changeForum(selected: { name: string, socialType: 'FORUM' | 'BLOG' }) {
-    this.router.navigate([selected.socialType === 'FORUM' ? 'c' : 'b', selected.name, 'new']);
+  changeForum(selected: { name: string, socialType: SocialType }) {
+    this.router.navigate([selected.socialType === SocialType.FORUM ? 'c' : 'b', selected.name, 'new']);
   }
   // TODO: autosave
   saveData(data) {
@@ -131,5 +138,16 @@ export class BlogNewPostComponent implements OnInit {
 
   compareSocials(s1, s2) {
     return s1.name === s2.name;
+  }
+  removePost() {
+    if (this.postId) {
+      this.dialog.open(ConfirmDialogComponent).afterClosed().subscribe(r => {
+        if (r) {
+          this.store.dispatch(PostActions.PostDeleting({ pid: this.postId, sname: this.sname, socialType: SocialType.BLOG }));
+        }
+      });
+    } else {
+      // TODO: remove sdraft 
+    }
   }
 }

@@ -1,34 +1,68 @@
 <mat-card *ngIf="(auth$ | async).user as user" class="p-0">
   <mat-card-header>
     <mat-card-title>
-      {{ viewValue || 'اتاق گفتگو' }}
+      {{ viewValue || "اتاق گفتگو" }}
     </mat-card-title>
-    <mat-card-subtitle class="pt-1" *ngIf="connected && onlineUsers$ | async as onlineUsers">
-      افراد آنلاین: {{onlineUsers}}
+    <mat-card-subtitle
+      class="pt-1"
+      *ngIf="connected && onlineUsers$ | async as onlineUsers"
+    >
+      افراد آنلاین: {{ onlineUsers }}
     </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content *ngIf="connected" class="py-1 scroll-auto-y scrollbar mb-0" #chatContainer
-    [scrollTop]="chatContainer.scrollHeight">
+  <mat-card-content
+    *ngIf="connected"
+    id="messages"
+    class="py-1 scroll-auto-y scrollbar mb-0"
+    #chatContainer
+    [scrollTop]="chatContainer.scrollHeight"
+  >
     <mat-list dense class="mat-typography py-0 px-1 no-scroll">
       <ng-template #messageContainer>
         <!-- manually load messages -->
       </ng-template>
     </mat-list>
   </mat-card-content>
-  <mat-card-actions *ngIf="connected else join" class="message-box mx-0 px-1 pt-0 mat-typography">
+  <mat-card-actions
+    *ngIf="connected; else join"
+    class="message-box mx-0 px-1 pt-0 mat-typography"
+  >
     <mat-divider></mat-divider>
-    <mat-form-field class="w-100 d-grid" dir="ltr" floatLabel="never" appearance="outline">
-      <textarea (keyup.enter)="sendMessage(user.username)" cdkTextareaAutosize cdkAutosizeMinRows="1.2"
-        class="text-persian no-scroll" matInput placeholder="پیام" name="text" [(ngModel)]="message">
+    <mat-form-field
+      class="w-100 d-grid"
+      dir="ltr"
+      floatLabel="never"
+      appearance="outline"
+    >
+      <textarea
+        (keyup.enter)="sendMessage(user.username)"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1.2"
+        class="text-persian no-scroll"
+        matInput
+        placeholder="پیام"
+        name="text"
+        [(ngModel)]="message"
+      >
       </textarea>
-      <mat-icon (click)="sendMessage(user.username)" [ngClass]="{ 'mat-primary' : message }" matSuffix>
-        send</mat-icon>
+      <mat-icon
+        (click)="sendMessage(user.username)"
+        [ngClass]="{ 'mat-primary': message }"
+        matSuffix
+      >
+        send</mat-icon
+      >
     </mat-form-field>
   </mat-card-actions>
   <ng-template #join>
     <mat-card-actions class="mb-0">
       <div class="flex-center py-3">
-        <button (click)="connect()" mat-raised-button color="accent">
+        <button
+          id="joinChat"
+          (click)="connect()"
+          mat-raised-button
+          color="accent"
+        >
           پیوستن به گفتگو
         </button>
       </div>

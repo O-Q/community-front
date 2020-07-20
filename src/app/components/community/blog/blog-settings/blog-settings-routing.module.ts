@@ -7,12 +7,14 @@ import { BlogSettingsGeneralComponent } from './blog-settings-general/blog-setti
 import { BlogSettingsComponent } from './blog-settings.component';
 import { BlogSettingsWidgetsComponent } from './blog-settings-widgets/blog-settings-widgets.component';
 import { BlogSettingsPermissionComponent } from './blog-settings-permission/blog-settings-permission.component';
+import { SocialModGuard } from '../../../../guards/social-mod.guard';
 
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'general'
+    redirectTo: 'general',
+
   },
   {
     path: '',

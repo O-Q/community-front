@@ -13,10 +13,10 @@ import {
   passwordMatchValidator,
   requiredError,
   MyErrorStateMatcher
-} from 'src/app/utils/form.util';
-import * as AuthActions from './../../../../store/auth/auth.actions';
-import * as fromApp from './../../../../store/state';
-import * as fromAuth from './../../../../store/auth/auth.reducer';
+} from '@app/utils/form.util';
+import * as AuthActions from '@store/auth/auth.actions';
+import * as fromApp from '@store/state';
+import * as fromAuth from '@store/auth/auth.reducer';
 
 import { Observable } from 'rxjs';
 @Component({

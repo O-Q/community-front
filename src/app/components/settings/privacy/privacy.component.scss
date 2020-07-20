@@ -1,0 +1,19 @@
+@import "./../../../../variables";
+.privacy-profile {
+  mat-icon {
+    display: none;
+  }
+  @media screen and (max-width: $max-width) {
+    display: flex;
+    flex-direction: row-reverse;
+    mat-icon {
+      display: unset;
+    }
+  }
+}
+
+mat-form-field {
+  @media screen and (max-width: $max-width) {
+    width: 100px;
+  }
+}

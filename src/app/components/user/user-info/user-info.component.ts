@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/state';
-import * as UserInfoActions from './../../../store/user-info/user-info.actions';
+import { AppState } from '@store/state';
+import * as UserInfoActions from '@store/user-info/user-info.actions';
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',

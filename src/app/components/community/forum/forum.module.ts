@@ -16,6 +16,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ForumBaseComponent } from './forum-base/forum-base.component';
 import { ForumComponent } from './forum.component';
 import { AppCommonModule } from '../../common/common.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [

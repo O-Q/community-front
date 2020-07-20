@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AppState } from '../../../../store/state';
+import { AppState } from '@store/state';
 import { Store } from '@ngrx/store';
-import * as SocialActions from './../../../../store/social/social.actions';
-import { SocialType } from '../../../../../../server/dist/user/interfaces/user.interface';
-import { getUserSocialRole } from '../../../../store/user';
+import * as SocialActions from '@store/social/social.actions';
+import { getUserSocialRole } from '@store/user';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { SocialType } from '@app/models/user.model';
 
 @Component({
   selector: 'app-forum-base',
@@ -15,6 +15,7 @@ import { ConfirmDialogComponent } from '../../../common/confirm-dialog/confirm-d
 export class ForumBaseComponent implements OnInit {
   social$ = this.store.select('social');
   userRole$ = this.store.select(getUserSocialRole);
+  user$ = this.store.select('user');
   constructor(private store: Store<AppState>, private dialog: MatDialog) {
   }
 

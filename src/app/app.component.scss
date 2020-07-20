@@ -1,24 +1,16 @@
-@import '../variables';
+@import "../variables";
 
 .layout-container {
   padding-top: $header-height;
   min-height: 100%;
-
+  ::ng-deep mat-sidenav-content > router-outlet + * {
+    min-height: calc(100vh - #{$header-height} - #{$footer-height});
+    text-align: center;
+    margin-bottom: $footer-height;
+  }
   .layout-content {
     min-height: calc(100vh - #{$header-height});
-
-    &::ng-deep router-outlet+* {
-      min-height: calc(100vh - #{$header-height} - #{$footer-height});
-      text-align: center;
-      // align-items: center;
-      // margin-top: 20px;
-      flex-direction: column;
-      display: flex;
-      padding-bottom: 20px;
-    }
   }
-
-
 
   div.loading-module {
     min-height: calc(100vh - #{$header-height} - #{$footer-height});

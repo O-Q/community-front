@@ -1,16 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../../../store/state';
+import { AppState } from '@store/state';
 import { first, skipWhile } from 'rxjs/operators';
-import { enableSaveGuard } from '../../../../../utils/unsave-guard';
-import { SocialStatus } from '../../../../../constants/social.constant';
-import * as SocialActions from './../../../../../store/social/social.actions';
-import { SocialType } from '../../../../../models/user.model';
-import { ColorTypes } from '../../../../../interfaces/color-type.interface';
-import { ThemeService } from '../../../../../services/theme.service';
+import { enableSaveGuard } from '@app/utils/unsave-guard';
+import { SocialStatus } from '@app/constants/social.constant';
+import * as SocialActions from '@store/social/social.actions';
+import { SocialType } from '@app/models/user.model';
+import { ColorTypes } from '@app/interfaces/color-type.interface';
+import { ThemeService } from '@app/services/theme.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../../common/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 
 
 @Component({

@@ -1,15 +1,16 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
-import { Post } from '../../../interfaces/post.interface';
+import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { Post } from '@app/interfaces/post.interface';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/state';
-import * as PostActions from './../../../store/post/post.actions';
+import { AppState } from '@app/store/state';
+import * as PostActions from '@store/post/post.actions';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
   styleUrls: ['./post-card.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostCardComponent implements OnInit {
   @Input()
@@ -18,9 +19,13 @@ export class PostCardComponent implements OnInit {
   @Input()
   admins: string[];
 
+  @Input()
+  isHomepage: boolean;
+  safeHTML;
   auth$ = this.store.select('auth');
-  constructor(private dialog: MatDialog, private store: Store<AppState>) { }
+  constructor(private dialog: MatDialog, private store: Store<AppState>, private sanitizer: DomSanitizer) { }
   ngOnInit() {
+    this.safeHTML = this.sanitizer.bypassSecurityTrustHtml(this.post.text);
   }
 
   onDeletePost() {

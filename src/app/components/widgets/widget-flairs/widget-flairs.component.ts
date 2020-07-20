@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from './../../../store/state';
+import { AppState } from '@store/state';
 import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-widget-flairs',

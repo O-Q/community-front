@@ -5,46 +5,99 @@
       <mat-card-subtitle>subtitle</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]='form'>
+      <form [formGroup]="form">
         <mat-form-field>
-          <input formControlName="sname" matInput [placeholder]="'نام ' + type" required />
-          <mat-hint class="fs-small">توجه: این نام بعدا قابل تغییر نیست</mat-hint>
+          <input
+            id="sname"
+            formControlName="sname"
+            matInput
+            [placeholder]="'نام ' + type"
+            required
+          />
+          <mat-hint class="fs-small"
+            >توجه: این نام بعدا قابل تغییر نیست</mat-hint
+          >
+          <mat-error>
+            {{ required("نام") }}
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="title" matInput [placeholder]="'عنوان ' + type" required />
+          <input
+            id="title"
+            formControlName="title"
+            matInput
+            [placeholder]="'عنوان ' + type"
+            required
+          />
+          <mat-error>
+            {{ required("عنوان") }}
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>توضیحات</mat-label>
-          <textarea formControlName="description" required #box matInput maxlength="250" cdkTextareaAutosize
-            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="8"></textarea>
+          <textarea
+            id="description"
+            formControlName="description"
+            required
+            #box
+            matInput
+            maxlength="250"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="8"
+          ></textarea>
           <mat-hint class="fs-small">
-            در اینجا دلیل اینکه افراد جدید به {{type}} شما بپیوندند را بنویسید
+            در اینجا دلیل اینکه افراد جدید به {{ type }} شما بپیوندند را بنویسید
           </mat-hint>
+          <mat-error>
+            {{ required("توضیحات") }}
+          </mat-error>
         </mat-form-field>
         <mat-form-field dir="ltr">
           <mat-label class="text-persian">موضوع اصلی</mat-label>
-          <mat-select formControlName="subject" required>
-            <mat-option class="text-persian" *ngFor="let subject of ['هنر', 'برنامه نویسی']" [value]="subject">
-              {{subject}}
+          <mat-select id="select-subject" formControlName="subject" required>
+            <mat-option
+              class="text-persian"
+              *ngFor="let subject of ['هنر', 'برنامه نویسی']"
+              [value]="subject"
+            >
+              {{ subject }}
             </mat-option>
           </mat-select>
+          <mat-error>
+            {{ required("موضوع اصلی") }}
+          </mat-error>
         </mat-form-field>
-        <app-flairs-auto-complete placeholder="زیر موضوعات (اختیاری)" [selectedFlairs]="selectedFlairs"
-          [flairsControl]="form.get('flairs')">
+        <app-flairs-auto-complete
+          placeholder="زیر موضوعات (اختیاری)"
+          [selectedFlairs]="selectedFlairs"
+          [flairsControl]="form.get('flairs')"
+        >
         </app-flairs-auto-complete>
       </form>
     </mat-card-content>
     <mat-card-actions>
       <ng-container *ngIf="social$ | async as social">
-        <button [disabled]="social.loading || form.invalid"
-          (click)="onCreate(type === 'انجمن' ? SocialType.FORUM : SocialType.BLOG)" class="btn mb-1" mat-raised-button
-          color="primary">
-          <span *ngIf="!social.loading else loading">
+        <button
+          id="createClick"
+          [disabled]="social.loading || form.invalid"
+          (click)="
+            onCreate(type === 'انجمن' ? SocialType.FORUM : SocialType.BLOG)
+          "
+          class="btn mb-1"
+          mat-raised-button
+          color="primary"
+        >
+          <span *ngIf="!social.loading; else loading">
             ساخت
             {{ type }}
           </span>
           <ng-template #loading>
-            <mat-spinner style="margin: 6px auto;" color="accent" [diameter]="25">
+            <mat-spinner
+              style="margin: 6px auto;"
+              color="accent"
+              [diameter]="25"
+            >
             </mat-spinner>
           </ng-template>
         </button>

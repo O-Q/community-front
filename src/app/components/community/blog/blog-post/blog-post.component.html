@@ -1,55 +1,122 @@
 <div class="container" *ngIf="post$ | async as post">
-  <div class="post-container">
-    <app-post-card class="p__card" [post]="post" [admins]="admins$ | async"></app-post-card>
-    <div class="comments">
-      <div class="comments__title flex-between">
-        <mat-divider> </mat-divider>
-        <span>بخش نظرات</span>
-        <mat-divider> </mat-divider>
+  <div class="d-flex w-100">
+    <div class="d-flex flex-dir-col my-auto">
+      <button
+        (click)="express('LIKE', post)"
+        matTooltip="+1"
+        mat-icon-button
+        aria-label="like"
+        matTooltipPosition="above"
+      >
+        <mat-icon
+          [ngStyle]="{ color: post.liked ? 'orange' : null }"
+          mat-font-icon
+          class="fa fa-angle-up"
+        ></mat-icon>
+      </button>
+      <span class="text-center" dir="ltr">{{ post.reaction }}</span>
+      <button
+        (click)="express('DISLIKE', post)"
+        mat-icon-button
+        matTooltip="-1"
+        aria-label="dislike"
+      >
+        <mat-icon
+          [ngStyle]="{ color: post.liked == false ? 'orange' : null }"
+          mat-font-icon
+          class="fa fa-angle-down"
+        >
+        </mat-icon>
+      </button>
+    </div>
+    <div class="post-container text-persian">
+      <!-- <app-post-card class="p__card" [post]="post" [admins]="admins$ | async"></app-post-card> -->
+      <div class="flex-between">
+        <span class="w-100 f-blog-post">{{ post.title }}</span>
+        <button
+          (click)="onBack()"
+          mat-stroked-button
+          class="pos-abs l-0 ml-2"
+          style="height: fit-content; margin-top: -4rem;"
+        >
+          بازگشت
+        </button>
       </div>
-      <div *ngIf="(user$|async).user as user else registerBox" class="comments__new text-persian">
-        <div class="d-flex">
-          <div class="content__pic" [ngStyle]="{'background-image': 'url(' + user.avatar + ')' }">
-          </div>
-          <mat-form-field class="content__field fs-normal w-100">
-            <textarea matInput [formControl]="comment" class="no-scroll" [maxLength]="150" cdkTextareaAutosize matInput
-              placeholder="نظر خود را بنویسید"></textarea>
-            <mat-error>
-              "نظر" حداقل باید شامل پانزده حرف باشد
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <span class="flex-end fs-small mb-2" style="margin-top:-1rem">{{ comment.value.length }}/150</span>
-        <div class="flex-end">
-          <button (click)="onSendComment(post)" color="primary" mat-stroked-button
-            [ngClass]="{'mat-raised-button': comment.value.length > 0 }" [disabled]="!comment.value.length">
-            ثبت نظر
-          </button>
-        </div>
-      </div>
-      <div class="pt-1">
-        <mat-card *ngFor="let comment of post.comments" class="mb-2">
-          <mat-card-header class="text-persian">
-            <mat-card-title>{{comment.author.username}} میگه:</mat-card-title>
-            <mat-card-subtitle>نوشته شده در تاریخ {{comment.createdAt | persianDate }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content class="text-persian mx-2">
-            {{comment.text}}
-          </mat-card-content>
-          <mat-card-actions>
-            <app-post-actions [post]="comment" [sname]="post.social.name"></app-post-actions>
+      <span style="font-size: 16px;" class="w-100"
+        >{{ post.subtitle }}
+        <br *ngIf="post.subtitle" />
+        <span class="f-medium-subtitle fw-bold">
+          <a
+            routerLink="/u/{{ post.author }}"
+            class="hover-pointer post__user-link"
+          >
+            نویسنده: {{ post.author }} </a
+          >&nbsp; | تاریخ:
+          {{ post.createdAt | persianDate }}
+        </span>
+      </span>
 
-          </mat-card-actions>
-        </mat-card>
+      <div class="fs-normal" [innerHTML]="safeHTML"></div>
+    </div>
+  </div>
+
+  <div class="comments m-auto">
+    <div class="comments__title flex-between">
+      <mat-divider> </mat-divider>
+      <span>بخش نظرات</span>
+      <mat-divider> </mat-divider>
+    </div>
+    <div
+      *ngIf="(user$ | async).user as user; else registerBox"
+      class="comments__new text-persian"
+    >
+      <div class="d-flex">
+        <div
+          class="content__pic"
+          [ngStyle]="{ 'background-image': 'url(' + user.avatar + ')' }"
+        ></div>
+        <mat-form-field class="content__field fs-normal w-100">
+          <textarea
+            matInput
+            [formControl]="comment"
+            class="no-scroll"
+            [maxLength]="150"
+            cdkTextareaAutosize
+            matInput
+            placeholder="نظر خود را بنویسید"
+          ></textarea>
+          <mat-error>
+            "نظر" حداقل باید شامل پانزده حرف باشد
+          </mat-error>
+        </mat-form-field>
       </div>
+      <span class="flex-end fs-small mb-2" style="margin-top: -1rem;"
+        >{{ comment.value.length }}/150</span
+      >
+      <div class="flex-end">
+        <button
+          (click)="onSendComment(post)"
+          color="primary"
+          mat-stroked-button
+          [ngClass]="{ 'mat-raised-button': comment.value.length > 0 }"
+          [disabled]="!comment.value.length"
+        >
+          ثبت نظر
+        </button>
+      </div>
+    </div>
+    <div class="pt-1">
+      <app-post-card
+        *ngFor="let comment of post.comments"
+        [post]="comment"
+      ></app-post-card>
     </div>
   </div>
 </div>
 
-
 <ng-template #registerBox>
-  <mat-card class="mt-2">
-    <mat-card-content>
+  <mat-card class="mt-2 mx-1 d-grid">
+    <mat-card-content class="m-auto">
       <span class="fw-bold">برای نظر دادن باید عضو شوید</span>
     </mat-card-content>
     <mat-card-actions class="m-auto">

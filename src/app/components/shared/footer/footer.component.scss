@@ -1,8 +1,22 @@
-@import '../../../../variables';
+@import "../../../../variables";
 
 :host {
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: $footer-height;
+  background-color: cadetblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  max-height: 100%;
+  .left,
+  .right,
+  .center {
+    flex: 1;
+  }
 }

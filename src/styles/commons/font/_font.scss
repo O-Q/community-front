@@ -1,4 +1,4 @@
-@import './base_font';
+@import "./base_font";
 
 .f-large-title,
 mat-card-title {
@@ -13,9 +13,12 @@ mat-card-title {
 mat-card-subtitle {
   @extend %f-large-subtitle;
 }
-
+.f-blog-post {
+  @extend %f-community-title;
+}
 .f-medium-subtitle {
   @extend %f-medium-subtitle;
+  @extend %fw-bold;
 }
 
 .fs-normal {

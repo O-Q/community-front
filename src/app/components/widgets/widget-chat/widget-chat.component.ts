@@ -1,14 +1,23 @@
 import { Component, OnInit, ViewContainerRef, ViewChild, ComponentFactoryResolver, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import * as fromAuth from './../../../store/auth/auth.reducer';
-import * as fromApp from './../../../store/state';
-import { Socket } from 'ngx-socket-io';
-import { ServerEvent, ClientEvent } from '../../../../../server/src/shared/socket-events.enum';
+import * as fromAuth from '@store/auth/auth.reducer';
+import * as fromApp from '@store/state';
+// import { Socket } from 'ngx-socket-io';
 import { first } from 'rxjs/operators';
 import { WidgetChatMessageComponent } from './widget-chat-message/widget-chat-message.component';
-import { ChatRoomMessage } from '../../../../../server/src/shared/chatroom.interface';
+
+enum ServerEvent {
+  JOIN_CHAT = 'joinChat',
+  SEND_MESSAGE_CHAT = 'sendMessageChat'
+}
+enum ClientEvent {
+  CHAT = 'chat',
+  ONLINE_CHAT = 'onlineChat',
+  LATEST_MESSAGE = 'latestMessage',
+  EXCEPTION = 'exception'
+}
 
 
 @Component({
@@ -25,11 +34,13 @@ export class WidgetChatComponent implements OnInit {
   messageContainer: ViewContainerRef;
   connected = false;
   auth$: Observable<fromAuth.State>;
-  onlineUsers$ = this._fromOnlineChat();
+  // onlineUsers$ = this._fromOnlineChat();
+  onlineUsers$ = of(1);
+
   message: string;
   constructor(
     private store: Store<fromApp.AppState>,
-    private socket: Socket,
+    // private socket: Socket,
     private componentFactoryResolver: ComponentFactoryResolver,
   ) { }
 
@@ -38,7 +49,7 @@ export class WidgetChatComponent implements OnInit {
   }
 
   connect() {
-    this._fromOnlineChat();
+    // this._fromOnlineChat();
     this._fromException();
     this._fromChat();
     this._joinChat('5daacad61f206143885486a7');
@@ -48,39 +59,45 @@ export class WidgetChatComponent implements OnInit {
 
   sendMessage(username: string) {
     // TODO: shift+enter and enter
-    this.socket.emit(ServerEvent.SEND_MESSAGE_CHAT, { message: this.message, sid: '5daacad61f206143885486a7' });
-    this.addMessageComponent({ message: this.message, username });
-    this.message = undefined;
+    // this.socket.emit(ServerEvent.SEND_MESSAGE_CHAT, { message: this.message, sid: '5daacad61f206143885486a7' });
+    // this.addMessageComponent({ message: this.message, username });
+    // this.message = undefined;
   }
 
   addMessageComponent(message: ChatRoomMessage) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WidgetChatMessageComponent);
-    const componentRef = this.messageContainer.createComponent<WidgetChatMessageComponent>(componentFactory);
-    componentRef.instance.chatMessage = message;
-    componentRef.instance.auth$ = this.auth$;
-    componentRef.instance.selfRef = componentRef;
+    // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WidgetChatMessageComponent);
+    // const componentRef = this.messageContainer.createComponent<WidgetChatMessageComponent>(componentFactory);
+    // componentRef.instance.chatMessage = message;
+    // componentRef.instance.auth$ = this.auth$;
+    // componentRef.instance.selfRef = componentRef;
   }
   private _joinChat(sid: string) {
-    this.socket.emit(ServerEvent.JOIN_CHAT, { sid });
+    // this.socket.emit(ServerEvent.JOIN_CHAT, { sid });
   }
   private _fromException() {
-    this.socket.fromEvent(ClientEvent.EXCEPTION).subscribe(x => console.log(x));
+    // this.socket.fromEvent(ClientEvent.EXCEPTION).subscribe(x => console.log(x));
   }
   private _fromLatestMessages() {
-    this.socket.fromEvent<ChatRoomMessage[]>(ClientEvent.LATEST_MESSAGE)
-      .pipe(first()).subscribe(messages => {
-        if (messages.length) {
-          messages.forEach(m => this.addMessageComponent(m));
-        } else {
-          this.addMessageComponent(null);
-        }
-      });
+    // this.socket.fromEvent<ChatRoomMessage[]>(ClientEvent.LATEST_MESSAGE)
+    //   .pipe(first()).subscribe(messages => {
+    //     if (messages.length) {
+    //       messages.forEach(m => this.addMessageComponent(m));
+    //     } else {
+    //       this.addMessageComponent(null);
+    //     }
+    //   });
   }
   private _fromChat() {
-    this.socket.fromEvent<ChatRoomMessage>(ClientEvent.CHAT).subscribe(m => this.addMessageComponent(m));
+    // this.socket.fromEvent<ChatRoomMessage>(ClientEvent.CHAT).subscribe(m => this.addMessageComponent(m));
   }
-  private _fromOnlineChat(): Observable<number> {
-    return this.socket.fromEvent<number>(ClientEvent.ONLINE_CHAT);
-  }
+  // private _fromOnlineChat(): Observable<number> {
+  //   return this.socket.fromEvent<number>(ClientEvent.ONLINE_CHAT);
+  // }
 
+}
+
+
+interface ChatRoomMessage {
+  message: string;
+  username: string;
 }

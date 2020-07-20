@@ -9,6 +9,7 @@ import { BlogPostComponent } from './blog-post/blog-post.component';
 import { BlogHomeComponent } from './blog-home/blog-home.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({

@@ -1,6 +1,9 @@
 import { RouterStateSerializer } from '@ngrx/router-store';
 import { ActivatedRouteSnapshot, Data, Params, RouterStateSnapshot } from '@angular/router';
 import { RouterReducerState } from '@ngrx/router-store';
+import { Store } from '@ngrx/store';
+import { getMergedRoute } from './router.selectors';
+import { first } from 'rxjs/operators';
 export interface State {
     readonly url: string;
     readonly queryParams: Params;

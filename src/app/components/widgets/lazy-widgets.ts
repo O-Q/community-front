@@ -1,32 +1,32 @@
 import { NgModuleFactory, Type } from '@angular/core';
-import { WidgetNames } from '../../../../server/src/shared/widget-list.enum';
+import { WIDGETS } from '@app/constants/social.constant';
 
 export const lazyWidgets: {
   path: string;
   loadChildren: () => Promise<NgModuleFactory<any> | Type<any>>;
 }[] = [
     {
-      path: WidgetNames.RULES,
+      path: WIDGETS.RULES,
       loadChildren: () =>
         import('./widget-rules/widget-rules.module').then(
           m => m.WidgetRulesModule
         )
     },
     {
-      path: WidgetNames.USER_LIST,
+      path: WIDGETS.USER_LIST,
       loadChildren: () =>
         import('./widget-users-list/widget-user-list.module').then(
           m => m.WidgetUserListModule
         )
     },
     {
-      path: WidgetNames.CHAT,
+      path: WIDGETS.CHAT,
       loadChildren: () => import('./widget-chat/widget-chat.module').then(
         m => m.WidgetChatModule
       )
     },
     {
-      path: WidgetNames.FLAIRS,
+      path: WIDGETS.FLAIRS,
       loadChildren: () => import('./widget-flairs/widget-flairs.module').then(
         m => m.WidgetFlairsModule
       )

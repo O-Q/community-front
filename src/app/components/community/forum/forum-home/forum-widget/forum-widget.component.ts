@@ -4,13 +4,11 @@ import {
   Input,
   ViewContainerRef,
   ViewChild,
-  AfterContentInit,
   AfterViewInit,
   ChangeDetectorRef
 } from '@angular/core';
-import { WidgetLoaderService } from '../../../../widgets/widget-loader.service';
-import { Widget } from '../../../../../interfaces/widgets.interface';
-import { IUser } from '../../../../../models/user.model';
+import { WidgetLoaderService } from '@app/components/widgets/widget-loader.service';
+import { Widget } from '@app/interfaces/widgets.interface';
 
 @Component({
   selector: 'app-forum-widget',

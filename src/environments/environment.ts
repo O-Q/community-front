@@ -10,6 +10,11 @@ export const environment = {
   BASE_FRONT_URL: 'http://localhost:4200',
   urls: {
     baseUrl: 'http://localhost:3000',
+    search: {
+      SEARCH: 'search',
+      HOMEPAGE_SOCIAL: 'search/homepage/social',
+      HOMEPAGE_POST: 'search/homepage/post'
+    },
     auth: {
       SIGN_IN: 'auth/signin',
       SIGN_UP: 'auth/signup'

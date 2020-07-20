@@ -1,13 +1,31 @@
-<ng-container *ngIf="(social$ | async) as s">
-  <ng-container *ngIf="(posts$ | async) as p">
+<ng-container *ngIf="(social$ | async).social as s">
+  <ng-container *ngIf="posts$ | async as p">
     <nav mat-tab-nav-bar class="tabs-container">
       <a mat-tab-link routerLink="." [active]="!flair"> صفحه اصلی </a>
-      <a mat-tab-link routerLink="." [queryParams]="{flair: f}" *ngFor="let f of s.social?.flairs"
-        [active]="flair == f"> {{f}} </a>
+      <a
+        mat-tab-link
+        routerLink="."
+        [queryParams]="{ flair: f }"
+        *ngFor="let f of s.social?.flairs"
+        [active]="flair == f"
+      >
+        {{ f }}
+      </a>
     </nav>
     <div class="flex-evenly mt-2 content-container">
-      <div style="width: 60%;">
-        <app-post-card [post]="post" [admins]="admins$ | async" *ngFor="let post of p.posts"></app-post-card>
+      <div class="post-container" *ngIf="p.length; else noPost">
+        <app-post-card
+          [post]="post"
+          [admins]="admins$ | async"
+          *ngFor="let post of p.posts"
+        ></app-post-card>
+        <mat-paginator
+          class="text-english mb-2"
+          [length]="p.length"
+          pageSize="10"
+          (page)="onChangePage($event)"
+          [pageSizeOptions]="[5, 10, 20]"
+        ></mat-paginator>
       </div>
       <mat-card class="info-container">
         <mat-card-header class="flex-center">
@@ -18,9 +36,32 @@
           <p>یه توضیحی در مورد بلاگ و فرد نویسنده مثلا میتونه اینجا باشه.</p>
         </mat-card-content>
         <mat-card-actions>
-          <a routerLink="new" mat-stroked-button>پست جدید</a>
+          <a
+            name="createPost"
+            *ngIf="s.isUserRegistered"
+            routerLink="new"
+            mat-stroked-button
+            >پست جدید</a
+          >
         </mat-card-actions>
       </mat-card>
+      <button
+        name="createPost"
+        *ngIf="s.isUserRegistered"
+        mat-mini-fab
+        routerLink="new"
+        class="r-0 b-0 mb-2 mr-2 new-post-phone"
+        style="position: fixed; z-index: 1;"
+        matTooltip="پست جدید"
+      >
+        <mat-icon class="fa fa-edit"></mat-icon>
+      </button>
     </div>
   </ng-container>
 </ng-container>
+
+<ng-template #noPost>
+  <div class="flex-center align-center" style="width: 60%;">
+    <span>هنوز پستی منتشر نشده است.</span>
+  </div>
+</ng-template>

@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RuleGroup } from '../../../interfaces/widgets.interface';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/state';
-import { map } from 'rxjs/operators';
+import { AppState } from '@store/state';
 
 @Component({
   selector: 'app-widget-rules',
