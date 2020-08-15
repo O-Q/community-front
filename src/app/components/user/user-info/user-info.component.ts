@@ -18,6 +18,10 @@ export class UserInfoComponent implements OnInit {
     this.store.dispatch(UserInfoActions.UserFollowing({ username }));
 
   }
+  onTalk(user) {
+    alert('به زودی...');
+
+  }
 
   onUnfollow(username: string) {
     this.store.dispatch(UserInfoActions.UserUnFollowing({ username }));

@@ -8,10 +8,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { UserPostsComponent } from './user-posts/user-posts.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { AppCommonModule } from '@app/components/common/common.module';
+import { SkeletonProfileBoxComponent } from './user-info/skeleton-profile-box/skeleton-profile-box.component';
 
 
 @NgModule({
-  declarations: [UserComponent, UserPostsComponent, UserInfoComponent],
+  declarations: [UserComponent, UserPostsComponent, UserInfoComponent, SkeletonProfileBoxComponent],
   imports: [
     CommonModule,
     AppCommonModule,

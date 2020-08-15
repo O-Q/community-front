@@ -1,6 +1,9 @@
-<div class="container" *ngIf="post$ | async as post">
-  <div class="d-flex w-100">
-    <div class="d-flex flex-dir-col my-auto">
+<div class="container pb-3" *ngIf="post$ | async as post">
+  <div class="d-flex w-100 pos-rel">
+    <div
+      class="d-flex flex-dir-col"
+      style="position: sticky; height: fit-content; top: 40%;"
+    >
       <button
         (click)="express('LIKE', post)"
         matTooltip="+1"
@@ -36,8 +39,7 @@
         <button
           (click)="onBack()"
           mat-stroked-button
-          class="pos-abs l-0 ml-2"
-          style="height: fit-content; margin-top: -4rem;"
+          class="pos-abs l-0 ml-2 back-btn"
         >
           بازگشت
         </button>
@@ -51,19 +53,41 @@
             class="hover-pointer post__user-link"
           >
             نویسنده: {{ post.author }} </a
-          >&nbsp; | تاریخ:
+          >&nbsp; | &nbsp; تاریخ:
           {{ post.createdAt | persianDate }}
         </span>
       </span>
 
       <div class="fs-normal" [innerHTML]="safeHTML"></div>
+      <div
+        style="
+          box-shadow: inset #7171714f 17px -16px 20px 8px;
+          border: solid 2px #86868636;
+          border-radius: 8px;
+          padding: 1rem;
+          opacity: 0.8;
+        "
+      >
+        <mat-chip-list>
+          <span class="fs-normal italc">دسته‌بندی:</span>
+          <a
+            class="hover-pointer"
+            style="text-decoration: none;"
+            mat-chip
+            [routerLink]="['/b', sname]"
+            [queryParams]="{ flair: flair }"
+            *ngFor="let flair of post.flairs"
+            >{{ flair }}</a
+          >
+        </mat-chip-list>
+      </div>
     </div>
   </div>
 
   <div class="comments m-auto">
     <div class="comments__title flex-between">
       <mat-divider> </mat-divider>
-      <span>بخش نظرات</span>
+      <span style="min-width: 120px;">بخش نظرات</span>
       <mat-divider> </mat-divider>
     </div>
     <div
@@ -73,7 +97,11 @@
       <div class="d-flex">
         <div
           class="content__pic"
-          [ngStyle]="{ 'background-image': 'url(' + user.avatar + ')' }"
+          [ngStyle]="{
+            'background-image': user.avatar
+              ? 'url(' + user.avatar + ')'
+              : 'url(' + '../../../../../assets/avatar.png' + ')'
+          }"
         ></div>
         <mat-form-field class="content__field fs-normal w-100">
           <textarea
@@ -107,6 +135,7 @@
     </div>
     <div class="pt-1">
       <app-post-card
+        [sname]="sname"
         *ngFor="let comment of post.comments"
         [post]="comment"
       ></app-post-card>
@@ -120,7 +149,7 @@
       <span class="fw-bold">برای نظر دادن باید عضو شوید</span>
     </mat-card-content>
     <mat-card-actions class="m-auto">
-      <button mat-raised-button color="primary">عضویت</button>
+      <a mat-raised-button color="primary" routerLink="/auth/register">عضویت</a>
     </mat-card-actions>
   </mat-card>
 </ng-template>

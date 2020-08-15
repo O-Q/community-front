@@ -34,7 +34,7 @@ export class ErrorHandlerService {
 
   private _handleWithSnackbar(r: HttpErrorResponse) {
     if (r.error.error) {
-      this.snackbar.open(r.error.error);
+      this.snackbar.open(r.error.message || r.error.error);
     } else if (r.error.statusCode === 401) {
       this.snackbar.open('شما خارج شدید.')
     } else {

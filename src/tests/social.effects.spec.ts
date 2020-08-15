@@ -43,7 +43,7 @@ describe('Store [Social] | Effects', () => {
             expect(action).toEqual({
                 type: '[User] User Social Created',
                 social: {
-                    notifications: 0,
+                    notifications: [],
                     role: 'CREATOR',
                     social: { flairs: [], _id: 1, name: '', type: SocialType.FORUM },
                     status: 'ACTIVE',

@@ -1,14 +1,15 @@
 @import "../variables";
 
 .layout-container {
-  padding-top: $header-height;
   min-height: 100%;
+  overflow: inherit;
   ::ng-deep mat-sidenav-content > router-outlet + * {
-    min-height: calc(100vh - #{$header-height} - #{$footer-height});
+    min-height: calc(100vh - #{$header-height});
     text-align: center;
-    margin-bottom: $footer-height;
+    // margin-bottom: $footer-height;
   }
   .layout-content {
+    overflow: inherit;
     min-height: calc(100vh - #{$header-height});
   }
 
@@ -16,4 +17,17 @@
     min-height: calc(100vh - #{$header-height} - #{$footer-height});
     align-items: center;
   }
+}
+
+#site-header {
+  position: sticky;
+  height: 5rem;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 25px rgba(0, 0, 0, 0.1);
+}
+#site-header.hide {
+  top: -5rem;
 }

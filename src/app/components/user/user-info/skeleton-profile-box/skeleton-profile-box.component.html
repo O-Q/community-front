@@ -1,0 +1,58 @@
+<mat-card>
+  <div class="user__banner pos-abs t-0 l-0" alt="بنر کاربر"></div>
+  <mat-card-header>
+    <div
+      mat-card-avatar
+      class="mt-3"
+      style="width: 100px; height: 100px; z-index: 1;"
+      alt=""
+    ></div>
+  </mat-card-header>
+  <mat-card-content style="margin-top: -1.75rem;">
+    <div class="fw-bold f-large-title text-english ml-3 pt-1">
+      <app-skeleton-line half></app-skeleton-line>
+    </div>
+    <div class="f-medium-subtitle text-persian mr-1">
+      <app-skeleton-line half></app-skeleton-line>
+    </div>
+    <div class="user__box-container pt-2 pb-1">
+      <div class="user__box">
+        <mat-icon inline class="d-flex align-center m-auto">cake</mat-icon>
+        <span class="f-medium-subtitle">
+          <app-skeleton-line half></app-skeleton-line>
+        </span>
+      </div>
+      <mat-divider style="height: 70px;" vertical> </mat-divider>
+      <div class="user__box">
+        <mat-icon inline class="d-flex align-center m-auto"
+          >local_play</mat-icon
+        >
+        <app-skeleton-line></app-skeleton-line>
+      </div>
+    </div>
+    <div class="text-persian">
+      <span class="fw-bold">درباره‌ی من</span>
+      <p class="fs-small justify"></p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="flex-around m-auto">
+    <ng-container>
+      <button mat-stroked-button color="accent">
+        دنبال کردن
+      </button>
+      <ng-template #Unfollow>
+        <button
+          class="flex-center"
+          style="background: #6495ed78;"
+          mat-stroked-button
+          color="accent"
+        >
+          دنبال می‌کنید
+        </button>
+      </ng-template>
+    </ng-container>
+    <button mat-stroked-button color="accent">
+      گفتگو
+    </button>
+  </mat-card-actions>
+</mat-card>

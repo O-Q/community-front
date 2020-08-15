@@ -1,3 +1,5 @@
+@import "./variables";
+
 .cdk-overlay-container {
   z-index: 1045;
 }
@@ -6,6 +8,14 @@
   text-align: right !important;
 }
 
+.mat-paginator-range-label {
+  margin: 0 24px !important;
+}
+.mat-paginator-page-size-select {
+  @media screen and (max-width: $max-width) {
+    width: 44px !important;
+  }
+}
 .mat-menu-item .mat-icon {
   margin-right: 0 !important;
   margin-left: 16px;
@@ -32,8 +42,7 @@ mat-dialog-container {
   }
 }
 
-
-button>mat-icon[mat-font-icon] {
+button > mat-icon[mat-font-icon] {
   width: auto;
   height: auto;
   font-size: 20px;
@@ -57,8 +66,6 @@ button>mat-icon[mat-font-icon] {
 .mat-paginator-range-label,
 .mat-paginator-page-size {
   direction: rtl;
-
-
 }
 
 .mat-option-text {

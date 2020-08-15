@@ -47,6 +47,7 @@ export class BlogPostComponent implements OnInit, OnDestroy {
       const comment = this.comment.value;
       const sid = post.social._id;
       const pid = post._id;
+      this.comment.reset('');
       this.store.dispatch(PostActions.PostReplyPublishing({ pid, sid, sname: this.sname, comment, socialType: 'BLOG' }));
     }
   }

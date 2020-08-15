@@ -154,6 +154,10 @@ export const reducer = createReducer(
             return { ...state };
         }
     }),
+    on(userActions.UserLeaveSocial, (state, action) => ({
+        ...state,
+        user: { ...state.user, socials: state.user.socials.filter(s => s.social._id !== action.sid) }
+    }))
 
 
 );

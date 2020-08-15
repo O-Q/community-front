@@ -1,10 +1,33 @@
-<mat-list-item *ngIf="chatMessage && (auth$ | async).user as user"
-  [dir]="chatMessage.username === user.username ? 'rtl' : 'ltr'">
-  <img matListAvatar src="https://randomuser.me/api/portraits/thumb/lego/2.jpg" />
-  <div class="d-grid">
-    <span [ngStyle]="{'text-align' : chatMessage.username === user.username ? 'right' : 'left'}"
-      class="fw-bold">{{ chatMessage.username }}</span>
-    <p class="text-persian">{{ chatMessage.message }}</p>
+<mat-list-item
+  style="padding-top: 1.5rem;"
+  *ngIf="chatMessage && (auth$ | async).user as user"
+  [dir]="isMe ? 'rtl' : 'ltr'"
+>
+  <img
+    matListAvatar
+    [ngStyle]="{ margin: isMe ? '45px 0 0 .25rem' : '45px .25rem 0 0' }"
+    src="assets/user/avatar/{{ chatMessage.username }}.jpeg"
+    onerror="this.src='assets/user/avatar.png'"
+  />
+  <div
+    class="d-grid w-100"
+    style="
+      border: #00000070 1px solid;
+      border-radius: 10px;
+      background: #5f78a0c4;
+    "
+  >
+    <span
+      [ngStyle]="{
+        'text-align': isMe ? 'right' : 'left',
+        'margin-left': !isMe ? '16px' : null,
+        'margin-right': isMe ? '16px' : null
+      }"
+      class="italic"
+      style="font-weight: 100;"
+      >{{ chatMessage.username }}</span
+    >
+    <p class="text-persian mx-1">{{ chatMessage.message }}</p>
   </div>
   <!-- <p *ngIf="event.type == 'member:joined'" class="text-center"> -->
   <!-- <b>{{selectedConversation.members[event.from].user.name}}</b> has joined the conversation</p> -->

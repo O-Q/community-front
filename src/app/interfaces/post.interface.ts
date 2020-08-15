@@ -16,7 +16,7 @@ export interface Post {
     flairs: string[];
     createdAt: string;
     updatedAt: string;
-    type: SocialType.BLOG | SocialType.FORUM;
+    socialType: SocialType.BLOG | SocialType.FORUM;
 }
 
 

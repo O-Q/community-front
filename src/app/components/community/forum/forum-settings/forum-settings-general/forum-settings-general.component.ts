@@ -7,11 +7,11 @@ import { first, skipWhile } from 'rxjs/operators';
 
 import * as SocialActions from '@store/social/social.actions';
 import { SocialType } from '@app/models/user.model';
-import { enableSaveGuard } from '@app/utils/unsave-guard';
 import { ColorTypes } from '@app/interfaces/color-type.interface';
 import { ThemeService } from '@app/services/theme.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { enableSaveGuard } from '@app/guards/unsave-guard';
 @Component({
   selector: 'app-forum-settings-general',
   templateUrl: './forum-settings-general.component.html',

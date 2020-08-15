@@ -6,12 +6,18 @@
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let rule of inputs[0]?.value; index as i">
+      <mat-list-item
+        *ngFor="let rule of inputs[0]?.value; last as l; index as i"
+      >
         <div class="d-grid">
-          <span class="fs-small text-persian">{{ i + 1 }}. {{ rule }}</span>
+          <span
+            class="fs-small text-persian"
+            style="text-align: justify !important;"
+            >{{ i + 1 }}. {{ rule }}</span
+          >
           <!-- <span class="fs-small">{{ rule.description }}</span> -->
         </div>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="!l"></mat-divider>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

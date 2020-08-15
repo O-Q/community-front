@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { AuthService } from '@app/services/auth.service';
 import { Router, RouterEvent, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 import { ThemeService } from '@app/services/theme.service';
+import { initHeader } from './utils/flexible-header';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,14 @@ import { ThemeService } from '@app/services/theme.service';
 export class AppComponent implements OnInit {
   asyncLoadingCount = 0;
   showLoading$ = new EventEmitter(false);
+
   constructor(private authService: AuthService, private router: Router, private theme: ThemeService) {
     this.authService.loadUser();
     this.theme.initTheme();
   }
   ngOnInit() {
     this._initLoadingIndicator();
+    initHeader();
   }
 
   private _initLoadingIndicator() {
@@ -33,3 +36,4 @@ export class AppComponent implements OnInit {
 
 
 }
+

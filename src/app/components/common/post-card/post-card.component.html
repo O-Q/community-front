@@ -8,12 +8,12 @@
       matTooltipPosition="above"
     >
       <mat-icon
-        [ngStyle]="{ color: post.liked ? 'orange' : null }"
+        [ngStyle]="{ color: liked ? 'orange' : null }"
         mat-font-icon
         class="fa fa-angle-up"
       ></mat-icon>
     </button>
-    <span class="text-center" dir="ltr">{{ post.reaction }}</span>
+    <span class="text-center" dir="ltr">{{ reaction }}</span>
     <button
       (click)="express('DISLIKE')"
       mat-icon-button
@@ -21,7 +21,7 @@
       aria-label="dislike"
     >
       <mat-icon
-        [ngStyle]="{ color: post.liked == false ? 'orange' : null }"
+        [ngStyle]="{ color: liked == false ? 'orange' : null }"
         mat-font-icon
         class="fa fa-angle-down"
       >
@@ -32,30 +32,40 @@
     <mat-card-header class="flex-between">
       <a
         *ngIf="isHomepage"
-        [routerLink]="[
-          post.type === 'BLOG' ? 'b' : 'c',
-          post.social,
-          'p',
-          post._id
-        ]"
+        [routerLink]="[socialUrl]"
         class="pos-abs italic t-0 social-link"
       >
-        در {{ post.type === "BLOG" ? "بلاگ" : "انجمن" }} {{ post.social }}</a
+        در {{ post.socialType === "BLOG" ? "بلاگ" : "انجمن" }}
+        {{ post.social }}</a
       >
       <mat-card-title class="mb-1"
-        >{{ post.title || post.author + " میگه:" }}
+        ><span *ngIf="post.title; else authorCond"> {{ post.title }} </span>
+        <ng-template #authorCond>
+          <a class="author-link" [routerLink]="['/u', post.author]">{{
+            post.author
+          }}</a>
+          میگه:
+        </ng-template>
       </mat-card-title>
       <mat-card-subtitle>
         {{ post.subtitle }}
         <br *ngIf="post.subtitle" />
-        <span *ngIf="post.type === 'BLOG'" class="f-medium-subtitle fw-bold">
+        <span
+          class="f-medium-subtitle fw-bold"
+          *ngIf="post.socialType === 'BLOG'"
+        >
           <a
+            *ngIf="!isComment"
             routerLink="/u/{{ post.author }}"
             class="hover-pointer post__user-link"
           >
-            نویسنده: {{ post.author }} </a
-          >&nbsp; | تاریخ:
-          {{ post.createdAt | persianDate }}
+            نویسنده: {{ post.author }} &nbsp; | &nbsp;
+          </a>
+          <span> تاریخ: {{ post.createdAt | persianDate }}</span>
+          <span *ngIf="post.updatedAt !== post.createdAt">
+            &nbsp; | &nbsp; آخرین بروزرسانی:
+            {{ post.updatedAt | persianDate }}</span
+          >
         </span>
       </mat-card-subtitle>
 
@@ -63,28 +73,64 @@
         <mat-icon>more_vert</mat-icon>
       </button>
     </mat-card-header>
-    <mat-card-content
-      class="post__content"
-      [ngStyle]="{ 'min-height': post.type ? '100px' : null }"
-      [innerHTML]="safeHTML"
+    <div
+      style="outline: none;"
+      class="pos-rel"
+      [ngClass]="{
+        'open-post': !isOnPostPage && post.socialType !== 'BLOG' && !isComment
+      }"
+      (mouseover)="isHover = true"
+      (mouseout)="isHover = false"
+      [routerLink]="
+        !isOnPostPage && post.socialType !== 'BLOG' && !isComment
+          ? [socialUrl, 'p', post._id]
+          : null
+      "
     >
-    </mat-card-content>
-    <mat-card-actions *ngIf="post.type" class="mb-0 p-0 d-flex">
-      <app-post-actions
-        [post]="post"
-        [sname]="post.social.name || post.social"
-      ></app-post-actions>
-      <a
-        *ngIf="post.type === 'FORUM'; else expandPost"
-        routerLink="/u/{{ post.author }}"
-        class="f-medium-subtitle fw-bold italic my-auto mr-auto d-flex post__user-link"
+      <mat-card-content
+        class="post__content"
+        [ngClass]="{ blurry: isHover }"
+        [id]="'p-' + post._id"
+        [ngStyle]="{ 'min-height': !isComment ? '100px' : null }"
+        [innerHTML]="safeHTML"
+        [contentEditable]="editMode"
       >
-        نویسنده: {{ post.author }} | تاریخ:
-        {{ post.createdAt | persianDate }}
-      </a>
+      </mat-card-content>
+    </div>
+
+    <button
+      style="width: fit-content;"
+      class="mb-2 mt-1 mx-auto"
+      color="primary"
+      mat-raised-button
+      *ngIf="editMode"
+      (click)="updateComment(post)"
+    >
+      ذخیره تغییرات
+    </button>
+    <mat-card-actions *ngIf="!isComment" class="mb-0 p-0 d-flex">
+      <app-post-actions [post]="post" [sname]="sname"></app-post-actions>
+      <div
+        *ngIf="post.socialType === 'FORUM'; else expandPost"
+        class="f-medium-subtitle my-auto mr-auto d-flex"
+      >
+        <a
+          class="italic"
+          routerLink="/u/{{ post.author }}"
+          class="post__user-link"
+        >
+          نویسنده: {{ post.author }}
+        </a>
+        &nbsp; | &nbsp;
+        <span class="italic">تاریخ: {{ post.createdAt | persianDate }}</span>
+        <span *ngIf="post.updatedAt !== post.createdAt">
+          &nbsp; | &nbsp; آخرین بروزرسانی:
+          <span class="italic">{{ post.updatedAt | persianDate }}</span></span
+        >
+      </div>
       <ng-template #expandPost>
         <a
-          [routerLink]="['/b', post.social || post.social.name, 'p', post._id]"
+          [routerLink]="[socialUrl, 'p', post._id]"
           class="f-medium-subtitle fw-bold italic my-auto mr-auto d-flex post__user-link"
         >
           ادامه‌ی مطلب
@@ -98,13 +144,7 @@
   <!-- if moderator or writer -->
   <a
     *ngIf="post.author === (auth$ | async).user?.username"
-    [routerLink]="[
-      post.social.type === 'BLOG' ? '/b' : '/c',
-      post.social.name || post.social,
-      'p',
-      post._id,
-      'edit'
-    ]"
+    (click)="onEdit(post)"
     mat-menu-item
     class="mat-button mat-primary text-persian w-100 d-flex align-center"
   >

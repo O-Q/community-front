@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from '@app/models/user.model';
+import { INotification } from '../../interfaces/notification.interface';
 
 export const UserFetching = createAction('[User]  User Fetch Start');
 
@@ -7,6 +8,7 @@ export const UserFetched = createAction('[User]  User Fetched Successfully', pro
 
 export const UserSocialsFetched = createAction('[User]  User Socials Fetched Successfully', props<{ socials: any }>());
 
+export const UserLeaveSocial = createAction('[User] User Leave Social', props<{ sid: string }>())
 
 export const UserLogout = createAction('[User] User Logout And Removed');
 
@@ -38,6 +40,6 @@ export const UserPhotoRemoveFailed = createAction('[User] User Photo Remove Fail
 export const UserPrivacyUpdating = createAction('[User] User Privacy Updating', props<{ privacy: any }>());
 export const UserPrivacyUpdated = createAction('[User] User Privacy Updated', props<{ privacy: any }>());
 
-export const UserSocialNotification = createAction('[USER] Set User Social Notification', props<{ sname: string, notifications: number }>());
+export const UserSocialNotification = createAction('[USER] Set User Social Notification', props<{ sname: string, notifications: INotification[] }>());
 
 export const UserError = createAction('[User] User Error', props<{ message: string }>());

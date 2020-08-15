@@ -6,8 +6,15 @@
     <!-- END skeleton for load posts -->
   </ng-container>
   <ng-template #loadedPosts>
-    <ng-container *ngIf="p.posts?.length">
-      <app-post-card *ngFor="let post of p.posts" [post]="post"></app-post-card>
+    <ng-container *ngIf="p.posts?.length; else noPostProbably">
+      <app-post-card
+        *ngFor="let post of p.posts"
+        [post]="post"
+        isHomepage="true"
+      ></app-post-card>
     </ng-container>
+    <ng-template #noPostProbably>
+      <span class="fs-normal m-auto">احتمالا کاربر پستی نگذاشته است.</span>
+    </ng-template>
   </ng-template>
 </ng-container>

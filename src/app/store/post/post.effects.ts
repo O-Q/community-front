@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@store/state';
 import { PostDetailed, Post } from '@app/interfaces/post.interface';
 import { SocialType } from '@app/models/user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class PostEffects {
@@ -63,7 +64,7 @@ export class PostEffects {
     postExpress = this.actions$.pipe(
         ofType(PostActions.PostExpressing),
         switchMap((postsFetchingData) => {
-            const { reaction, pid } = postsFetchingData;
+            const { reaction, pid, isComment } = postsFetchingData;
             return this.http.post<{ reaction: number }>(
                 this.configService.makeUrl(environment.urls.post.UPDATE_REACTION, {
                     params: { pid }
@@ -72,7 +73,7 @@ export class PostEffects {
                 DEFAULT_HTTP_OPTION
             ).pipe(
                 map(r => {
-                    return PostActions.PostExpressed({ reaction: r.reaction, pid });
+                    return PostActions.PostExpressed({ reaction: r.reaction, pid, isComment: !!isComment });
                 }), catchError((error: HttpErrorResponse) => {
                     const message = error.error.message;
                     return of(PostActions.PostExpressFailed({ message }));
@@ -91,7 +92,7 @@ export class PostEffects {
                 DEFAULT_HTTP_OPTION
             ).pipe(map(() => {
                 this.router.navigate([postPublishingData.socialType === SocialType.BLOG ? '/b' : '/c', postPublishingData.sname]);
-                return PostActions.PostPublished();
+                return PostActions.PostPublished({});
             }), catchError((error: HttpErrorResponse) => {
                 this.errorHandler.handleHttpError(error, { showSnackbar: true });
                 const message = error.error.message;
@@ -105,11 +106,12 @@ export class PostEffects {
             const { pid, sid, comment, sname, socialType } = postReplyPublishingData;
             return this.http.post(
                 this.configService.makeUrl(environment.urls.post.CREATE_REPLAY_POST_BY_SID, { params: { sid, pid } }),
-                { comment },
+                { comment, socialType },
                 DEFAULT_HTTP_OPTION
-            ).pipe(map(() => {
+            ).pipe(map((post) => {
+                post['social'] = sname;
                 // this.router.navigateByUrl(`/${socialType === SocialType.BLOG ? 'b' : 'c'}/${sname}/p/${pid}`);
-                return PostActions.PostPublished();
+                return PostActions.PostPublished({ comment: post });
             }), catchError((error: HttpErrorResponse) => {
                 this.errorHandler.handleHttpError(error, { showSnackbar: true });
                 const message = error.error.message;
@@ -122,16 +124,15 @@ export class PostEffects {
         withLatestFrom(this.store.select('post')),
         switchMap(
             ([postDeletingData, postState]) => {
-
-                const { pid, sname } = postDeletingData;
+                const { pid, sname, socialType, isComment } = postDeletingData;
                 return this.http.delete(
-                    this.configService.makeUrl(environment.urls.post.DELETE_POST, { params: { pid } }),
+                    this.configService.makeUrl(environment.urls.post.DELETE_POST, { params: { pid }, queries: { socialType } }),
                     DEFAULT_HTTP_OPTION
                 ).pipe(map(() => {
                     console.log(postDeletingData.socialType);
-                    if (postDeletingData.socialType) {
+                    if (!isComment) {
                         this.router.navigate([postDeletingData.socialType === 'BLOG' ? '/b' : '/c', sname]);
-                        const posts = postState.posts.filter(p => p._id !== pid);
+                        const posts = postState.posts?.filter(p => p._id !== pid);
                         this.store.dispatch(PostActions.PostsFetched({ posts, length: postState.length - 1 }));
                     } else { // comments
                         const comments = postState.post.comments.filter(c => c._id !== pid);
@@ -178,9 +179,13 @@ export class PostEffects {
     @Effect()
     postUpdate = this.actions$.pipe(
         ofType(PostActions.PostUpdating),
-        switchMap((postUpdateData) => {
+        withLatestFrom(this.store.select('post')),
+        switchMap(([postUpdateData, postState]) => {
             console.log(postUpdateData.post);
-            const { text, title, subtitle, pid, flairs } = postUpdateData.post;
+            const { text, subtitle, flairs } = postUpdateData.post;
+            const pid = postUpdateData.post.pid || postUpdateData.post._id;
+            const isComment = !!postUpdateData.isComment;
+            const title = isComment ? '$$COMMENT' : postUpdateData.post.title;
             return this.http.patch<PostDetailed>(
                 this.configService.makeUrl(environment.urls.post.UPDATE_POST, {
                     params: {
@@ -192,9 +197,16 @@ export class PostEffects {
             ).pipe(
                 map(resData => {
                     console.log(postUpdateData);
-
-                    this.router.navigate([postUpdateData.socialType === SocialType.BLOG ? '/b' : '/c', postUpdateData.sname]);
-                    return PostActions.PostDetailedFetched({ post: resData });
+                    if (!isComment) {
+                        this.router.navigate([postUpdateData.socialType === SocialType.BLOG ? '/b' : '/c', postUpdateData.sname]);
+                    }
+                    this.snackbar.open('پست با موفقیت بروزرسانی شد.');
+                    return PostActions.PostDetailedFetched({
+                        post: {
+                            ...postState.post,
+                            comments: postState.post.comments.map(c => c._id === pid ? { ...resData, author: postUpdateData.post.author } : c),
+                        }
+                    });
                 }), catchError((error: HttpErrorResponse) => {
                     const message = error.error.message;
                     return of(PostActions.PostDetailedFetchFailed({ message }));
@@ -207,6 +219,7 @@ export class PostEffects {
         private http: HttpClient,
         private configService: ConfigService,
         private router: Router,
+        private snackbar: MatSnackBar,
         private errorHandler: ErrorHandlerService,
         private store: Store<AppState>
     ) { }

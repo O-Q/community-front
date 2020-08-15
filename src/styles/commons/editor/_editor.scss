@@ -1,55 +1,76 @@
-  .editor__input {
-    background-color: transparent;
+@import "./../../../variables";
+.editor__input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+ckeditor {
+  min-width: 70%;
+
+  .ck.ck-content p {
+    font-size: 14px;
+  }
+
+  * {
+    &.ck-focused {
+      outline: none !important;
+      border: none !important;
+      box-shadow: inset 1px -1px 11px -4px rgba(0, 0, 0, 0.75) !important;
+    }
+
+    .ck-placeholder {
+      text-align: right;
+      direction: rtl;
+      margin-right: -6px;
+    }
+  }
+
+  .ck.ck-editor__main > .ck-editor__editable {
+    background-color: unset;
+  }
+
+  .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+    border-color: transparent;
+  }
+
+  .ck.ck-editor__main > .ck-editor__editable.ck-focused {
     border: none;
-    outline: none;
+    box-shadow: none;
   }
+}
 
-  ckeditor {
-    min-width: 70%;
+.image.image_resized {
+  margin: auto;
+  display: flex;
+  flex-flow: column wrap;
+  border: #adadad solid 1px;
+  border-radius: 8px;
+  background: #ffffff38;
 
-    .ck.ck-content p {
-      font-size: 14px;
-    }
-
-    * {
-
-      &.ck-focused {
-        outline: none !important;
-        border: none !important;
-        box-shadow: inset 1px -1px 11px -4px rgba(0, 0, 0, 0.75) !important;
-
-      }
-
-      .ck-placeholder {
-        text-align: right;
-        direction: rtl;
-        margin-right: -6px;
-      }
-    }
-
-    .ck.ck-editor__main>.ck-editor__editable {
-      background-color: unset;
-    }
-
-    .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-      border-color: transparent;
-    }
-
-    .ck.ck-editor__main>.ck-editor__editable.ck-focused {
-      border: none;
-      box-shadow: none;
-    }
+  @media screen and (max-width: $max-width) {
+    width: 100% !important;
   }
-
-  .ck.ck-button.ck-block-toolbar-button {
-    color: rgb(31, 206, 236);
-
-    &:hover {
-      background-color: rgba(31, 205, 236, 0.075) !important;
-    }
+  img {
+    width: 100%;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
   }
-
-
-  .ck.ck-dropdown.ck-heading-dropdown {
-    width: 80px;
+  figcaption {
+    text-align: center;
+    font-size: small;
+    font-style: italic;
   }
+}
+
+.ck.ck-button.ck-block-toolbar-button {
+  color: rgb(31, 206, 236);
+
+  &:hover {
+    background-color: rgba(31, 205, 236, 0.075) !important;
+  }
+}
+
+.ck.ck-dropdown.ck-heading-dropdown {
+  width: 80px;
+}

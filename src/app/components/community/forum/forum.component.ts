@@ -28,12 +28,13 @@ export class ForumComponent implements OnInit, OnDestroy {
       if (URLArray?.[2] === 'new') {
         this.theme.changeToUserDefault();
       } else if (!r.params.name || social.social?.name === r.params.name) {
+        this.theme.changeColors(social.social.colors);
         return;
       } else if (!this.sname || this.sname !== r.params.name) {
         this.sname = r.params.name;
         this.store.dispatch(SocialActions.SocialFetching({ sname: this.sname, socialType: SocialType.FORUM }));
       } else {
-        this.store.select('social').pipe(first()).subscribe(s => this.theme.changeColors(s.social.colors));
+        this.theme.changeColors(social.social.colors);
       }
     });
   }

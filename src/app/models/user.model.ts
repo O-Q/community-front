@@ -1,3 +1,4 @@
+import { INotification } from '../interfaces/notification.interface';
 
 enum Role {
   SUPERUSER = 'superuser',
@@ -25,7 +26,7 @@ export interface IUser {
     status: string; // TODO: type
     role: string; // TODO: type
     social: { name: string, flairs: string[], type: SocialType, _id: string };
-    notifications: number;
+    notifications: INotification[];
   }[];
   roles: UserRole[];
   status: UserStatus;

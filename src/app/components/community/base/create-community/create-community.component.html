@@ -1,8 +1,7 @@
-<mat-card *ngIf="currentRoute$ | async as route">
+<mat-card *ngIf="currentRoute$ | async as route" class="my-1">
   <ng-container *ngIf="route.url.startsWith('/c/') ? 'انجمن' : 'بلاگ' as type">
     <mat-card-header>
       <mat-card-title>ساخت {{ type }} جدید</mat-card-title>
-      <mat-card-subtitle>subtitle</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="form">
@@ -58,7 +57,18 @@
           <mat-select id="select-subject" formControlName="subject" required>
             <mat-option
               class="text-persian"
-              *ngFor="let subject of ['هنر', 'برنامه نویسی']"
+              *ngFor="
+                let subject of [
+                  'هنر',
+                  'کامپیوتر',
+                  'اقتصاد',
+                  'مذهب',
+                  'تکنولوژی',
+                  'صنعت',
+                  'شخصی',
+                  'دیگر'
+                ]
+              "
               [value]="subject"
             >
               {{ subject }}

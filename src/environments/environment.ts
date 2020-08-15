@@ -40,6 +40,7 @@ export const environment = {
       UPDATE_WIDGETS: 'blog/widget/bulk',
       UPDATE_INFO: 'blog/info',
       UPDATE_WIDGET: 'blog/widget',
+      GET_DEFAULT_WIDGETS: 'blog/widget/default',
       UPLOAD_AVATAR: 'blog/avatar',
       UPLOAD_BANNER: 'blog/banner',
       DELETE_AVATAR: 'blog/avatar',
@@ -80,6 +81,7 @@ export const environment = {
       GET_POSTS_BY_USERNAME: 'post/user',
       CREATE_POST_BY_SID: 'post/social/:sid',
       CREATE_REPLAY_POST_BY_SID: 'post/i/:pid/social/:sid/reply',
+      UPLOAD: 'post/upload'
     }
   }
 };

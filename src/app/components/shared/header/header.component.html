@@ -54,6 +54,7 @@
       <div class="menu flex-dir-col">
         <img
           class="no-select avatar-menu"
+          [ngClass]="{ connected: user.user }"
           [src]="user.user?.avatar || '../../../../assets/avatar.png'"
         />
         <mat-icon
@@ -64,7 +65,7 @@
     </div>
   </header>
   <mat-menu #menu="matMenu" class="no-custom-theme">
-    <button disableRipple mat-menu-item class="flex-center">
+    <button disableRipple mat-menu-item class="flex-center align-center">
       <mat-slide-toggle
         style="vertical-align: middle;"
         [checked]="themeService.isDark"
@@ -76,9 +77,12 @@
       <button
         *ngIf="user.user.socials?.length > 0"
         mat-menu-item
-        [matMenuTriggerFor]="forums"
+        [matMenuTriggerFor]="socials"
       >
         بلاگ‌ و فروم‌ها
+      </button>
+      <button mat-menu-item [matMenuTriggerFor]="notifications">
+        اطلاعیه‌ها
       </button>
       <button mat-menu-item id="createForum" [routerLink]="['c', 'new']">
         ساخت فروم
@@ -97,7 +101,52 @@
         <mat-icon class="fa fa-sign-out-alt"></mat-icon>
       </button>
 
-      <mat-menu #forums="matMenu" class="no-custom-theme">
+      <mat-menu #notifications="matMenu" class="no-custom-theme">
+        <ng-container
+          *ngIf="
+            user.user.socials?.length > 0 && notificationCount$ | async;
+            else noNotification
+          "
+        >
+          <ng-container *ngFor="let social of user.user?.socials">
+            <a
+              mat-menu-item
+              *ngFor="let notification of social.notifications"
+              [routerLink]="
+                notification.pid
+                  ? [
+                      social.social.type === 'FORUM' ? 'c' : 'b',
+                      social.social.name,
+                      'p',
+                      notification.pid
+                    ]
+                  : [
+                      social.social.type === 'FORUM' ? 'c' : 'b',
+                      social.social.name
+                    ]
+              "
+            >
+              <div class="d-flex align-center text-persian">
+                <mat-icon class="fa fa-bell"></mat-icon>
+                <div>
+                  {{ notification.message }}
+                </div>
+              </div>
+            </a>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #noNotification>
+          <div
+            class="fs-small flex-center align-center mat-menu-item"
+            style="width: 200px; height: 50px; direction: rtl;"
+          >
+            اطلاعیه‌ای وجود ندارد.
+          </div>
+        </ng-template>
+      </mat-menu>
+
+      <mat-menu #socials="matMenu" class="no-custom-theme">
         <a
           mat-menu-item
           *ngFor="let social of user.user.socials"
@@ -118,9 +167,9 @@
             <div>{{ social.social.name }}</div>
             <div
               class="notifications"
-              *ngIf="social.notifications as notification"
+              *ngIf="social.notifications?.length as notifLength"
             >
-              {{ notification }}
+              {{ notifLength }}
             </div>
           </div>
         </a>

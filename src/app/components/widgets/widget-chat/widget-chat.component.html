@@ -4,7 +4,7 @@
       {{ viewValue || "اتاق گفتگو" }}
     </mat-card-title>
     <mat-card-subtitle
-      class="pt-1"
+      class="pt-1 mb-0"
       *ngIf="connected && onlineUsers$ | async as onlineUsers"
     >
       افراد آنلاین: {{ onlineUsers }}
@@ -17,7 +17,7 @@
     #chatContainer
     [scrollTop]="chatContainer.scrollHeight"
   >
-    <mat-list dense class="mat-typography py-0 px-1 no-scroll">
+    <mat-list dense class="mat-typography py-0 px-1 no-scroll pb-2">
       <ng-template #messageContainer>
         <!-- manually load messages -->
       </ng-template>

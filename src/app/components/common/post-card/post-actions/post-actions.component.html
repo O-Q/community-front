@@ -23,7 +23,7 @@
   <a
     mat-button
     [routerLink]="[
-      post.type === 'BLOG' ? '/b' : '/c',
+      post.socialType === 'BLOG' ? '/b' : '/c',
       sname || post.social.name,
       'p',
       post._id

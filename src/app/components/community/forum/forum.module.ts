@@ -11,12 +11,12 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ForumPostComponent } from './forum-post/forum-post.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SkeletonWidgetComponent } from './forum-home/forum-widget/skeleton-widget/skeleton-widget.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ForumBaseComponent } from './forum-base/forum-base.component';
 import { ForumComponent } from './forum.component';
 import { AppCommonModule } from '../../common/common.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { SkeletonWidgetModule } from '../shared/skeleton-widget/skeleton-widget.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ForumWidgetComponent,
     ForumPostComponent,
     ForumBaseComponent,
-    SkeletonWidgetComponent,
     ForumComponent,
   ],
   imports: [
@@ -38,6 +37,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatSelectModule,
     ScrollingModule,
+    SkeletonWidgetModule,
   ],
 })
 export class ForumModule {

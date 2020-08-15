@@ -1,23 +1,30 @@
 <mat-card class="social-detail">
   <mat-card-header>
-    <button class="d__more pos-abs t-0
-    l-0 mo" mat-icon-button [matMenuTriggerFor]="menu">
+    <button
+      class="d__more pos-abs t-0 l-0 mo"
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+    >
       <mat-icon>more_vert</mat-icon>
     </button>
-    <img *ngIf="social?.avatar" mat-card-avatar style=" width: 60px; height: 60px;" [src]="social?.avatar" alt="">
-    <mat-card-title>{{social?.name}}</mat-card-title>
+    <img
+      *ngIf="social?.avatar"
+      mat-card-avatar
+      style="width: 60px; height: 60px;"
+      [src]="social?.avatar"
+      alt=""
+    />
+    <mat-card-title>{{ social?.name }}</mat-card-title>
     <mat-card-subtitle class="flex-between f-medium-subtitle">
-      تاریخ تاسیس: {{social?.createdAt | persianDate}}
+      تاریخ تاسیس: {{ social?.createdAt | persianDate }}
     </mat-card-subtitle>
-
   </mat-card-header>
 
   <div class="d__member-stat f-medium-subtitle flex-evenly">
     <div>
       افراد آنلاین: 55
     </div>
-    <mat-divider [vertical]="true">
-    </mat-divider>
+    <mat-divider [vertical]="true"> </mat-divider>
     <div>
       تعداد اعضا: 964
     </div>
@@ -27,16 +34,15 @@
     <div class="d__c__description">
       {{ social?.description }}
     </div>
-
   </mat-card-content>
-  <mat-card-actions class="flex-around">
-    <div *ngIf="!social?.isUserRegistered else registered">
+  <mat-card-actions class="flex-around" *ngIf="(auth$ | async).user">
+    <div *ngIf="!social?.isUserRegistered; else registered">
       <button mat-stroked-button (click)="onJoin()">
         عضویت
       </button>
     </div>
     <ng-template #registered>
-      <a mat-stroked-button routerLink="new">
+      <a *ngIf="social.writeAccess" mat-stroked-button routerLink="new">
         پست جدید
       </a>
     </ng-template>
@@ -53,9 +59,17 @@
     <mat-icon color="warn" mat-font-icon class="far fa-flag"></mat-icon>
     گزارش
   </button>
-  <button *ngIf="social?.isUserRegistered" mat-menu-item class="mat-button-base mat-warn text-persian"
-    (click)="onLeave()">
-    <mat-icon color="warn" mat-font-icon="fa-icon" class="fa fa-sign-out-alt"></mat-icon>
+  <button
+    *ngIf="social?.isUserRegistered"
+    mat-menu-item
+    class="mat-button-base mat-warn text-persian"
+    (click)="onLeave()"
+  >
+    <mat-icon
+      color="warn"
+      mat-font-icon="fa-icon"
+      class="fa fa-sign-out-alt"
+    ></mat-icon>
     خروج از انجمن
   </button>
 </mat-menu>

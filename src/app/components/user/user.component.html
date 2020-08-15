@@ -1,13 +1,18 @@
 <div>
   <nav mat-tab-nav-bar>
-    <a [active]="rla.isActive" *ngFor="let link of navLinks" mat-tab-link [routerLink]="link.path" routerLinkActive
-      #rla="routerLinkActive">
-      {{link.title}}
+    <a
+      [active]="rla.isActive"
+      *ngFor="let link of navLinks"
+      mat-tab-link
+      [routerLink]="link.path"
+      routerLinkActive
+      #rla="routerLinkActive"
+    >
+      {{ link.title }}
     </a>
   </nav>
   <div class="d-flex info-outlet-container m-3">
     <app-user-info></app-user-info>
     <router-outlet></router-outlet>
   </div>
-
 </div>

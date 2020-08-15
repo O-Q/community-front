@@ -36,7 +36,7 @@ export const SocialWidgetUpdated = createAction('[Social] Social Widget Updated 
 
 
 
-export const SocialWidgetDefaultGetting = createAction('[Social] Social Widget Default Getting');
+export const SocialWidgetDefaultGetting = createAction('[Social] Social Widget Default Getting', props<{ socialType: SocialType }>());
 export const SocialWidgetDefaultGot = createAction('[Social] Social Widget Default Got Successfully', props<{ widgets: Widget[] }>());
 // export const SocialWidgetDefaultGetFailed = createAction('[Social] Social Widget Default Get Failed', props<{ message: string }>());
 
@@ -108,6 +108,7 @@ interface SocialFetchingPayload {
 export interface SocialInfoUpdatedPayload {
   description: string;
   status: string;
+  aboutMe?: string;
   flairs: string[];
   isPrivate: boolean;
   title: string;
@@ -115,7 +116,7 @@ export interface SocialInfoUpdatedPayload {
 }
 export interface SocialInfoUpdatingPayload extends SocialInfoUpdatedPayload {
   sname: string;
-  socialType: string;
+  socialType: SocialType;
 }
 
 

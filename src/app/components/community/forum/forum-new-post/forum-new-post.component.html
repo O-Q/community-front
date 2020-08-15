@@ -73,7 +73,12 @@
             placeholder="زیرنویس (اختیاری)"
           ></textarea>
         </mat-form-field>
-        <ckeditor [editor]="editor" [config]="config" [(ngModel)]="text">
+        <ckeditor
+          *ngIf="config"
+          [editor]="editor"
+          [config]="config"
+          [(ngModel)]="text"
+        >
         </ckeditor>
         <mat-form-field class="d-flex mt-2">
           <mat-label>زیرموضوعات</mat-label>

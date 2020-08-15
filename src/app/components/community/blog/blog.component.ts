@@ -28,6 +28,7 @@ export class BlogComponent implements OnInit, OnDestroy {
         this.isNew = true;
         this.theme.changeToUserDefault();
       } else if (!r.params.name || social.social?.name === r.params.name) {
+        this.theme.changeColors(social.social.colors);
         this.isNew = false;
         return;
       } else if (!this.sname || this.sname !== r.params.name) {
@@ -36,7 +37,7 @@ export class BlogComponent implements OnInit, OnDestroy {
         this.store.dispatch(SocialActions.SocialFetching({ sname: this.sname, socialType: SocialType.BLOG }));
       } else {
         this.isNew = false;
-        this.store.select('social').pipe(first()).subscribe(s => this.theme.changeColors(s.social.colors));
+        this.theme.changeColors(social.social.colors);
       }
     });
 

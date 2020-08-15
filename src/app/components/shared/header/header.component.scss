@@ -1,13 +1,7 @@
 @import "../../../../variables";
 
 :host {
-  position: absolute; // before that was fixed
   background-color: cadetblue;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1040;
-  height: $header-height;
 
   header {
     height: 100%;
@@ -45,21 +39,24 @@
         height: 50px;
         width: 50px;
         border-radius: 50%;
-        border: solid blue;
-        border-bottom: blue solid 15px;
+        border: solid #cf6565;
+        border-bottom: #cf6565 solid 15px;
         object-fit: cover;
         transition: box-shadow 0.2s;
-
         &:hover {
           box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.75);
         }
+      }
+      .connected {
+        border: solid #79bf65;
+        border-bottom: #79bf65 solid 15px;
       }
     }
   }
 }
 
 .selected {
-  background-color: gainsboro;
+  background-color: #dcdcdc47;
 }
 
 .menu {

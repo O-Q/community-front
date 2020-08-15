@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import * as SocialActions from '@store/social/social.actions';
 import { getDefaultWidgets, getSocialLoading } from '@store/social';
 import { skipWhile, first } from 'rxjs/operators';
+import { SocialType } from '../../../../../../models/user.model';
 @Component({
   selector: 'app-settings-widget-list-dialog',
   templateUrl: './settings-widget-list-dialog.component.html',
@@ -17,12 +18,12 @@ export class SettingsWidgetListDialogComponent {
   defaultWidgets: Widget[];
   isLoading$ = this.store.select(getSocialLoading);
   constructor(
-    @Inject(MAT_DIALOG_DATA) private currentWidgets: Widget[],
+    @Inject(MAT_DIALOG_DATA) private data: { currentWidgets: Widget[], socialType: SocialType },
     private dialogRef: MatDialogRef<SettingsWidgetListDialogComponent>,
     private store: Store<AppState>,
     private changeDetect: ChangeDetectorRef
   ) {
-    this.store.dispatch(SocialActions.SocialWidgetDefaultGetting());
+    this.store.dispatch(SocialActions.SocialWidgetDefaultGetting({ socialType: this.data.socialType }));
     this.store.select(getDefaultWidgets).pipe(skipWhile(w => !w), first()).subscribe(w => {
       this.defaultWidgets = w;
       this.changeDetect.detectChanges();
@@ -30,20 +31,20 @@ export class SettingsWidgetListDialogComponent {
   }
 
   isActive(wname: string) {
-    return this.currentWidgets.some(w => w.name === wname);
+    return this.data.currentWidgets.some(w => w.name === wname);
   }
   onSelectionChange(event: MatSelectionListChange) {
     const widget: Widget = event.option.value;
     if (event.option.selected) {
-      this.currentWidgets.push(widget);
+      this.data.currentWidgets.push(widget);
     } else {
-      this.currentWidgets = this.currentWidgets.filter(w => widget.name !== w.name);
+      this.data.currentWidgets = this.data.currentWidgets.filter(w => widget.name !== w.name);
     }
 
   }
 
   onSave() {
-    this.dialogRef.close(this.currentWidgets);
+    this.dialogRef.close(this.data.currentWidgets);
   }
   close() {
     this.dialogRef.close();

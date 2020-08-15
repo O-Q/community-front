@@ -6,7 +6,7 @@
         mat-tab-link
         routerLink="."
         [queryParams]="{ flair: f }"
-        *ngFor="let f of s.social?.flairs"
+        *ngFor="let f of s.flairs"
         [active]="flair == f"
       >
         {{ f }}
@@ -27,24 +27,30 @@
           [pageSizeOptions]="[5, 10, 20]"
         ></mat-paginator>
       </div>
-      <mat-card class="info-container">
-        <mat-card-header class="flex-center">
-          <mat-card-title>درباره</mat-card-title>
-          <mat-card-subtitle>subtitle</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="text-persian">
-          <p>یه توضیحی در مورد بلاگ و فرد نویسنده مثلا میتونه اینجا باشه.</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <a
-            name="createPost"
-            *ngIf="s.isUserRegistered"
-            routerLink="new"
-            mat-stroked-button
-            >پست جدید</a
-          >
-        </mat-card-actions>
-      </mat-card>
+      <div style="width: 250px;" class="widgets-info">
+        <mat-card *ngIf="s.aboutMe" class="info-container">
+          <mat-card-header class="flex-center">
+            <mat-card-title>‌درباره‌ی من</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="text-persian">
+            <p class="fs-small">{{ s.aboutMe }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a
+              name="createPost"
+              *ngIf="s.isUserRegistered"
+              routerLink="new"
+              mat-stroked-button
+              >پست جدید</a
+            >
+          </mat-card-actions>
+        </mat-card>
+        <app-blog-widget
+          [isRegistered]="s.isUserRegistered"
+          [widgets]="s.widgets"
+        >
+        </app-blog-widget>
+      </div>
       <button
         name="createPost"
         *ngIf="s.isUserRegistered"

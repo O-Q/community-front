@@ -35,6 +35,7 @@ export class ForumPostComponent implements OnInit {
       const sid = post.social._id;
       const pid = post._id;
       this.store.dispatch(PostActions.PostReplyPublishing({ pid, sid, sname, comment, socialType: 'FORUM' }));
+      this.comment.reset('');
     }
   }
   async onBack(sname: string) {

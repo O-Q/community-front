@@ -8,16 +8,23 @@
   </mat-card-header>
   <mat-card-content>
     <mat-selection-list (selectionChange)="onSelectionChange($event)">
-      <mat-list-option class="text-persian" [selected]="isActive(widget.name)" [value]="widget"
-        *ngFor="let widget of defaultWidgets">
-        {{widget.viewValue}}
+      <mat-list-option
+        class="text-persian"
+        [selected]="isActive(widget.name)"
+        [value]="widget"
+        *ngFor="let widget of defaultWidgets"
+      >
+        {{ widget.viewValue }}
       </mat-list-option>
     </mat-selection-list>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="accent" (click)="onSave()">
-      <app-button-content content="ذخیره تغییرات" [isLoading]="isLoading$ | async"></app-button-content>
-
+      <app-button-content
+        style="color: black;"
+        content="ذخیره تغییرات"
+        [isLoading]="isLoading$ | async"
+      ></app-button-content>
     </button>
   </mat-card-actions>
 </mat-card>

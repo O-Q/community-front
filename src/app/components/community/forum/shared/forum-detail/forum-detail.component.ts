@@ -14,7 +14,7 @@ import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/co
 export class ForumDetailComponent {
   @Input()
   social;
-
+  auth$ = this.store.select('user');
   constructor(private store: Store<AppState>, private dialog: MatDialog) {
   }
 

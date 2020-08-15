@@ -18,6 +18,7 @@
   برای عوض‌کردن ترتیب، ویجت‌ها را بکشید.
 </span>
 <div
+  *ngIf="widgets.length"
   cdkDropList
   class="example-list w-auto flex-dir-col d-flex mx-auto my-2"
   (cdkDropListDropped)="drop($event)"
@@ -28,7 +29,7 @@
     *ngFor="let widget of widgets"
     cdkDrag
   >
-    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+    <div *cdkDragPlaceholder></div>
     <div class="flex-between">
       <mat-checkbox
         class="d-flex align-center"
@@ -65,10 +66,3 @@
     <!-- {{widget}} -->
   </div>
 </div>
-
-<button class="m-auto" mat-raised-button color="primary" (click)="onSave()">
-  <app-button-content
-    content="ذخیره تغییرات"
-    [isLoading]="(social$ | async).loading"
-  ></app-button-content>
-</button>

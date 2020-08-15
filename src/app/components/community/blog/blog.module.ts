@@ -10,16 +10,22 @@ import { BlogHomeComponent } from './blog-home/blog-home.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ForumWidgetComponent } from '../forum/forum-home/forum-widget/forum-widget.component';
+import { BlogWidgetComponent } from './blog-home/blog-widget/blog-widget.component';
+import { SkeletonWidgetModule } from '../shared/skeleton-widget/skeleton-widget.module';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
-  declarations: [BlogComponent, BlogBaseComponent, BlogPostComponent, BlogHomeComponent,],
+  declarations: [BlogComponent, BlogBaseComponent, BlogPostComponent, BlogHomeComponent, BlogWidgetComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AppCommonModule,
     BlogRoutingModule,
     MatTabsModule,
+    MatChipsModule,
+    SkeletonWidgetModule,
   ]
 })
 export class BlogModule { }

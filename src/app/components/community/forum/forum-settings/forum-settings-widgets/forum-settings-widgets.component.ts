@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, ViewContainerRef, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AppState } from '@store/state';
 import { Store } from '@ngrx/store';
@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsWidgetListDialogComponent } from './settings-widget-list-dialog/settings-widget-list-dialog.component';
 import { EditWidgetDialogComponent } from './edit-widget-dialog/edit-widget-dialog.component';
-import { enableSaveGuard } from '@app/utils/unsave-guard';
+import { enableSaveGuard } from '@app/guards/unsave-guard';
 @Component({
   selector: 'app-forum-settings-widgets',
   templateUrl: './forum-settings-widgets.component.html',
@@ -21,11 +21,13 @@ export class ForumSettingsWidgetsComponent implements AfterViewInit {
   widgets: Widget[];
   social$ = this.store.select('social');
   sname: string;
+  socialType: SocialType;
   @ViewChildren('widgetContainers', { read: ViewContainerRef }) widgetContainers: QueryList<ViewContainerRef>;
   constructor(
     private store: Store<AppState>,
     private widgetLoader: WidgetLoaderService,
     private snackbar: MatSnackBar,
+    private change: ChangeDetectorRef,
     private dialog: MatDialog) {
     this._getWidgets();
   }
@@ -36,16 +38,20 @@ export class ForumSettingsWidgetsComponent implements AfterViewInit {
       .subscribe(v => {
         this.sname = v.social.name;
         this.widgets = v.social.widgets.map(w => ({ ...w }));
+        this.socialType = v.social.type;
       });
   }
   private _loadWidgets() {
-    setTimeout(() => {
+    setTimeout(async () => {
+      const promises = [];
       this.widgetContainers.forEach((vcr) => {
         const id = vcr.element.nativeElement.parentElement.id;
         const widget = this.widgets.find(w => w.name === id);
-        this.widgetLoader.load(id, vcr, widget.inputs, widget.viewValue);
+        promises.push(this.widgetLoader.load(id, vcr, widget.inputs, widget.viewValue));
       });
-    }, 300);
+      await Promise.all(promises);
+      this.change.detectChanges();
+    }, 500);
   }
   private _reloadWidgets() {
     this.widgetContainers.forEach(vcf => vcf.remove());
@@ -71,19 +77,22 @@ export class ForumSettingsWidgetsComponent implements AfterViewInit {
     this.snackbar.open('ویجت حذف شد');
   }
   onOpenWidgetLists() {
-    this.dialog.open(SettingsWidgetListDialogComponent, { data: this.widgets }).afterClosed().subscribe((r: Widget[]) => {
-      if (r) {
-        console.log(r);
+    this.dialog.open(SettingsWidgetListDialogComponent,
+      { data: { currentWidgets: this.widgets, socialType: this.socialType } })
+      .afterClosed()
+      .subscribe((r: Widget[]) => {
+        if (r) {
+          console.log(r);
 
-        this.widgets = r;
-        this.store.dispatch(SocialActions.SocialWidgetsUpdating({
-          socialType: SocialType.FORUM,
-          widgets: r.slice(),
-          sname: this.sname
-        }));
-        this._reloadWidgets();
-      }
-    });
+          this.widgets = r;
+          this.store.dispatch(SocialActions.SocialWidgetsUpdating({
+            socialType: SocialType.FORUM,
+            widgets: r.slice(),
+            sname: this.sname
+          }));
+          this._reloadWidgets();
+        }
+      });
 
   }
   onEdit(widget: Widget) {

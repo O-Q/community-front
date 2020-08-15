@@ -13,7 +13,7 @@ import { WidgetChatMessageComponent } from './widget-chat-message/widget-chat-me
 import { environment } from '@env/environment';
 
 const config: SocketIoConfig = {
-  url: `${environment.urls.baseUrl}:8080`,
+  url: `ws://localhost:8080`,
   options: { query: { token: localStorage.getItem(ACCESS_TOKEN_KEY) } }
 };
 
@@ -28,7 +28,7 @@ const config: SocketIoConfig = {
     MatListModule,
     MatInputModule,
     MatButtonModule,
-    // SocketIoModule.forRoot(config),
+    SocketIoModule.forRoot(config),
   ],
 })
 export class WidgetChatModule {

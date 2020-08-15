@@ -1,4 +1,4 @@
-<div class="flex-around settings-container">
+<div class="flex-around settings-container mb-2">
   <mat-card style="min-width: 150px; height: fit-content;" class="mt-3 mx-2">
     <mat-card-header>
       <mat-card-title>شاخه‌ها</mat-card-title>
@@ -94,13 +94,35 @@
                     <div class="grid-center">
                       <div mat-line class="d-flex">
                         <mat-icon class="ml-1">description</mat-icon>
-                        درباره انجمن
+                        درباره‌ی بلاگ
                       </div>
                     </div>
                     <div class="d-flex">
                       <mat-form-field class="w-75">
                         <textarea
                           formControlName="description"
+                          class="no-scroll"
+                          [maxLength]="150"
+                          cdkTextareaAutosize
+                          #textArea
+                          matInput
+                        ></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-list-item>
+                <mat-list-item class="h-auto">
+                  <div class="w-100">
+                    <div class="grid-center">
+                      <div mat-line class="d-flex">
+                        <mat-icon class="ml-1">account_circle</mat-icon>
+                        درباره‌ی من
+                      </div>
+                    </div>
+                    <div class="d-flex">
+                      <mat-form-field class="w-75">
+                        <textarea
+                          formControlName="aboutMe"
                           class="no-scroll"
                           [maxLength]="150"
                           cdkTextareaAutosize
@@ -146,10 +168,7 @@
               </button>
             </div>
             <mat-divider class="my-3"></mat-divider>
-            <div
-              class="ml-2 mb-2"
-              class="d-flex align-center flex-dir-col pos-rel"
-            >
+            <div class="ml-2 mb-2 d-flex align-center flex-dir-col pos-rel">
               <button
                 (click)="onRemoveImage('banner')"
                 *ngIf="s.social?.banner"
@@ -188,12 +207,12 @@
                   <div class="grid-center">
                     <div mat-line class="d-flex">
                       <mat-icon class="ml-1">traffic</mat-icon>
-                      وضعیت گروه
+                      وضعیت بلاگ
                     </div>
                   </div>
                   <div>
                     <mat-form-field>
-                      <mat-label>وضعیت گروه</mat-label>
+                      <mat-label>وضعیت بلاگ</mat-label>
                       <mat-select formControlName="status">
                         <mat-option
                           *ngFor="let s of SocialStatus"

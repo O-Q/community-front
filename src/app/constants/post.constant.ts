@@ -2,5 +2,5 @@ export enum PostSortBy {
     NEWEST = 'NEWEST',
     HOT = 'HOT',
     TOP = 'TOP',
-    DEFAULT = 'TOP'
+    DEFAULT = 'NEWEST'
 }

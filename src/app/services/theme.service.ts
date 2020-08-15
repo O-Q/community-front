@@ -14,7 +14,7 @@ export class ThemeService {
   backgroundStyleNode;
   adaptColorWithBackgroundNode;
   // '.mat-button-base'
-  textClassLists = ['#background-color .mat-card', '.mat-list-item', 'p', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
+  textClassLists = ['#background-color .mat-card', '.mat-list-item', '.f-medium-subtitle', 'p', '.mat-menu-content', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
   noCustomBackground = ['.mat-select-panel',
     '.mat-menu-panel:not(.no-custom-theme)',
     '.mat-autocomplete-panel',
@@ -25,18 +25,19 @@ export class ThemeService {
   initTheme() {
     if (localStorage.getItem('dark')) {
       this.darkTheme();
-      this.isDark = true;
     } else {
       this.isDark = false;
     }
   }
   darkTheme() {
     localStorage.setItem('dark', '1');
+    this.isDark = true;
     document.body.classList.add(DARK_THEME);
     this.overlay.getContainerElement().classList.add(DARK_THEME);
   }
   defaultTheme() {
     localStorage.removeItem('dark');
+    this.isDark = false;
     document.body.classList.remove(DARK_THEME);
     this.overlay.getContainerElement().classList.remove(DARK_THEME);
   }
@@ -108,7 +109,7 @@ export class ThemeService {
   }
 
   changeColors(colors) {
-    if (colors) {
+    if (colors && Object.keys(colors)?.length) {
       this._changeTitleColor(colors);
       this._changeBackgroundColor(colors);
       this._changeTextColor(colors);
@@ -140,68 +141,89 @@ export class ThemeService {
 
   private _changeTitleColor(colors) {
     this._removeTitleColor();
-    const style = document.createElement('style');
-    style.innerHTML = `#title-color {
-      color: ${colors.title} !important;
-    }`;
-    this.titleStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
+    if (colors.title) {
+      const style = document.createElement('style');
+      style.innerHTML = `#title-color {
+        color: ${colors.title} !important;
+      }`;
+      this.titleStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
+    }
   }
   private _changeBackgroundColor(colors) {
     this._removeBackgroundColor();
-    const style = document.createElement('style');
-    style.innerHTML = `#background-color .mat-card, #background-color .mat-chip, #background-color .mat-table,#background-color .mat-paginator, ${this.noCustomBackground}{
-      background-color: ${colors.background} !important; filter: brightness(85%);
+    if (colors.background) {
+      const style = document.createElement('style');
+      style.innerHTML = `#background-color .mat-card, #background-color .mat-chip, #background-color .mat-table,#background-color .mat-paginator, ${this.noCustomBackground}{
+        background-color: ${colors.background} !important; filter: brightness(85%); color: ${colors.text || '#fafafa !important'}
+      }
+      #background-color {
+        background-color: ${colors.background};
+      }
+      `;
+      this.backgroundStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
+      this._adaptColor(colors);
     }
-    #background-color {
-      background-color: ${colors.background};
-    }
-    `;
-    this.backgroundStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
-    this._adaptColor(colors);
   }
 
   private _changePrimaryColor(colors) {
     this._removePrimaryColor();
-    const style = document.createElement('style');
-    style.innerHTML = `
+    if (colors.primary) {
+      const style = document.createElement('style');
+      style.innerHTML = `
       #background-color .mat-primary:not(.picker-btn):not(.mat-form-field):not(.mat-button):not(.mat-stroked-button):not(.mat-icon):not(.mat-icon-button) {
-       background-color: ${colors.primary} !important;
+        background-color: ${colors.primary} !important;
       }
       #background-color .mat-primary.mat-icon-button {
-          color: ${colors.primary} !important;
+        color: ${colors.primary} !important;
       }`;
-    this.primaryStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
-    this._adaptColor(colors);
+      this.primaryStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
+      this._adaptColor(colors);
+    }
   }
   private _changeAccentColor(colors) {
     this._removeAccentColor();
-    const style = document.createElement('style');
-    style.innerHTML =
-      `#background-color .mat-accent:not(.mat-checkbox):not(.mat-icon-button):not(.mat-slide-toggle):not(.mat-spinner):not(.mat-stroked-button)  {
+    if (colors.accent) {
+      const style = document.createElement('style');
+      style.innerHTML =
+        `#background-color .mat-accent:not(.mat-checkbox):not(.mat-icon-button):not(.mat-slide-toggle):not(.mat-spinner):not(.mat-stroked-button)  {
         background-color: ${colors.accent} !important;
-       }
-       .cdk-overlay-container .mat-accent.mat-raised-button {
-          background-color: ${colors.accent} !important;
-        }
-        #background-color .mat-accent.mat-icon-button {
-          color: ${colors.accent} !important;
-        }
-       `;
-    this.accentStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
-    this._adaptColor(colors);
+      }
+      .cdk-overlay-container .mat-accent.mat-raised-button {
+        background-color: ${colors.accent} !important;
+      }
+      #background-color .mat-accent.mat-icon-button {
+        color: ${colors.accent} !important;
+      }
+      `;
+      this.accentStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
+      this._adaptColor(colors);
+    }
   }
 
   private _changeTextColor(colors) {
     this._removeTextColor();
+    const text = colors.text || this._getDefaultTextColor();
     const style = document.createElement('style');
-    style.innerHTML = `${this.textClassLists.join(', #background-color ')} { color: ${colors.text} !important; }`;
+    style.innerHTML = `${this.textClassLists.join(', #background-color ')} { color: ${text} !important; }`;
     this.textStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
     this._adaptColor(colors);
   }
 
   private _adaptColor(colors) {
     this._removeAdaptColor();
-    const { text, primary, accent, background } = colors;
+    const { primary, accent } = colors;
+    let background;
+
+    if (!colors.background) {
+      if (this.isDark) {
+        background = '#303030';
+      } else {
+        background = '#fafafa';
+      }
+    } else {
+      background = colors.background;
+    }
+    const text = colors.text || this._getDefaultTextColor();
     const style = document.createElement('style');
     style.innerHTML = `
     .mat-button-base.mat-primary,.mat-icon.mat-primaryو .mat-chip, .mat-tab-link, .mat-option.mat-selected {
@@ -215,5 +237,10 @@ export class ThemeService {
     }
     `;
     this.adaptColorWithBackgroundNode = document.getElementsByTagName('head')[0].appendChild(style);
+  }
+
+  private _getDefaultTextColor() {
+    return this.isDark ? '#fafafa' : '#303030';
+
   }
 }

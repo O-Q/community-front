@@ -15,6 +15,9 @@ import { SocialType } from '@app/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 import { getMergedRoute } from '../../../../store/router/router.selectors';
+import { ACCESS_TOKEN_KEY } from '../../../../constants/local-storage.constant';
+import { environment } from '../../../../../environments/environment';
+import { ConfigService } from '../../../../services/config.service';
 
 @Component({
   selector: 'app-blog-new-post',
@@ -31,23 +34,7 @@ export class BlogNewPostComponent implements OnInit {
   text = '';
   wordsCount = 0;
   isXSmall$: Observable<boolean>;
-  config = {
-    ...CKEDITOR_DEFAULT_CONFIG,
-    autosave: {
-      ...CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE,
-      save: editor => this.saveData(editor.getData())
-    },
-    wordCount: {
-      onUpdate: stats => this.wordsCount = stats.words
-    }
-    // not need maybe with interceptor for auth token and upload url in building ckeditor
-    // simpleUpload: {
-    //   uploadUrl: 'http://localhost:3000/image/uploadddd',
-    //   headers: {
-    //     Authorization: 'Bearer <JSON Web Token>'
-    // }
-    // }
-  };
+  config;
   selectedSocial$ = this.store.select(getSelectedSocial);
   user$ = this.store.select('user');
   postId = null;
@@ -57,12 +44,13 @@ export class BlogNewPostComponent implements OnInit {
     private route: ActivatedRoute,
     private bpo: BreakpointObserver,
     private store: Store<AppState>,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private configService: ConfigService) {
     this.isXSmall$ = this.bpo.observe(Breakpoints.XSmall).pipe(map(is => is.matches));
     const { name, pid } = this.route.snapshot.params;
+    this.sname = name;
     if (pid) { // edit post
       this.store.dispatch(PostActions.PostDetailedFetching({ sname: name, pid }));
-      this.sname = name;
       this.store.select('post').pipe(takeWhile((v) => !v.post, true)).subscribe(v => {
         if (v.post) {
           this.text = v.post.text;
@@ -80,9 +68,30 @@ export class BlogNewPostComponent implements OnInit {
   async ngOnInit() {
     const route = await this.store.select(getMergedRoute).pipe(first()).toPromise();
     this.socialType = route.url.split('/')[1] === 'b' ? SocialType.BLOG : SocialType.FORUM;
+    this.config = {
+      ...CKEDITOR_DEFAULT_CONFIG,
+      autosave: {
+        ...CKEDITOR_DEFAULT_CONFIG_AUTO_SAVE,
+        save: editor => this.saveData(editor.getData())
+      },
+      wordCount: {
+        onUpdate: stats => this.wordsCount = stats.words
+      },
+      // not need maybe with interceptor for auth token and upload url in building ckeditor
+      simpleUpload: {
+        uploadUrl: this.configService.makeUrl(environment.urls.post.UPLOAD),
+        headers: {
+          Authorization: localStorage.getItem(ACCESS_TOKEN_KEY),
+          social_type: this.socialType,
+          sname: this.sname,
+        }
+      }
+    };
   }
-  changeForum(selected: { name: string, socialType: SocialType }) {
+  changeSocial(selected: { name: string, socialType: SocialType }) {
     this.router.navigate([selected.socialType === SocialType.FORUM ? 'c' : 'b', selected.name, 'new']);
+    this.config.simpleUpload.headers.sname = selected.name;
+    this.config.simpleUpload.headers.social_type = selected.socialType;
   }
   // TODO: autosave
   saveData(data) {
@@ -105,7 +114,7 @@ export class BlogNewPostComponent implements OnInit {
 
       this.store.dispatch(PostActions.PostPublishing(
         {
-          post: { title, subtitle, text, flairs },
+          post: { title, subtitle, text, flairs, socialType: this.socialType },
           sid: selectedSocial._id,
           sname: selectedSocial.name,
           socialType: this.socialType

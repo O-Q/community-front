@@ -40,10 +40,15 @@ export const reducer = createReducer(
         fetchError: null,
         loading: true,
     })),
-    on(postActions.PostPublished, (state) => ({
-        ...state,
-        loading: false
-    })),
+    on(postActions.PostPublished, (state, action) => {
+        const comment = action.comment;
+        const post = state.post;
+        return {
+            ...state,
+            post: { ...post, comments: post?.comments ? [...post.comments, comment] : [comment], comment: post?.comment + 1 || 0 },
+            loading: false
+        };
+    }),
     on(postActions.PostPublishFailed, (state, action) => ({
         ...state,
         loading: false,
@@ -53,10 +58,6 @@ export const reducer = createReducer(
         ...state,
         fetchError: null,
         loading: true,
-    })),
-    on(postActions.PostPublished, (state) => ({
-        ...state,
-        loading: false
     })),
     on(postActions.PostPublishFailed, (state, action) => ({
         ...state,
@@ -121,17 +122,37 @@ export const reducer = createReducer(
         } else if (action.reaction === 'DISLIKE' && action.post.liked !== false) {
             liked = false;
         }
-        return {
-            ...state,
-            posts: state.posts?.map(p => p._id === action.pid ? { ...p, liked } : p),
-            post: { ...state.post, liked }
+        if (action.isComment) {
+            return {
+                ...state,
+                posts: state.posts?.map(p => p._id === action.pid ? { ...p, liked } : p),
+                post: { ...state.post, comments: state.post.comments.map(p => p._id === action.pid ? { ...p, liked } : p) }
+            };
+        } else {
+
+            return {
+                ...state,
+                posts: state.posts?.map(p => p._id === action.pid ? { ...p, liked } : p),
+                post: { ...state.post, liked }
+            }
         };
     }),
-    on(postActions.PostExpressed, (state, action) => ({
-        ...state,
-        posts: state.posts?.map(p => p._id === action.pid ? { ...p, reaction: action.reaction } : p),
-        post: { ...state.post, reaction: action.reaction }
-    })),
+    on(postActions.PostExpressed, (state, action) => {
+
+        if (action.isComment) {
+            return {
+                ...state,
+                posts: state.posts?.map(p => p._id === action.pid ? { ...p, reaction: action.reaction } : p),
+                post: { ...state?.post, comments: state.post?.comments.map(p => p._id === action.pid ? { ...p, reaction: action.reaction } : p) }
+            };
+        } else {
+            return {
+                ...state,
+                posts: state.posts?.map(p => p._id === action.pid ? { ...p, reaction: action.reaction } : p),
+                post: { ...state.post, reaction: action.reaction }
+            };
+        }
+    }),
     on(postActions.PostExpressFailed, (state, action) => ({
         ...state,
         fetchError: action.message,

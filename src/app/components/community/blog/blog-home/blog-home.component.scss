@@ -33,7 +33,6 @@
     }
   }
   .info-container {
-    width: 250px;
     height: fit-content;
 
     @media screen and (max-width: $max-width) {
@@ -43,6 +42,12 @@
 }
 .new-post-phone {
   @media screen and (min-width: $max-width) {
+    display: none;
+  }
+}
+
+.widgets-info {
+  @media screen and (max-width: $max-width) {
     display: none;
   }
 }

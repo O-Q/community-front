@@ -1,5 +1,10 @@
 <mat-card *ngIf="auth$ | async as auth" class="no-custom-theme">
-  <button mat-icon-button class="pos-abs" matTooltip="بستن" (click)="onClose()">
+  <button
+    mat-icon-button
+    class="pos-abs t-0 l-0"
+    matTooltip="بستن"
+    (click)="onClose()"
+  >
     <mat-icon class="fa fa-times" inline></mat-icon>
   </button>
   <mat-card-header>

@@ -1,14 +1,17 @@
-@import './../variables.scss';
+@import "./../variables.scss";
 
+:host {
+  justify-content: center;
+}
 mat-card {
-  margin: auto;
   min-width: 300px;
   min-height: 300px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
 
   @media screen and (max-width: $max-width) {
     min-width: 85%;
-
   }
 
   mat-card-header {
@@ -18,9 +21,9 @@ mat-card {
 
   mat-card-content,
   form {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-
   }
 }
 
@@ -39,5 +42,5 @@ mat-form-field {
   color: red;
   font-size: 12px;
   font-weight: 600;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }

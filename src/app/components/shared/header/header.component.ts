@@ -8,7 +8,7 @@ import { LoginComponent } from '../login/login.component';
 import { State } from '@store/user/user.reducer';
 import { AppState } from '@store/state';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import * as AuthActions from '@store/auth/auth.actions';
 import * as SearchActions from '@store/search/search.actions';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   isOpenSearch = false;
   form: FormGroup;
   search$ = this.store.select('search');
+  notificationCount$ = this.store.select('user').pipe(map(u => u.user.socials.reduce((a, b) => a + b.notifications.length, 0)));
   constructor(
     public themeService: ThemeService,
     public dialog: MatDialog,

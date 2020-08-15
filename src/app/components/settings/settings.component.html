@@ -1,3 +1,19 @@
+<a
+  [routerLink]="['/u', username$ | async]"
+  mat-button
+  style="
+    position: fixed;
+    left: 0;
+    top: 24%;
+    transform: rotate(270deg);
+    margin-left: -35px;
+    background: cadetblue;
+    z-index: 3;
+  "
+>
+  صفحه‌ی من
+</a>
+
 <nav mat-tab-nav-bar class="text-english mx-auto" style="max-width: 100%;">
   <a
     [active]="rla.isActive"

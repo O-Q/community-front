@@ -3,7 +3,6 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/state';
 import { first, skipWhile } from 'rxjs/operators';
-import { enableSaveGuard } from '@app/utils/unsave-guard';
 import { SocialStatus } from '@app/constants/social.constant';
 import * as SocialActions from '@store/social/social.actions';
 import { SocialType } from '@app/models/user.model';
@@ -11,6 +10,7 @@ import { ColorTypes } from '@app/interfaces/color-type.interface';
 import { ThemeService } from '@app/services/theme.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
+import { enableSaveGuard } from '@app/guards/unsave-guard';
 
 
 @Component({
@@ -30,11 +30,12 @@ export class BlogSettingsGeneralComponent implements OnInit {
   colors;
   constructor(private store: Store<AppState>, private theme: ThemeService, private dialog: MatDialog) {
     this.form = new FormGroup({
-      description: new FormControl('', [Validators.required, Validators.maxLength(250)]),
-      title: new FormControl('', Validators.required),
+      description: new FormControl('', [Validators.required, Validators.maxLength(150)]),
+      title: new FormControl('', [Validators.required]),
       flairs: new FormControl([]),
       status: new FormControl('', [Validators.required]),
       isPrivate: new FormControl('', [Validators.required]),
+      aboutMe: new FormControl('', [Validators.maxLength(150)]),
     });
 
     this.store.select('social').pipe(skipWhile(w => !w.social), first()).subscribe((s: any) => {
@@ -42,6 +43,7 @@ export class BlogSettingsGeneralComponent implements OnInit {
       this.form.get('title').setValue(s.social.title);
       this.form.get('status').setValue(s.social.status);
       this.form.get('isPrivate').setValue(s.social.isPrivate);
+      this.form.get('aboutMe').setValue(s.social.aboutMe);
       this.colors = { ...s.social.colors };
       this.sname = s.social.name;
       s.social.flairs.forEach(f => this.selectedFlairs.add(f));
@@ -81,13 +83,14 @@ export class BlogSettingsGeneralComponent implements OnInit {
     console.log(this.form.value);
 
     if (this.form.valid) {
-      const { title, description, status, isPrivate } = this.form.value;
+      const { title, description, status, isPrivate, aboutMe } = this.form.value;
       this.store.dispatch(SocialActions.SocialInfoUpdating(
         {
           title,
           colors: { ...this.colors },
           sname: this.sname,
           description,
+          aboutMe,
           status,
           isPrivate,
           socialType: SocialType.BLOG,

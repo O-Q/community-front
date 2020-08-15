@@ -29,9 +29,12 @@ export class TokenInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(tap(r => { }, (e: HttpErrorResponse) => {
             if (e.status === 401 && !request.url.includes('signin')) {
                 this.store.dispatch(AuthActions.logout({ silent: false, message: '⚠ برای این‌ کار ابتدا وارد شوید' }));
-            } else {
-                this.store.dispatch(AuthActions.logout({ silent: false, message: '⛔ اطلاعات وارد شده نادرست است' }));
+            } else if (e.status === 404) {
+                this.router.navigateByUrl('/404');
             }
+            //  else {
+            //     this.store.dispatch(AuthActions.logout({ silent: false, message: '⛔ اطلاعات وارد شده نادرست است' }));
+            // }
         }));
     }
 }

@@ -98,11 +98,11 @@ export const reducer = createReducer(
     fetchError: null,
   })),
   on(socialActions.SocialInfoUpdated, (state, action) => {
-    const { description, status, flairs, isPrivate, title, colors } = action;
+    const { description, status, flairs, isPrivate, title, colors, aboutMe } = action;
     return {
       ...state,
       loading: false,
-      social: { ...state.social, description, status, flairs, isPrivate, title, colors }
+      social: { ...state.social, description, status, flairs, isPrivate, title, colors, aboutMe }
     };
   }),
 
@@ -181,12 +181,13 @@ export const reducer = createReducer(
     ...state,
     loading: true,
     fetchError: null,
-    social: { ...state.social, isUserRegistered: false }
   })),
   on(socialActions.SocialLeft, (state) => {
     return {
       ...state,
       loading: false,
+      social: { ...state.social, isUserRegistered: false }
+
     };
   }), on(socialActions.SocialUsersGetting, (state) => ({
     ...state,

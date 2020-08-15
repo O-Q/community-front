@@ -1,7 +1,7 @@
 <ng-container *ngIf="social$ | async as social">
   <ng-container *ngIf="!social.loading; else loadingSocial">
     <app-forum-base></app-forum-base>
-    <div class="w-100 flex-center">
+    <div class="w-100 flex-center mb-2">
       <!-- Posts -->
       <div
         class="posts-container"

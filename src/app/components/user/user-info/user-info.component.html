@@ -1,8 +1,8 @@
 <ng-container *ngIf="user$ | async as u">
-  <mat-card *ngIf="u.user as user">
+  <mat-card *ngIf="u.user || !u.loading; else loadingInfo">
     <img
       class="user__banner pos-abs t-0 l-0"
-      [src]="user.banner || './../../../../assets/avatar.png'"
+      [src]="u.user.banner || '../../../../../assets/banner.png'"
       alt="بنر کاربر"
     />
     <mat-card-header>
@@ -10,22 +10,22 @@
         mat-card-avatar
         class="mt-3"
         style="width: 100px; height: 100px; z-index: 1;"
-        [src]="user.avatar || './../../../../assets/avatar.png'"
+        [src]="u.user.avatar || './../../../../assets/avatar.png'"
         alt=""
       />
     </mat-card-header>
     <mat-card-content style="margin-top: -1.75rem;">
-      <div class="fw-bold f-large-title text-english ml-3">
-        {{ user.username }}
+      <div class="fw-bold f-large-title text-english ml-3 pt-1">
+        {{ u.user.username }}
       </div>
       <div class="f-medium-subtitle text-persian mr-1">
-        آخرین بازدید: {{ user.updatedAt | persianDate }}
+        آخرین بازدید: {{ u.user.updatedAt | persianDate }}
       </div>
       <div class="user__box-container pt-2 pb-1">
         <div class="user__box">
           <mat-icon inline class="d-flex align-center m-auto">cake</mat-icon>
           <span class="f-medium-subtitle">
-            {{ user.createdAt | persianDate }}
+            {{ u.user.createdAt | persianDate }}
           </span>
         </div>
         <mat-divider style="height: 70px;" vertical> </mat-divider>
@@ -38,9 +38,9 @@
           </span>
         </div>
       </div>
-      <div class="text-persian">
+      <div class="text-persian" *ngIf="u.user.description">
         <span class="fw-bold">درباره‌ی من</span>
-        <p class="fs-small justify">{{ user.description }}</p>
+        <p class="fs-small justify">{{ u.user.description }}</p>
       </div>
     </mat-card-content>
     <mat-card-actions class="flex-around m-auto">
@@ -65,7 +65,12 @@
           </button>
         </ng-template>
       </ng-container>
-      <button mat-stroked-button color="accent">گفتگو</button>
+      <button mat-stroked-button color="accent" (click)="onTalk(u.user)">
+        گفتگو
+      </button>
     </mat-card-actions>
   </mat-card>
+  <ng-template #loadingInfo>
+    <app-skeleton-profile-box></app-skeleton-profile-box>
+  </ng-template>
 </ng-container>

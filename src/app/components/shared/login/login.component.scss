@@ -1,10 +1,13 @@
-@import '../../../../styles/form';
-
-
+@import "../../../../styles/form";
+@import "../../../../variables";
+mat-card {
+  @media screen and (max-width: $max-width) {
+    width: 80vw;
+  }
+}
 mat-icon[matPrefix] {
   user-select: none;
 }
-
 
 .login-btn {
   margin: 20px auto 0 auto !important;
@@ -14,6 +17,6 @@ mat-icon[matPrefix] {
   margin-top: -10px;
 
   .fp__action:hover {
-    opacity: .5;
+    opacity: 0.5;
   }
 }

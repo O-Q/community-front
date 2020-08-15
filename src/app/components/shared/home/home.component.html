@@ -1,4 +1,82 @@
 <div class="mt-3 flex-evenly container">
+  <div
+    *ngIf="search$ | async as search"
+    class="d-flex flex-dir-col mx-3 right-side"
+    style="margin-top: 4.25rem;"
+  >
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>انجمن‌های داغ</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-nav-list *ngIf="search.forums?.length; else noHotForum">
+          <div *ngFor="let forum of search.forums; last as last">
+            <a
+              [routerLink]="['/c', forum.name]"
+              routerLinkActive="router-link-active"
+              class="fs-small text-persian h-auto py-1"
+              mat-list-item
+            >
+              {{ forum.title }}
+            </a>
+            <mat-divider *ngIf="!last" class="pos-rel"></mat-divider>
+          </div>
+        </mat-nav-list>
+        <ng-template #noHotForum>
+          <span class="fs-small fw-normal">
+            اولین انجمنی باشید که اینجا قرار می‌گیرد. ✨</span
+          >
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>بلاگ‌های داغ</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-nav-list *ngIf="search.blogs?.length; else noHotBlog">
+          <div *ngFor="let blog of search.blogs; last as last">
+            <a
+              [routerLink]="['/b', blog.name]"
+              class="fs-small text-persian h-auto py-1"
+              mat-list-item
+            >
+              {{ blog.title }}
+            </a>
+            <mat-divider *ngIf="!last" class="pos-rel"></mat-divider>
+          </div>
+        </mat-nav-list>
+        <ng-template #noHotBlog>
+          <span class="fs-small fw-normal">
+            اولین بلاگی باشید که اینجا قرار می‌گیرد. ✨</span
+          >
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>📢</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="py-3">
+        تبلیغات شما اینجا
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="accent">سفارش تبلیغ</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>توجه</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="fs-small">
+        این بستر فعلا در مراحل اولیه است.
+      </mat-card-content>
+      <mat-card-actions class="fs-small">
+        در حال توسعه توسط <b>مهدی شیری</b>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <mat-divider class="divide-sections"> </mat-divider>
   <div class="d-flex flex-dir-col mx-3 post-container">
     <div class="flex-between mb-2 align-center">
       <mat-button-toggle-group
@@ -32,68 +110,5 @@
         </div>
       </ng-template>
     </ng-container>
-  </div>
-  <div class="d-flex flex-dir-col mx-3 right-side" style="margin-top: 4.25rem;">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>انجمن‌های داغ</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-nav-list>
-          <div *ngFor="let forum of (search$ | async).forums; last as last">
-            <a
-              [routerLink]="['/c', forum.name]"
-              routerLinkActive="router-link-active"
-              class="fs-small text-persian h-auto py-1"
-              mat-list-item
-            >
-              {{ forum.title }}
-            </a>
-            <mat-divider *ngIf="!last" class="pos-rel"></mat-divider>
-          </div>
-        </mat-nav-list>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>بلاگ‌های داغ</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-nav-list>
-          <div *ngFor="let blog of (search$ | async).blogs; last as last">
-            <a
-              [routerLink]="['/b', blog.name]"
-              class="fs-small text-persian h-auto py-1"
-              mat-list-item
-            >
-              {{ blog.title }}
-            </a>
-            <mat-divider *ngIf="!last" class="pos-rel"></mat-divider>
-          </div>
-        </mat-nav-list>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>📢</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="py-3">
-        تبلیغات شما اینجا
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="accent">سفارش تبلیغ</button>
-      </mat-card-actions>
-    </mat-card>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>توجه</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="fs-small">
-        این بستر فعلا در مراحل اولیه است.
-      </mat-card-content>
-      <mat-card-actions class="fs-small">
-        در حال توسعه توسط <b>مهدی شیری</b>
-      </mat-card-actions>
-    </mat-card>
   </div>
 </div>

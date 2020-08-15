@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, ChangeDetectionStrategy } from '@angul
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/state';
 import * as UserActions from '@store/user/user.actions';
-import { enableSaveGuard } from '@app/utils/unsave-guard';
+import { enableSaveGuard } from '@app/guards/unsave-guard';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
