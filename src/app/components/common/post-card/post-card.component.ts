@@ -102,7 +102,7 @@ export class PostCardComponent implements OnInit {
   }
 
   isPermittedToRemove(user: IUser) {
-    const role = user.socials.find(s => s.social._id === this.post.social?._id)?.role;
+    const role = user.socials?.find(s => s.social?._id === this.post.social?._id)?.role;
     return user.username === this.post.author || ['MODERATOR', 'CREATOR'].includes(role) || user.roles.some(r => r === UserRole.ADMIN);
   }
 
