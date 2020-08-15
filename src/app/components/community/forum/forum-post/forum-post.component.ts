@@ -27,8 +27,6 @@ export class ForumPostComponent implements OnInit {
   }
   ngOnInit() { }
   onSendComment(post) {
-    console.log(this.comment.valid);
-
     if (this.comment.valid) {
       const comment = this.comment.value;
       const sname = post.social.name;

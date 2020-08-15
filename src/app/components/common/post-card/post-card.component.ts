@@ -8,8 +8,10 @@ import * as PostActions from '@store/post/post.actions';
 import * as SearchActions from '@store/search/search.actions';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { SocialType } from '../../../models/user.model';
+import { SocialType, User, IUser, UserRole } from '../../../models/user.model';
 import { updateReaction } from '../../../utils/reaction.util';
+import { map } from 'rxjs/operators';
+import { SocialUserRole } from '../../../constants/social.constant';
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
@@ -35,7 +37,7 @@ export class PostCardComponent implements OnInit {
   isOnPostPage: boolean;
   liked: boolean;
   reaction: number;
-  auth$ = this.store.select('auth');
+  user$ = this.store.select('user').pipe(map(u => u.user));
   constructor(private dialog: MatDialog, private store: Store<AppState>, private sanitizer: DomSanitizer, private router: Router) { }
   ngOnInit() {
     this.liked = this.post.liked;
@@ -99,8 +101,9 @@ export class PostCardComponent implements OnInit {
     this.editMode = false;
   }
 
-  isPermittedToRemove(username) {
-    return username === this.post.author || this.admins?.includes[username];
+  isPermittedToRemove(user: IUser) {
+    const role = user.socials.find(s => s.social._id === this.post.social?._id)?.role;
+    return user.username === this.post.author || ['MODERATOR', 'CREATOR'].includes(role) || user.roles.some(r => r === UserRole.ADMIN);
   }
 
   express(newReaction: 'LIKE' | 'DISLIKE', user) {

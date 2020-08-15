@@ -80,8 +80,6 @@ export class BlogSettingsGeneralComponent implements OnInit {
     }
   }
   onSave() {
-    console.log(this.form.value);
-
     if (this.form.valid) {
       const { title, description, status, isPrivate, aboutMe } = this.form.value;
       this.store.dispatch(SocialActions.SocialInfoUpdating(

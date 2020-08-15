@@ -14,7 +14,7 @@ export class ThemeService {
   backgroundStyleNode;
   adaptColorWithBackgroundNode;
   // '.mat-button-base'
-  textClassLists = ['#background-color .mat-card', '.mat-list-item', '.f-medium-subtitle', 'p', '.mat-menu-content', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
+  textClassLists = ['#background-color .mat-card', '.mat-list-item', '.f-medium-subtitle', 'p', 'ul', 'li', 'span', 'figcaption', 'a', 'div', '.mat-menu-content', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
   noCustomBackground = ['.mat-select-panel',
     '.mat-menu-panel:not(.no-custom-theme)',
     '.mat-autocomplete-panel',
@@ -202,8 +202,8 @@ export class ThemeService {
 
   private _changeTextColor(colors) {
     this._removeTextColor();
-    const text = colors.text || this._getDefaultTextColor();
     const style = document.createElement('style');
+    const text = getTextColor(this._getBackgroundColor(colors), this._getTextColor(colors))
     style.innerHTML = `${this.textClassLists.join(', #background-color ')} { color: ${text} !important; }`;
     this.textStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
     this._adaptColor(colors);
@@ -212,18 +212,8 @@ export class ThemeService {
   private _adaptColor(colors) {
     this._removeAdaptColor();
     const { primary, accent } = colors;
-    let background;
-
-    if (!colors.background) {
-      if (this.isDark) {
-        background = '#303030';
-      } else {
-        background = '#fafafa';
-      }
-    } else {
-      background = colors.background;
-    }
-    const text = colors.text || this._getDefaultTextColor();
+    const background = this._getBackgroundColor(colors);
+    const text = this._getTextColor(colors);
     const style = document.createElement('style');
     style.innerHTML = `
     .mat-button-base.mat-primary,.mat-icon.mat-primaryو .mat-chip, .mat-tab-link, .mat-option.mat-selected {
@@ -237,6 +227,18 @@ export class ThemeService {
     }
     `;
     this.adaptColorWithBackgroundNode = document.getElementsByTagName('head')[0].appendChild(style);
+  }
+
+  private _getBackgroundColor(colors) {
+    return colors.background || this._getDefaultBackgroundColor();
+  }
+
+  private _getTextColor(colors) {
+    return colors.text || this._getDefaultTextColor();
+  }
+
+  private _getDefaultBackgroundColor() {
+    return this.isDark ? '#303030' : '#fafafa';
   }
 
   private _getDefaultTextColor() {

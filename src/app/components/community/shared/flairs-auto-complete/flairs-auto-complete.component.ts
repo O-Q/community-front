@@ -70,8 +70,6 @@ export class FlairsAutoCompleteComponent implements OnInit {
   }
 
   private _filterFlair(value: string): AppItem[] {
-    console.log('bib');
-
     if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
       const x = suggestedFlairs.filter(fruit => fruit.value.toLowerCase().indexOf(filterValue) === 0);

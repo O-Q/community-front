@@ -1,10 +1,10 @@
 <mat-card
   class="post text-persian pr-0 pb-0 d-flex"
-  *ngIf="auth$ | async as auth"
+  *ngIf="user$ | async as user"
 >
   <div class="d-grid post__interact">
     <button
-      (click)="express('LIKE', auth.user)"
+      (click)="express('LIKE', user)"
       matTooltip="+1"
       mat-icon-button
       aria-label="like"
@@ -18,7 +18,7 @@
     </button>
     <span class="text-center" dir="ltr">{{ post.reaction }}</span>
     <button
-      (click)="express('DISLIKE', auth.user)"
+      (click)="express('DISLIKE', user)"
       mat-icon-button
       matTooltip="-1"
       aria-label="dislike"
@@ -146,7 +146,7 @@
 <mat-menu #menu="matMenu">
   <!-- if moderator or writer -->
   <a
-    *ngIf="post.author === (auth$ | async).user?.username"
+    *ngIf="post.author === (user$ | async)?.username"
     (click)="onEdit(post)"
     mat-menu-item
     class="mat-button mat-primary text-persian w-100 d-flex align-center"
@@ -162,7 +162,7 @@
   <button
     mat-menu-item
     class="mat-button mat-warn text-persian"
-    *ngIf="isPermittedToRemove((auth$ | async).user?.username)"
+    *ngIf="isPermittedToRemove(user$ | async)"
     (click)="onDeletePost()"
   >
     <mat-icon

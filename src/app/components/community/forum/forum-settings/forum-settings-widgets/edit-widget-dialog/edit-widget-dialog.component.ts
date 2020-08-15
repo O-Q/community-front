@@ -16,7 +16,6 @@ export class EditWidgetDialogComponent implements OnInit {
   addNew(inputWidget, input) {
     inputWidget.value.push(input.value);
     input.value = '';
-    console.log(this.widget);
   }
 
   onRemove(inputWidget, item: string) {

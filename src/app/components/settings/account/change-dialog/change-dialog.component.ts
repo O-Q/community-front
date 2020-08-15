@@ -32,7 +32,6 @@ export class ChangeDialogComponent implements OnInit {
   }
   onChange() {
     if (this.form.valid) {
-      console.log(this.form.value);
       this.dialogRef.close(this.form.value);
     }
   }

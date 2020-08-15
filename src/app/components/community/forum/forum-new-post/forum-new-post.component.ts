@@ -101,8 +101,6 @@ export class ForumNewPostComponent implements OnInit {
     });
   }
   onPublish(selectedSocial) {
-    console.log(selectedSocial);
-
 
     if (this.title.valid && this.wordsCount >= 3) {
       const text = this.text;

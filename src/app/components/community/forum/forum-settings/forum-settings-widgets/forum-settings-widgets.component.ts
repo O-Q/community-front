@@ -82,8 +82,6 @@ export class ForumSettingsWidgetsComponent implements AfterViewInit {
       .afterClosed()
       .subscribe((r: Widget[]) => {
         if (r) {
-          console.log(r);
-
           this.widgets = r;
           this.store.dispatch(SocialActions.SocialWidgetsUpdating({
             socialType: SocialType.FORUM,

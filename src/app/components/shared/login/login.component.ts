@@ -63,7 +63,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   login() {
-    console.log(this.form.valid);
 
     if (this.form.valid) {
       const { username, password } = this.form.value;

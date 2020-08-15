@@ -19,7 +19,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs = this.store.select(getMergedRoute).subscribe(route => {
-      console.log('route changed:', route);
       const username = route.params.username;
       if (username) {
         this.store.dispatch(UserInfoActions.UserInfoGetting({ username }));

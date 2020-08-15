@@ -33,8 +33,6 @@ export class ColorPickerComponent implements OnInit {
     this.selectedColor = this.initialColor;
   }
   toggleColorPicker() {
-    console.log(this.initialColor);
-
     this.showColorPicker = !this.showColorPicker;
   }
   changeColor(color: string) {

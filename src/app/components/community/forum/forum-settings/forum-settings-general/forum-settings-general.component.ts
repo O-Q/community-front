@@ -84,7 +84,6 @@ export class ForumSettingsGeneralComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.form.value);
     // TODO: add colors
     if (this.form.valid) {
       const { title, description, status, isPrivate } = this.form.value;
