@@ -1,12 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import * as SearchAction from './search.actions';
+import { Post } from '../../interfaces/post.interface';
+import { act } from '@ngrx/effects';
 
 export interface State {
   loadingPost: boolean;
   loadingSocial: boolean;
   loadingSearch: boolean;
   results: any;
-  posts: any[];
+  posts: Post[];
   blogs: any[];
   forums: any[];
   postLength: number;
@@ -61,6 +63,9 @@ export const reducer = createReducer(
     blogs: action.data.blogs,
     forums: action.data.forums,
     fetchError: null
+  })), on(SearchAction.HomepagePostExpressing, (state, action) => ({
+    ...state,
+    posts: state.posts.map(p => p._id === action.post._id ? action.post : p)
   }))
 
 );

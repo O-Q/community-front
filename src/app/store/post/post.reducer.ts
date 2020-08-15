@@ -123,12 +123,13 @@ export const reducer = createReducer(
                 post: { ...state.post, comments: state.post.comments.map(p => p._id === action.pid ? { ...action.post } : p) }
             };
         } else {
+            console.log(action.post);
             return {
                 ...state,
                 posts: state.posts?.map(p => p._id === action.pid ? { ...action.post } : p),
                 post: { ...action.post }
-            }
-        };
+            };
+        }
     }),
     on(postActions.PostExpressed, (state, action) => {
 

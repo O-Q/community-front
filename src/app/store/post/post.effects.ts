@@ -7,6 +7,8 @@ import { of } from 'rxjs';
 import { ConfigService } from '@app/services/config.service';
 import { DEFAULT_HTTP_OPTION } from '@app/constants/http-headers.constant';
 import * as PostActions from './post.actions';
+import * as SearchActions from './../search/search.actions';
+
 
 import { environment } from '@env/environment';
 import { Router } from '@angular/router';
@@ -65,6 +67,9 @@ export class PostEffects {
         ofType(PostActions.PostExpressing),
         switchMap((postsFetchingData) => {
             const { reaction, pid, isComment } = postsFetchingData;
+            if (postsFetchingData.isHomepage) {
+                this.store.dispatch(SearchActions.HomepagePostExpressing({ post: postsFetchingData.post }));
+            }
             return this.http.post<{ reaction: number }>(
                 this.configService.makeUrl(environment.urls.post.UPDATE_REACTION, {
                     params: { pid }
@@ -74,6 +79,7 @@ export class PostEffects {
             ).pipe(
                 map(r => {
                     return PostActions.PostExpressed({ reaction: r.reaction, pid, isComment: !!isComment });
+
                 }), catchError((error: HttpErrorResponse) => {
                     const message = error.error.message;
                     return of(PostActions.PostExpressFailed({ message }));

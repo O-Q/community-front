@@ -48,7 +48,7 @@ export const PostUpdated = createAction('[POST] Post Updated Successfully');
 export const PostUpdateFailed = createAction('[POST] Post Update Failed', props<{ message: string }>());
 
 
-export const PostExpressing = createAction('[POST] Post Express Start', props<{ reaction: 'LIKE' | 'DISLIKE', pid: string, post: Post, isComment?: boolean }>());
+export const PostExpressing = createAction('[POST] Post Express Start', props<{ reaction: 'LIKE' | 'DISLIKE', pid: string, post: Post, isComment?: boolean, isHomepage?: boolean }>());
 export const PostExpressed = createAction('[POST] Post Expressed Successfully', props<{ reaction: number, pid: string, isComment }>());
 export const PostExpressFailed = createAction('[POST] Post Express Failed', props<{ message: string }>());
 

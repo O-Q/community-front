@@ -5,6 +5,7 @@ import { Post } from '@app/interfaces/post.interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '@app/store/state';
 import * as PostActions from '@store/post/post.actions';
+import * as SearchActions from '@store/search/search.actions';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SocialType } from '../../../models/user.model';
@@ -106,6 +107,13 @@ export class PostCardComponent implements OnInit {
     const isComment = !!this.post.replyTo;
     const { liked, reaction } = user ?
       updateReaction(newReaction, this.post.liked, this.post.reaction) : { liked: null, reaction: this.post.reaction };
-    this.store.dispatch(PostActions.PostExpressing({ reaction: newReaction, pid: this.post._id, post: { ...this.post, liked, reaction }, isComment }));
+    this.store.dispatch(PostActions.PostExpressing(
+      {
+        reaction: newReaction,
+        pid: this.post._id,
+        post: { ...this.post, liked, reaction },
+        isComment,
+        isHomepage: this.isHomepage
+      }));
   }
 }

@@ -26,6 +26,8 @@ export const HomepagePostFetched = createAction(
   '[Search] Homepage Post Fetched Successfully',
   props<{ posts: Post[], length: number }>()
 );
+export const HomepagePostExpressing = createAction('[Search] Homepage Post Expressing',
+  props<{ post: Post }>());
 
 
 export const SearchError = createAction(
