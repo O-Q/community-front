@@ -1,27 +1,30 @@
-<mat-card class="post text-persian pr-0 pb-0 d-flex">
+<mat-card
+  class="post text-persian pr-0 pb-0 d-flex"
+  *ngIf="auth$ | async as auth"
+>
   <div class="d-grid post__interact">
     <button
-      (click)="express('LIKE')"
+      (click)="express('LIKE', auth.user)"
       matTooltip="+1"
       mat-icon-button
       aria-label="like"
       matTooltipPosition="above"
     >
       <mat-icon
-        [ngStyle]="{ color: liked ? 'orange' : null }"
+        [ngStyle]="{ color: post.liked ? 'orange' : null }"
         mat-font-icon
         class="fa fa-angle-up"
       ></mat-icon>
     </button>
-    <span class="text-center" dir="ltr">{{ reaction }}</span>
+    <span class="text-center" dir="ltr">{{ post.reaction }}</span>
     <button
-      (click)="express('DISLIKE')"
+      (click)="express('DISLIKE', auth.user)"
       mat-icon-button
       matTooltip="-1"
       aria-label="dislike"
     >
       <mat-icon
-        [ngStyle]="{ color: liked == false ? 'orange' : null }"
+        [ngStyle]="{ color: post.liked == false ? 'orange' : null }"
         mat-font-icon
         class="fa fa-angle-down"
       >

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ViewContainerRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { WidgetLoaderService } from '../../../../widgets/widget-loader.service';
-import { Widget } from '../../../../../../../server/dist/blog/interfaces/blog.interface';
+import { Widget } from '../../../../../interfaces/widgets.interface';
 
 @Component({
   selector: 'app-blog-widget',

@@ -67,6 +67,7 @@
         <app-post-card
           *ngFor="let comment of post.comments"
           [post]="comment"
+          [admins]="admins$ | async"
           isComment="true"
         ></app-post-card>
       </div>

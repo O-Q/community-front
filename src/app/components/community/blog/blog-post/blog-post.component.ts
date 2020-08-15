@@ -11,6 +11,7 @@ import { first } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { Post } from '@app/interfaces/post.interface';
+import { updateReaction } from '../../../../utils/reaction.util';
 
 @Component({
   selector: 'app-blog-post',
@@ -56,7 +57,15 @@ export class BlogPostComponent implements OnInit, OnDestroy {
       (await this.store.select(getMergedRoute).pipe(first()).toPromise()).prevUrl || `/b/${this.sname}`
     );
   }
-  express(reaction: 'LIKE' | 'DISLIKE', post: Post) {
-    this.store.dispatch(PostActions.PostExpressing({ reaction, pid: post._id, post }));
+  express(newReaction: 'LIKE' | 'DISLIKE', post: Post, user) {
+    const { liked, reaction } = user.user ?
+      updateReaction(newReaction, post.liked, post.reaction) : { liked: null, reaction: post.reaction };
+    this.store.dispatch(PostActions.PostExpressing(
+      {
+        reaction: newReaction,
+        pid: post._id,
+        post: { ...post, liked, reaction },
+      }));
   }
+
 }

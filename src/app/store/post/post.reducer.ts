@@ -116,24 +116,17 @@ export const reducer = createReducer(
         fetchError: action.message,
         loading: false
     })), on(postActions.PostExpressing, (state, action) => {
-        let liked = null;
-        if (action.reaction === 'LIKE' && action.post.liked !== true) {
-            liked = true;
-        } else if (action.reaction === 'DISLIKE' && action.post.liked !== false) {
-            liked = false;
-        }
         if (action.isComment) {
             return {
                 ...state,
-                posts: state.posts?.map(p => p._id === action.pid ? { ...p, liked } : p),
-                post: { ...state.post, comments: state.post.comments.map(p => p._id === action.pid ? { ...p, liked } : p) }
+                posts: state.posts?.map(p => p._id === action.pid ? { ...action.post } : p),
+                post: { ...state.post, comments: state.post.comments.map(p => p._id === action.pid ? { ...action.post } : p) }
             };
         } else {
-
             return {
                 ...state,
-                posts: state.posts?.map(p => p._id === action.pid ? { ...p, liked } : p),
-                post: { ...state.post, liked }
+                posts: state.posts?.map(p => p._id === action.pid ? { ...action.post } : p),
+                post: { ...action.post }
             }
         };
     }),

@@ -1,11 +1,11 @@
 <div class="container pb-3" *ngIf="post$ | async as post">
-  <div class="d-flex w-100 pos-rel">
+  <div class="d-flex w-100 pos-rel" *ngIf="user$ | async as user">
     <div
       class="d-flex flex-dir-col"
       style="position: sticky; height: fit-content; top: 40%;"
     >
       <button
-        (click)="express('LIKE', post)"
+        (click)="express('LIKE', post, user)"
         matTooltip="+1"
         mat-icon-button
         aria-label="like"
@@ -19,7 +19,7 @@
       </button>
       <span class="text-center" dir="ltr">{{ post.reaction }}</span>
       <button
-        (click)="express('DISLIKE', post)"
+        (click)="express('DISLIKE', post, user)"
         mat-icon-button
         matTooltip="-1"
         aria-label="dislike"
@@ -135,6 +135,7 @@
     </div>
     <div class="pt-1">
       <app-post-card
+        isComment="true"
         [sname]="sname"
         *ngFor="let comment of post.comments"
         [post]="comment"

@@ -8,6 +8,7 @@ import * as PostActions from '@store/post/post.actions';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SocialType } from '../../../models/user.model';
+import { updateReaction } from '../../../utils/reaction.util';
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
@@ -101,28 +102,10 @@ export class PostCardComponent implements OnInit {
     return username === this.post.author || this.admins?.includes[username];
   }
 
-  express(reaction: 'LIKE' | 'DISLIKE') {
+  express(newReaction: 'LIKE' | 'DISLIKE', user) {
     const isComment = !!this.post.replyTo;
-    if (this.liked) {
-      if (reaction === 'LIKE') {
-        this.liked = undefined;
-        this.reaction -= 1;
-      } else {
-        this.reaction -= 2;
-        this.liked = false;
-      }
-    } else if (this.liked === false) {
-      if (reaction === 'LIKE') {
-        this.liked = true;
-        this.reaction += 2;
-      } else {
-        this.reaction += 1;
-        this.liked = undefined;
-      }
-    } else {
-      this.liked = reaction === 'LIKE' ? true : false;
-      this.reaction += (reaction === 'LIKE' ? 1 : -1);
-    }
-    this.store.dispatch(PostActions.PostExpressing({ reaction, pid: this.post._id, post: { ...this.post, liked: this.liked }, isComment }));
+    const { liked, reaction } = user ?
+      updateReaction(newReaction, this.post.liked, this.post.reaction) : { liked: null, reaction: this.post.reaction };
+    this.store.dispatch(PostActions.PostExpressing({ reaction: newReaction, pid: this.post._id, post: { ...this.post, liked, reaction }, isComment }));
   }
 }
