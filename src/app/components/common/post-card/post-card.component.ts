@@ -37,7 +37,7 @@ export class PostCardComponent implements OnInit {
   isOnPostPage: boolean;
   liked: boolean;
   reaction: number;
-  user$ = this.store.select('user').pipe(map(u => u.user));
+  user$ = this.store.select('user');
   constructor(private dialog: MatDialog, private store: Store<AppState>, private sanitizer: DomSanitizer, private router: Router) { }
   ngOnInit() {
     this.liked = this.post.liked;
@@ -102,8 +102,8 @@ export class PostCardComponent implements OnInit {
   }
 
   isPermittedToRemove(user: IUser) {
-    const role = user.socials?.find(s => s.social?._id === this.post.social?._id)?.role;
-    return user.username === this.post.author || ['MODERATOR', 'CREATOR'].includes(role) || user.roles.some(r => r === UserRole.ADMIN);
+    const role = user?.socials?.find(s => s?.social?._id === this.post.social?._id)?.role;
+    return user?.username === this.post.author || ['MODERATOR', 'CREATOR'].includes(role) || user?.roles?.some(r => r === UserRole.ADMIN);
   }
 
   express(newReaction: 'LIKE' | 'DISLIKE', user) {

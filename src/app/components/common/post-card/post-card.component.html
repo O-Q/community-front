@@ -146,7 +146,7 @@
 <mat-menu #menu="matMenu">
   <!-- if moderator or writer -->
   <a
-    *ngIf="post.author === (user$ | async)?.username"
+    *ngIf="post.author === (user$ | async).user?.username"
     (click)="onEdit(post)"
     mat-menu-item
     class="mat-button mat-primary text-persian w-100 d-flex align-center"
@@ -162,7 +162,7 @@
   <button
     mat-menu-item
     class="mat-button mat-warn text-persian"
-    *ngIf="isPermittedToRemove(user$ | async)"
+    *ngIf="isPermittedToRemove((user$ | async).user)"
     (click)="onDeletePost()"
   >
     <mat-icon
