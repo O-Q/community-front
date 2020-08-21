@@ -36,8 +36,6 @@ export class SearchEffects {
         page, itemsPerPage, sortBy
       }
     })).pipe(map(r => {
-      console.log(r);
-
       return SearchAction.HomepagePostFetched({ posts: r.posts, length: r.length });
     }), catchError(error => {
       const message = error.error.message;

@@ -15,9 +15,21 @@ const routes: Routes = [
     path: '',
     component: SettingsComponent,
     children: [
-      { path: 'profile', component: ProfileComponent },
-      { path: 'account', component: AccountComponent },
-      { path: 'privacy', component: PrivacyComponent }
+      {
+        path: 'profile', component: ProfileComponent, data: {
+          title: 'پروفایل من',
+        }
+      },
+      {
+        path: 'account', component: AccountComponent, data: {
+          title: 'حساب کاربری'
+        }
+      },
+      {
+        path: 'privacy', component: PrivacyComponent, data: {
+          title: 'حریم خصوصی'
+        }
+      }
 
 
     ]

@@ -7,6 +7,15 @@ td {
 th.mat-header-cell:first-of-type,
 td.mat-cell:first-of-type {
   padding-left: 0;
+  @media screen and (max-width: $max-width) {
+    padding-right: 0.5rem !important;
+  }
+}
+
+.mobile-no-pic {
+  @media screen and (max-width: $max-width) {
+    display: none;
+  }
 }
 
 th.mat-header-cell:last-of-type {

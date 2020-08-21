@@ -1,23 +1,29 @@
-<nav dir="ltr" mat-tab-nav-bar class="mb-2 w-100">
-  <a
-    [active]="rla.isActive"
-    *ngFor="let link of navLinks"
-    mat-tab-link
-    [routerLink]="link.path"
-    routerLinkActive
-    #rla="routerLinkActive"
+<ng-container *ngIf="permissionRoles$ | async as permissionRoles">
+  <nav dir="ltr" mat-tab-nav-bar class="mb-2 w-100">
+    <ng-container *ngFor="let link of navLinks; let f = first">
+      <a
+        [active]="rla.isActive"
+        mat-tab-link
+        [routerLink]="link.path"
+        routerLinkActive
+        *ngIf="
+          f || permissionRoles[link.permission] || (role$ | async) === 'CREATOR'
+        "
+        #rla="routerLinkActive"
+      >
+        {{ link.title }}
+      </a>
+    </ng-container>
+  </nav>
+  <button
+    color="accent"
+    (click)="onBack()"
+    matTooltip="بازگشت به انجمن"
+    class="pos-abs l-0 ml-3"
+    style="margin-top: 8rem;"
+    mat-icon-button
   >
-    {{ link.title }}
-  </a>
-</nav>
-<button
-  color="accent"
-  (click)="onBack()"
-  matTooltip="بازگشت به انجمن"
-  class="pos-abs l-0 ml-3"
-  style="margin-top: 8rem;"
-  mat-icon-button
->
-  <mat-icon class="fa fa-chevron-circle-left"></mat-icon>
-</button>
-<router-outlet></router-outlet>
+    <mat-icon class="fa fa-chevron-circle-left"></mat-icon>
+  </button>
+  <router-outlet></router-outlet>
+</ng-container>

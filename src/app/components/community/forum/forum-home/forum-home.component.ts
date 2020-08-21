@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map, first } from 'rxjs/operators';
+import { map, first, skipWhile } from 'rxjs/operators';
 import { Observable, Subscription, } from 'rxjs';
-import { selectAdmins } from '@store/social';
+import { selectAdmins, getSocialDescription } from '@store/social';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/state';
 import { getMergedRoute } from '@store/router/router.selectors';
 import * as PostActions from '@store/post/post.actions';
 import { makeQuery } from '@app/utils/paginator.func';
+import { Title, Meta } from '@angular/platform-browser';
 @Component({
   selector: 'app-forum-home',
   templateUrl: './forum-home.component.html',
@@ -24,6 +25,8 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
   constructor(
     private bpo: BreakpointObserver,
     private store: Store<AppState>,
+    private title: Title,
+    private meta: Meta
   ) {
     this.isXSmall$ = this.bpo.observe(Breakpoints.XSmall).pipe(map(is => is.matches));
 
@@ -34,7 +37,7 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // NOTE: I don't know why but it seems there's a bug in snapshot.url
 
-    this.sub = this.store.select(getMergedRoute).subscribe(r => {
+    this.sub = this.store.select(getMergedRoute).subscribe(async r => {
       // if forums changed. eg. /c/x to /c/y
       const URLArray = r.url.split('/');
       const socialType = URLArray[1] === 'c' ? 'FORUM' : 'BLOG';
@@ -48,6 +51,11 @@ export class ForumHomeComponent implements OnInit, OnDestroy {
           sname: this.sname, query
         }));
       }
+      this.title.setTitle(`نارنجی - ${this.sname} - ${this.flair ? this.flair : 'صفحه‌ اصلی'}`);
+      this.meta.updateTag({
+        name: 'description',
+        content: await this.store.select(getSocialDescription).pipe(skipWhile(d => !d), first()).toPromise()
+      });
     });
 
   }

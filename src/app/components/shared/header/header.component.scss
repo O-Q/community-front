@@ -118,3 +118,30 @@
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
   }
 }
+
+.notif-item {
+  filter: none;
+  .notif-icon {
+    z-index: 1;
+    margin-right: -16px;
+  }
+
+  .moving-text {
+    white-space: nowrap;
+    position: relative;
+    animation: 5s linear infinite alternate marquee;
+  }
+}
+
+@keyframes marquee {
+  0%,
+  25% {
+    transform: translateX(0%);
+    right: 0%;
+  }
+  75%,
+  100% {
+    transform: translateX(105%);
+    right: 100%;
+  }
+}

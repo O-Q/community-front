@@ -38,7 +38,7 @@
           <mat-card-actions>
             <a
               name="createPost"
-              *ngIf="s.isUserRegistered"
+              *ngIf="s.isUserRegistered && s.status !== 'BANNED'"
               routerLink="new"
               mat-stroked-button
               >پست جدید</a
@@ -53,7 +53,7 @@
       </div>
       <button
         name="createPost"
-        *ngIf="s.isUserRegistered"
+        *ngIf="s.isUserRegistered && s.status !== 'BANNED'"
         mat-mini-fab
         routerLink="new"
         class="r-0 b-0 mb-2 mr-2 new-post-phone"

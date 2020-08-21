@@ -8,7 +8,7 @@ import * as PostActions from '@store/post/post.actions';
 import { selectAdmins } from '@store/social';
 import { getMergedRoute } from '@store/router/router.selectors';
 import { first } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Meta, Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { Post } from '@app/interfaces/post.interface';
 import { updateReaction } from '../../../../utils/reaction.util';
@@ -27,15 +27,29 @@ export class BlogPostComponent implements OnInit, OnDestroy {
   safeHTML;
   subs: Subscription;
   sname: string;
-  constructor(private store: Store<AppState>, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {
+  constructor(private store: Store<AppState>,
+    private meta: Meta,
+    private title: Title,
+    private route: ActivatedRoute,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) {
     const urlS = this.route.snapshot.url;
     this.sname = urlS[0].path;
     const pid = urlS[2].path;
     this.store.dispatch(PostActions.PostDetailedFetching({ sname: this.sname, pid }));
   }
   ngOnInit() {
-    this.subs = this.post$.subscribe(p =>
-      this.safeHTML = this.sanitizer.bypassSecurityTrustHtml(p?.text)
+    this.subs = this.post$.subscribe(p => {
+      if (p) {
+        this.safeHTML = this.sanitizer.bypassSecurityTrustHtml(p.text);
+        this.meta.updateTag({
+          name: 'description',
+          content: `${this.sname} - ${p.title} - ${p.text.slice(0, 120)}`
+        });
+        this.title.setTitle(`نارنجی - ${this.sname} - ${p.title}`);
+      }
+    }
     );
   }
   ngOnDestroy() {

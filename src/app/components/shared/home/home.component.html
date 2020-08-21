@@ -1,9 +1,5 @@
-<div class="mt-3 flex-evenly container">
-  <div
-    *ngIf="search$ | async as search"
-    class="d-flex flex-dir-col mx-3 right-side"
-    style="margin-top: 4.25rem;"
-  >
+<div *ngIf="search$ | async as search" class="mt-3 flex-evenly container">
+  <div class="d-flex flex-dir-col mx-3 right-side" style="margin-top: 4.25rem;">
     <mat-card>
       <mat-card-header>
         <mat-card-title>انجمن‌های داغ</mat-card-title>
@@ -89,7 +85,7 @@
         <mat-button-toggle value="TOP">💯 بهترین‌ها</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
-    <ng-container *ngIf="search$ | async as search">
+    <ng-container *ngIf="!search.loadingPost; else PostSkeleton">
       <ng-container *ngIf="search.postLength; else noPost">
         <app-post-card
           [isHomepage]="true"
@@ -110,5 +106,10 @@
         </div>
       </ng-template>
     </ng-container>
+    <ng-template #PostSkeleton>
+      <app-skeleton-forum-post
+        *ngFor="let _ of [].constructor(3)"
+      ></app-skeleton-forum-post>
+    </ng-template>
   </div>
 </div>

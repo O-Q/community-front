@@ -20,9 +20,27 @@ const routes: Routes = [
     path: '',
     component: BlogSettingsComponent,
     children: [
-      { path: 'widgets', component: ForumSettingsWidgetsComponent, canDeactivate: [CanSaveDeactivateGuard] },
-      { path: 'general', component: BlogSettingsGeneralComponent, canDeactivate: [CanSaveDeactivateGuard] },
-      { path: 'permission', component: BlogSettingsPermissionComponent, canDeactivate: [CanSaveDeactivateGuard] },
+      {
+        path: 'widgets', component: ForumSettingsWidgetsComponent, canDeactivate: [CanSaveDeactivateGuard], data: {
+          title: 'تنظیمات - ویجت‌ها',
+          description: 'تنظیم و شخصی‌سازی ویجت‌های بلاگ'
+        },
+      },
+      {
+        path: 'general', component: BlogSettingsGeneralComponent, canDeactivate: [CanSaveDeactivateGuard],
+        data: {
+          title: 'تنظیمات - اطلاعات کلی',
+          description: 'تنظیم و شخصی‌سازی اطلاعات کلی بلاگ'
+        },
+      },
+      {
+        path: 'permission', component: BlogSettingsPermissionComponent, canDeactivate: [CanSaveDeactivateGuard],
+        data: {
+          title: 'تنظیمات - دسترسی‌ها',
+          description: 'تنظیم و شخصی‌سازی دسترسی‌ها و اعضا'
+        },
+
+      },
 
 
     ]

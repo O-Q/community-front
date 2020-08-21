@@ -11,7 +11,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlairsAutoCompleteModule } from '../shared/flairs-auto-complete/flairs-auto-complete.module';
 
 const routes: Routes = [
-  { path: '', component: CreateCommunityComponent }
+  {
+    path: '', component: CreateCommunityComponent
+  }
 ];
 
 @NgModule({

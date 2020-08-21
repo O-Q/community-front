@@ -42,7 +42,7 @@
       </button>
     </div>
     <ng-template #registered>
-      <a *ngIf="social.writeAccess" mat-stroked-button routerLink="new">
+      <a *ngIf="hasAccessToWrite(social)" mat-stroked-button routerLink="new">
         پست جدید
       </a>
     </ng-template>

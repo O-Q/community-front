@@ -8,6 +8,10 @@ import { Component, OnInit, Input, HostListener, ElementRef, Output, EventEmitte
 export class ColorPickerComponent implements OnInit {
   @Input()
   readonly initialColor?: string;
+
+  @Input()
+  readonly disabled?: boolean;
+
   @Output()
   colorChange = new EventEmitter<string>();
 

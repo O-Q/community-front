@@ -1,6 +1,9 @@
 <ng-container *ngIf="social$ | async as social">
-  <form [formGroup]="form">
+  <form *ngIf="userRole$ | async as userRole" [formGroup]="form">
     <button
+      [disabled]="
+        userRole !== 'CREATOR' && !social.social.permissionRoles.changeInfo
+      "
       (click)="onSave()"
       mat-raised-button
       color="primary"
@@ -20,6 +23,10 @@
         >
           <button
             *ngIf="social.social?.avatar"
+            [disabled]="
+              userRole !== 'CREATOR' &&
+              !social.social.permissionRoles.changeAvatar
+            "
             (click)="onRemoveImage('avatar')"
             color="warn"
             mat-mini-fab
@@ -35,9 +42,21 @@
             "
             alt="تصویر انجمن"
           />
-          <button color="accent" mat-stroked-button class="mt-2">
+          <button
+            [disabled]="
+              userRole !== 'CREATOR' &&
+              !social.social.permissionRoles.changeAvatar
+            "
+            color="accent"
+            mat-stroked-button
+            class="mt-2"
+          >
             انتخاب تصویر
             <input
+              [disabled]="
+                userRole !== 'CREATOR' &&
+                !social.social.permissionRoles.changeBanner
+              "
               accept="image/*"
               (change)="onChangeImage($event, 'avatar')"
               class="input-upload"
@@ -92,6 +111,10 @@
                 </div>
               </div>
               <app-flairs-auto-complete
+                [disabled]="
+                  userRole !== 'CREATOR' &&
+                  !social.social.permissionRoles.changeInfo
+                "
                 [selectedFlairs]="selectedFlairs"
                 [flairsControl]="form.get('flairs')"
               >
@@ -109,8 +132,18 @@
             "
             alt="بنر انجمن"
           />
-          <button mat-stroked-button>
+          <button
+            mat-stroked-button
+            [disabled]="
+              userRole !== 'CREATOR' &&
+              !social.social.permissionRoles.changeBanner
+            "
+          >
             <input
+              [disabled]="
+                userRole !== 'CREATOR' &&
+                !social.social.permissionRoles.changeBanner
+              "
               accept="image/*"
               (change)="onChangeImage($event, 'banner')"
               type="file"
@@ -126,6 +159,7 @@
         <mat-list-item *ngFor="let c of colorTypes">
           <span class="color-title">{{ c.viewValue }}</span>
           <app-color-picker
+            [disabled]="disableInfo"
             [initialColor]="colors[c.value]"
             (colorChange)="onChangeColor($event, c.value)"
           >

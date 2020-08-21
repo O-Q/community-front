@@ -42,7 +42,13 @@
     </button>
 
     <ng-template #registered>
-      <a mat-fab routerLink="new" matTooltip="پست جدید" class="ml-2">
+      <a
+        mat-fab
+        *ngIf="s.status !== 'BANNED'"
+        [routerLink]="['/c', s.name, 'new']"
+        matTooltip="پست جدید"
+        class="ml-2"
+      >
         <mat-icon inline>post_add</mat-icon>
       </a>
       <button

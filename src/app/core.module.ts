@@ -31,6 +31,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   ],
   imports: [
     CommonModule,
+    AppCommonModule,
     RouterModule,
     ReactiveFormsModule,
     MatAutocompleteModule,

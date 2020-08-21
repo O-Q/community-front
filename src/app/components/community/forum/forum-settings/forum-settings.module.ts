@@ -23,6 +23,7 @@ import { ColorPickerModule } from '../../shared/color-picker/color-picker.module
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { getPersianPaginatorIntl } from '../../../intl/persian-paginator';
+import { PermissionRoleDialogComponent } from './forum-settings-permission/permission-role-dialog/permission-role-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { getPersianPaginatorIntl } from '../../../intl/persian-paginator';
     ForumSettingsPermissionComponent,
     SettingsWidgetListDialogComponent,
     EditWidgetDialogComponent,
+    PermissionRoleDialogComponent,
   ],
   imports: [
     CommonModule,

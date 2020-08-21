@@ -4,8 +4,10 @@ import { AppState } from '@store/state';
 import { Subscription } from 'rxjs';
 import { getMergedRoute } from '@store/router/router.selectors';
 import * as PostActions from '@store/post/post.actions';
-import { selectAdmins } from '@store/social';
+import { selectAdmins, getSocialColors } from '@store/social';
 import { makeQuery } from '@app/utils/paginator.func';
+import { Meta, Title } from '@angular/platform-browser';
+import { first, skipUntil, skipWhile } from 'rxjs/operators';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   sname: string;
   ngOnInit() {
     // NOTE: I don't know why but it seems there's a bug in snapshot.url
-    this.sub = this.store.select(getMergedRoute).subscribe(r => {
+    this.sub = this.store.select(getMergedRoute).subscribe(async r => {
       // if forums changed. eg. /c/x to /c/y
       const URLArray = r.url.split('/');
       const socialType = URLArray[1] === 'c' ? 'FORUM' : 'BLOG';

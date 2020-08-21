@@ -1,11 +1,20 @@
-<button
-  mat-raised-button
-  color="primary"
-  class="my-2 mr-auto"
-  (click)="onSave()"
+<div
+  class="flex-between"
+  *ngIf="socialPermissions$ | async as socialPermissions"
 >
-  ذخیره اطلاعات
-</button>
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="(userSocialRole$ | async) === 'CREATOR'"
+    class="my-2"
+    (click)="onOpenPermissionRole(socialPermissions)"
+  >
+    دسترسی نقش‌ها
+  </button>
+  <button mat-raised-button color="primary" class="my-2" (click)="onSave()">
+    ذخیره اطلاعات
+  </button>
+</div>
 <table
   mat-table
   [dataSource]="dataSource"
@@ -18,9 +27,11 @@
     <td
       mat-cell
       *matCellDef="let element"
-      class="py-1 flex-center align-center"
+      class="py-1 d-flex align-center pr-2"
+      style="justify-content: flex-start; min-height: 45px;"
     >
       <a
+        class="mobile-no-pic"
         style="color: unset; text-decoration: none;"
         [routerLink]="['/u', element.username]"
       >
@@ -39,7 +50,9 @@
           alt=""
         />
       </a>
-      <span class="pr-2">{{ element.username }}</span>
+      <span class="m-auto" style="overflow-wrap: anywhere;">{{
+        element.username
+      }}</span>
     </td>
   </ng-container>
   <!-- Weight Column -->

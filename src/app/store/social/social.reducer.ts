@@ -13,7 +13,6 @@ export interface State {
   readonly posts: Post[];
   readonly defaultWidgets: Widget[];
   readonly users: any[];
-
 }
 
 export const INIT_STATE: State = {
@@ -209,5 +208,13 @@ export const reducer = createReducer(
   })), on(socialActions.SocialUserRemoved, (state) => ({
     ...state,
     loading: false,
+  })), on(socialActions.SocialPermissionRolesUpdating, (state) => ({
+    ...state,
+    loading: true,
+    fetchError: null,
+  })), on(socialActions.SocialPermissionRolesUpdated, (state, action) => ({
+    ...state,
+    loading: false,
+    social: { ...state.social, permissionRoles: action.permissionRoles }
   }))
 );

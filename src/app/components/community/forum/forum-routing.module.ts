@@ -13,7 +13,11 @@ const routes: Routes = [
     path: '', component: ForumComponent, children: [
       {
         path: 'new', loadChildren: () => import('./../base/base-community.module').then(m => m.BaseCommunityModule),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: {
+          title: 'ساخت انجمن',
+          description: 'انجمن خود را بسازید و شخصی‌سازی و مدیریت کنید.'
+        }
       },
       { path: ':name', component: ForumHomeComponent },
       {

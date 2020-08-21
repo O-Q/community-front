@@ -2,6 +2,7 @@
   <button
     class="picker-btn"
     color="primary"
+    [disabled]="disabled"
     (click)="toggleColorPicker()"
     mat-mini-fab
     [ngStyle]="{ 'background-color': selectedColor }"

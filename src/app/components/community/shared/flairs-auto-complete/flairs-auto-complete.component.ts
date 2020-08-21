@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
@@ -13,7 +13,8 @@ import { startWith, map } from 'rxjs/operators';
   templateUrl: './flairs-auto-complete.component.html',
   styleUrls: ['./flairs-auto-complete.component.scss']
 })
-export class FlairsAutoCompleteComponent implements OnInit {
+export class FlairsAutoCompleteComponent implements OnInit, AfterViewInit {
+
   @Input()
   selectedFlairs;
 
@@ -23,6 +24,9 @@ export class FlairsAutoCompleteComponent implements OnInit {
   @Input()
   placeholder?: string;
 
+
+  @Input()
+  disabled?: boolean;
   separatorKeysCodes: number[] = [ENTER];
   filteredFlairs: Observable<AppItem[]>;
   @ViewChild('flairInput') flairInput: ElementRef<HTMLInputElement>;
@@ -36,6 +40,11 @@ export class FlairsAutoCompleteComponent implements OnInit {
       map((flair: string | null) => flair ? this._filterFlair(flair) : suggestedFlairs.slice()));
   }
 
+  ngAfterViewInit(): void {
+    if (this.disabled) {
+      this.flairInput.nativeElement.disabled = true;
+    }
+  }
   // add new flair
   addFlair(event: MatChipInputEvent): void {
     const input = event.input;

@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   isOpenSearch = false;
   form: FormGroup;
   search$ = this.store.select('search');
-  notificationCount$ = this.store.select('user').pipe(map(u => u.user.socials.reduce((a, b) => a + b.notifications.length, 0)));
+  notificationCount$ = this.store.select('user').pipe(map(u => u.user?.socials?.reduce((a, b) => a + b.notifications.length, 0)));
   constructor(
     public themeService: ThemeService,
     public dialog: MatDialog,
@@ -48,6 +48,10 @@ export class HeaderComponent implements OnInit {
     if (this.form.valid && values.text) {
       this.store.dispatch(SearchActions.SearchFetching({ text: values.text, page: 1, itemsPerPage: 10 }));
     }
+  }
+
+  isMovingNeeded(el: HTMLElement) {
+    return el.scrollWidth > 211;
   }
   onBlurSearch() {
     this.isFirstCloseHappened = true;

@@ -16,9 +16,26 @@ const routes: Routes = [
     path: '',
     component: ForumSettingsComponent,
     children: [
-      { path: 'widgets', component: ForumSettingsWidgetsComponent, canDeactivate: [CanSaveDeactivateGuard] },
-      { path: 'general', component: ForumSettingsGeneralComponent, canDeactivate: [CanSaveDeactivateGuard] },
-      { path: 'permission', component: ForumSettingsPermissionComponent, canDeactivate: [CanSaveDeactivateGuard] },
+      {
+        path: 'widgets', component: ForumSettingsWidgetsComponent, canDeactivate: [CanSaveDeactivateGuard], data: {
+          title: 'تنظیمات - ویجت‌ها',
+          description: 'تنظیم و شخصی‌سازی ویجت‌های بلاگ'
+        },
+      },
+      {
+        path: 'general', component: ForumSettingsGeneralComponent, canDeactivate: [CanSaveDeactivateGuard],
+        data: {
+          title: 'تنظیمات - اطلاعات کلی',
+          description: 'تنظیم و شخصی‌سازی اطلاعات کلی بلاگ'
+        },
+      },
+      {
+        path: 'permission', component: ForumSettingsPermissionComponent, canDeactivate: [CanSaveDeactivateGuard],
+        data: {
+          title: 'تنظیمات - دسترسی‌ها',
+          description: 'تنظیم و شخصی‌سازی دسترسی‌ها و اعضا'
+        }
+      },
 
 
     ]

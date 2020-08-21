@@ -110,6 +110,7 @@
         >
           <ng-container *ngFor="let social of user.user?.socials">
             <a
+              class="notif-item"
               mat-menu-item
               *ngFor="let notification of social.notifications"
               [routerLink]="
@@ -127,15 +128,23 @@
               "
             >
               <div class="d-flex align-center text-persian">
-                <mat-icon class="fa fa-bell"></mat-icon>
-                <div>
+                <div class="notif-icon mat-button-toggle-appearance-standard">
+                  <mat-icon
+                    class="fa fa-bell m-0 text-center"
+                    style="width: 45px;"
+                  ></mat-icon>
+                </div>
+                <div
+                  class="pr-1"
+                  #el
+                  [ngClass]="{ 'moving-text': isMovingNeeded(el) }"
+                >
                   {{ notification.message }}
                 </div>
               </div>
             </a>
           </ng-container>
         </ng-container>
-
         <ng-template #noNotification>
           <div
             class="fs-small flex-center align-center mat-menu-item"

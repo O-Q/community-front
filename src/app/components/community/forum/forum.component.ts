@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store';
 import * as SocialActions from '@store/social/social.actions';
 import { ThemeService } from '@app/services/theme.service';
 import { SocialType } from '@app/models/user.model';
-import { first } from 'rxjs/operators';
+import { first, skipWhile } from 'rxjs/operators';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forum',
@@ -16,14 +17,15 @@ import { first } from 'rxjs/operators';
 export class ForumComponent implements OnInit, OnDestroy {
   sub: Subscription;
   sname: string;
-  constructor(private store: Store<AppState>, private theme: ThemeService) { }
-  ngOnInit() {
+  constructor(private store: Store<AppState>, private theme: ThemeService, private meta: Meta) { }
+  async ngOnInit() {
 
-
+    let social = null;
     // NOTE: I don't know why but it seems there's a bug in snapshot.url
     this.sub = this.store.select(getMergedRoute).subscribe(async r => {
       // if forums changed. eg. /c/x to /c/y
-      const social = await this.store.select('social').pipe(first()).toPromise();
+
+      social = await this.store.select('social').pipe(first()).toPromise();
       const URLArray = r.url.split('/');
       if (URLArray?.[2] === 'new') {
         this.theme.changeToUserDefault();
@@ -36,6 +38,11 @@ export class ForumComponent implements OnInit, OnDestroy {
       } else {
         this.theme.changeColors(social.social.colors);
       }
+    });
+    social = await this.store.select('social').pipe(skipWhile(s => !s.social), first()).toPromise();
+    this.meta.updateTag({
+      name: 'theme-color',
+      content: social.social.colors?.background,
     });
   }
   ngOnDestroy(): void {

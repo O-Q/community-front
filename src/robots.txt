@@ -1,0 +1,9 @@
+User-agent: *
+
+Allow: /u/*
+Allow: /c/*
+Allow: /b/*
+Allow: /
+Allow: /c/*/p/*
+Allow: /b/*/p/*
+Allow: /auth/*

@@ -16,6 +16,7 @@ import { environment } from '../../../../../environments/environment';
 import { ACCESS_TOKEN_KEY } from '../../../../constants/local-storage.constant';
 import { ConfigService } from '../../../../services/config.service';
 import { getMergedRoute } from '../../../../store/router/router.selectors';
+import { Title, Meta } from '@angular/platform-browser';
 
 
 
@@ -29,7 +30,7 @@ export class ForumNewPostComponent implements OnInit {
   // selectedSocial = new FormControl('', [Validators.required]);
   title = new FormControl('', [Validators.required, Validators.minLength(3)]);
   subtitle = new FormControl('', []);
-  flairs = new FormControl(null, []);
+  flairs = new FormControl(null, [Validators.required]);
   text = '';
   wordsCount = 0;
   isXSmall$: Observable<boolean>;
@@ -39,11 +40,12 @@ export class ForumNewPostComponent implements OnInit {
   postId = null;
   socialType: SocialType;
   sname: string;
+  sampleDate = new Date().toDateString();
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private bpo: BreakpointObserver,
-    private store: Store<AppState>, private configService: ConfigService) {
+    private store: Store<AppState>, private configService: ConfigService, private titleService: Title, private meta: Meta) {
     this.isXSmall$ = this.bpo.observe(Breakpoints.XSmall).pipe(map(is => is.matches));
     const { name, pid } = this.route.snapshot.params;
     this.sname = name;
@@ -57,8 +59,13 @@ export class ForumNewPostComponent implements OnInit {
           this.flairs.setValue(v.post.flairs);
           this.postId = v.post._id;
           this.socialType = v.post.socialType;
+          this.titleService.setTitle(`نارنجی - ${this.sname} - ویرایش پست`);
+          this.meta.updateTag({ name: 'description', content: `ویرایش پست در انجمن ${this.sname}` });
         }
       });
+    } else {
+      this.titleService.setTitle(`نارنجی - ${this.sname} - پست جدید`);
+      this.meta.updateTag({ name: 'description', content: `ایجاد پست جدید در انجمن ${this.sname}` });
 
     }
 
@@ -102,7 +109,7 @@ export class ForumNewPostComponent implements OnInit {
   }
   onPublish(selectedSocial) {
 
-    if (this.title.valid && this.wordsCount >= 3) {
+    if (this.flairs.valid && this.title.valid && this.wordsCount >= 3) {
       const text = this.text;
       const title = this.title.value;
       const subtitle = this.subtitle.value;

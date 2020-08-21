@@ -18,6 +18,7 @@ import { getMergedRoute } from '../../../../store/router/router.selectors';
 import { ACCESS_TOKEN_KEY } from '../../../../constants/local-storage.constant';
 import { environment } from '../../../../../environments/environment';
 import { ConfigService } from '../../../../services/config.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog-new-post',
@@ -45,7 +46,11 @@ export class BlogNewPostComponent implements OnInit {
     private bpo: BreakpointObserver,
     private store: Store<AppState>,
     private dialog: MatDialog,
-    private configService: ConfigService) {
+    private configService: ConfigService,
+    private titleService: Title,
+    private meta: Meta
+
+  ) {
     this.isXSmall$ = this.bpo.observe(Breakpoints.XSmall).pipe(map(is => is.matches));
     const { name, pid } = this.route.snapshot.params;
     this.sname = name;
@@ -58,9 +63,14 @@ export class BlogNewPostComponent implements OnInit {
           this.subtitle.setValue(v.post.subtitle);
           this.flairs.setValue(v.post.flairs);
           this.postId = v.post._id;
+
+          this.titleService.setTitle(`نارنجی - ${this.sname} - ویرایش پست`);
+          this.meta.updateTag({ name: 'description', content: `ویرایش پست در بلاگ ${this.sname}` });
         }
       });
-
+    } else {
+      this.titleService.setTitle(`نارنجی - ${this.sname} - پست جدید`);
+      this.meta.updateTag({ name: 'description', content: `ایجاد پست جدید در بلاگ ${this.sname}` });
     }
 
   }

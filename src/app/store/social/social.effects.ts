@@ -146,11 +146,31 @@ export class SocialEffects {
         const message = error.error.message;
         return of(SocialActions.SocialError({ message }));
       }));
-
-
-
     })
   );
+
+
+  @Effect()
+  socialPermissionRolesUpdate = this.actions$.pipe(
+    ofType(SocialActions.SocialPermissionRolesUpdating),
+    switchMap((socialPermissionRolesData) => {
+      const { sid, socialType, permissionRoles } = socialPermissionRolesData;
+      const url = socialType === SocialType.BLOG ? this.urls.blog.PERMISSION_ROLE : this.urls.forum.PERMISSION_ROLE;
+      return this.http.patch(
+        this.configService.makeUrl(url, { params: { sid } }),
+        { permissionRoles },
+        DEFAULT_HTTP_OPTION
+      ).pipe(map(() => {
+        this.snackbar.open(`دسترسی نقش‌ها بروزرسانی شد.`);
+        return SocialActions.SocialPermissionRolesUpdated({ permissionRoles });
+      }), catchError((error: HttpErrorResponse) => {
+        this.errorHandler.handleHttpError(error, { showSnackbar: true });
+        const message = error.error.message;
+        return of(SocialActions.SocialError({ message }));
+      }));
+    })
+  );
+
   @Effect()
   socialLeave = this.actions$.pipe(
     ofType(SocialActions.SocialLeaving),

@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { MaterialBaseModule } from '../../../../material.module';
 import { ForumNewPostComponent } from './forum-new-post.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ForumNewPostComponent } from './forum-new-post.component';
     MatInputModule,
     MatSelectModule,
     MatMenuModule,
+    MatChipsModule
   ]
 })
 export class ForumNewPostModule { }

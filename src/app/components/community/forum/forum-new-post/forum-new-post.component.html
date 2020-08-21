@@ -42,16 +42,16 @@
           <mat-icon>more_vert</mat-icon>
         </button>
       </div>
-      <div>
+      <div class="post-container">
         <mat-form-field class="w-100 text-persian" appearance="outline">
           <textarea
             [formControl]="title"
             matInput
-            style="color: unset;"
+            style="color: unset; font-size: 20px;"
             cdkTextareaAutosize
             cdkAutosizeMinRows="1.2"
             type="text"
-            class="d-flex w-100 f-blog-title editor__input"
+            class="d-flex fw-bold w-100 editor__input"
             placeholder="موضوع"
           ></textarea>
           <mat-error class="mt-2">
@@ -59,6 +59,7 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field
+          style="font-size: 12px;"
           class="w-100 text-persian mb-2"
           [ngClass]="{ 'mt-2': title.invalid }"
           appearance="outline"
@@ -80,17 +81,36 @@
           [(ngModel)]="text"
         >
         </ckeditor>
-        <mat-form-field class="d-flex mt-2">
-          <mat-label>زیرموضوعات</mat-label>
-          <mat-select [formControl]="flairs" multiple>
-            <mat-option
-              *ngFor="let flair of selectedSocial?.flairs"
-              [value]="flair"
-              >{{ flair }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="flex-between align-center mt-1">
+          <mat-chip-list aria-label="زیرموضوعات">
+            <span class="fs-normal" *ngIf="flairs.value?.length"
+              >دسته‌بندی:
+            </span>
+            <mat-chip *ngFor="let flair of flairs.value">{{ flair }}</mat-chip>
+          </mat-chip-list>
+        </div>
+        <div class="mt-1">
+          <span
+            class="f-medium-subtitle d-flex"
+            style="justify-content: flex-end;"
+          >
+            <a target="_blank" [routerLink]="['/u', user.username]"
+              >نویسنده: {{ user.username }}
+            </a>
+            &nbsp; | &nbsp;تاریخ: {{ sampleDate | persianDate }}</span
+          >
+        </div>
       </div>
+      <mat-form-field class="d-flex mt-2">
+        <mat-label>زیرموضوعات</mat-label>
+        <mat-select [formControl]="flairs" multiple>
+          <mat-option
+            *ngFor="let flair of selectedSocial?.flairs"
+            [value]="flair"
+            >{{ flair }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div class="flex-end mt-2" *ngIf="isXSmall$ | async">
         <button
           class="w-100"

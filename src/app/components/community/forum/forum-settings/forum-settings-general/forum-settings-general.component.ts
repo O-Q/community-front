@@ -12,6 +12,7 @@ import { ThemeService } from '@app/services/theme.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 import { enableSaveGuard } from '@app/guards/unsave-guard';
+import { getUserSocialRole } from '../../../../../store/user';
 @Component({
   selector: 'app-forum-settings-general',
   templateUrl: './forum-settings-general.component.html',
@@ -26,7 +27,8 @@ export class ForumSettingsGeneralComponent implements OnInit {
   sname: string;
   colors;
   form: FormGroup;
-
+  disableInfo: boolean;
+  userRole$ = this.store.select(getUserSocialRole);
   constructor(private store: Store<AppState>, private theme: ThemeService, private dialog: MatDialog) {
     this.form = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -41,6 +43,14 @@ export class ForumSettingsGeneralComponent implements OnInit {
       this.form.get('description').setValue(s.social.description);
       this.form.get('status').setValue(s.social.status);
       this.form.get('isPrivate').setValue(s.social.isPrivate);
+      const pr = s.social.permissionRoles;
+      this.userRole$.pipe(first()).subscribe((r) => {
+        if (r !== 'CREATOR' && !pr.changeInfo) {
+          this.form.get('title').disable();
+          this.form.get('description').disable();
+          this.disableInfo = true;
+        }
+      });
       this.sname = s.social.name;
       this.colors = { ...s.social.colors } || {};
       s.social.flairs.forEach(f => this.selectedFlairs.add(f));

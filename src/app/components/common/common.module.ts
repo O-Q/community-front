@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { SkeletonModule } from '@app/components/skeleton/skeleton.module';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 const components = [
@@ -23,7 +24,7 @@ const components = [
   PostActionsComponent];
 @NgModule({
   declarations: components,
-  imports: [CommonModule, RouterModule, MatDialogModule, MatBottomSheetModule, SkeletonModule, MaterialBaseModule],
+  imports: [CommonModule, RouterModule, MatDialogModule, MatBottomSheetModule, SkeletonModule, MaterialBaseModule, MatChipsModule],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { minWidth: '250px' } }
   ],

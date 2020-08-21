@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@app/components/common/confirm-dialog/confirm-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { PermissionRoleDialogComponent } from './permission-role-dialog/permission-role-dialog.component';
+import { getUserSocialRole } from '../../../../../store/user';
 
 @Component({
   selector: 'app-forum-settings-permission',
@@ -30,6 +32,8 @@ export class ForumSettingsPermissionComponent implements OnDestroy {
   users: any = {};
   subs: Subscription;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  socialPermissions$ = this.store.select('social').pipe(map(s => s.social.permissionRoles));
+  userSocialRole$ = this.store.select(getUserSocialRole);
 
   constructor(private store: Store<AppState>, private change: ChangeDetectorRef, private dialog: MatDialog) {
     this.store.select(getMergedRoute).pipe(first()).subscribe((r) => {
@@ -77,6 +81,10 @@ export class ForumSettingsPermissionComponent implements OnDestroy {
         this.dataSource.data = this.dataSource.data.filter(i => i.username !== element.username);
       }
     });
+  }
+
+  onOpenPermissionRole(permissions) {
+    this.dialog.open(PermissionRoleDialogComponent, { data: { sid: this.sid, socialType: SocialType.FORUM, permissions } });
   }
 
   onSave() {

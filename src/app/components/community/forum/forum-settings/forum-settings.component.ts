@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/state';
 import { getMergedRoute } from '@store/router/router.selectors';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { getUserSocialRole } from '../../../../store/user';
 
 @Component({
   selector: 'app-forum-settings',
@@ -14,17 +15,21 @@ export class ForumSettingsComponent implements OnInit {
   navLinks = [
     {
       path: 'general',
-      title: 'اطلاعات کلی'
+      title: 'اطلاعات کلی',
+      permission: 'changeInfo'
     },
     {
       path: 'widgets',
-      title: 'ویجت‌ها'
+      title: 'ویجت‌ها',
+      permission: 'changeWidgets'
     }, {
       path: 'permission',
-      title: 'مجوز و دسترسی'
+      title: 'مجوز و دسترسی',
+      permission: 'changeUsers'
     },
-
   ];
+  role$ = this.store.select(getUserSocialRole);
+  permissionRoles$ = this.store.select('social').pipe(map(s => s.social.permissionRoles));
   constructor(private store: Store<AppState>, private router: Router) { }
 
   ngOnInit(): void {

@@ -6,11 +6,15 @@
 .container {
   min-width: 70%;
   max-width: 82%;
+  .post-container {
+    border: #61616169 1px solid;
+    border-radius: 5px;
+    padding: 1rem;
+  }
 }
 
 ::ng-deep {
   .mat-form-field-appearance-outline {
-
     .mat-form-field-outline {
       display: none !important;
     }

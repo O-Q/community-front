@@ -14,6 +14,10 @@ const routes: Routes = [
     path: '', component: BlogComponent, children: [
       {
         path: 'new', loadChildren: () => import('./../base/base-community.module').then(m => m.BaseCommunityModule),
+        data: {
+          title: 'ساخت بلاگ',
+          description: 'بلاگ شخصی خود را بسازید و شخصی‌سازی و مدیریت کنید.'
+        },
         canLoad: [AuthGuard]
       },
 

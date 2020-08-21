@@ -14,7 +14,7 @@ mat-card-subtitle {
   @extend %f-large-subtitle;
 }
 .f-blog-post {
-  @extend %f-community-title;
+  @extend %f-blog-title;
 }
 .f-medium-subtitle {
   @extend %f-medium-subtitle;
@@ -38,7 +38,7 @@ mat-card-subtitle {
 }
 
 .f-blog-title {
-  @extend %f-community-title;
+  @extend %f-blog-title;
 }
 
 .f-forum-title {

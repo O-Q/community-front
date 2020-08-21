@@ -77,6 +77,13 @@ export const SocialUsersGot = createAction('[Social] Social Users Got', props<{ 
 export const SocialUsersUpdating = createAction('[Social] Social Users Updating', props<{ sid: string, socialType: SocialType, updatedUsers: any[] }>());
 export const SocialUsersUpdated = createAction('[Social] Social Users Updated');
 
+export const SocialPermissionRolesUpdating = createAction('[Social] Social Users Permission Roles Updating',
+  props<{ sid: string, socialType: SocialType, permissionRoles: any }>());
+
+export const SocialPermissionRolesUpdated = createAction('[Social] Social Users Permission Roles Updated',
+  props<{ permissionRoles: any }>());
+
+
 export const SocialUserRemoving = createAction('[Social] Social User Removing', props<{ sid: string, socialType: SocialType, uid: string }>());
 export const SocialUserRemoved = createAction('[Social] Social User Removed');
 interface SocialCreatingPayload {
