@@ -3,6 +3,7 @@ export const environment = {
   configPath: './assets/config/config.prod.json',
   BASE_FRONT_URL: 'https://dev.miakova.ir',
   urls: {
+    wsUrl: 'ws://api.miakova.ir:8080',
     baseUrl: 'https://api.miakova.ir',
     search: {
       SEARCH: 'search',
@@ -43,7 +44,9 @@ export const environment = {
       LEAVE_BY_SID: 'blog/leave/:sid',
       SOCIAL_USERS: 'blog/users',
       UPDATE_SOCIAL_USERS: 'blog/users/:sid',
-      REMOVE_SOCIAL_USER: 'blog/users/:sid/:uid'
+      REMOVE_SOCIAL_USER: 'blog/users/:sid/:uid',
+      PERMISSION_ROLE: 'blog/permissions/:sid',
+
 
 
 
@@ -64,6 +67,7 @@ export const environment = {
       LEAVE_BY_SID: 'forum/leave/:sid',
       SOCIAL_USERS: 'forum/users',
       UPDATE_SOCIAL_USERS: 'forum/users/:sid',
+      PERMISSION_ROLE: 'forum/permissions/:sid',
       REMOVE_SOCIAL_USER: 'forum/users/:sid/:uid',
     },
     post: {

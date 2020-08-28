@@ -14,7 +14,7 @@ export class ThemeService {
   backgroundStyleNode;
   adaptColorWithBackgroundNode;
   // '.mat-button-base'
-  textClassLists = ['#background-color .mat-card', '.mat-list-item', '.f-medium-subtitle', 'p', 'ul', 'li', 'span', 'figcaption', 'a', 'div', '.mat-menu-content', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
+  textClassLists = ['#background-color .mat-card', '.mat-list-item', '.f-medium-subtitle', 'p', 'ul', 'li', 'span:not(.f-forum-title):not(.f-large-subtitle)', 'figcaption', 'a', 'div', '.mat-menu-content', '.mat-subheader', '.mat-checkbox-label', '.mat-card-subtitle', '.mat-option:not(.mat-selected)'];
   noCustomBackground = ['.mat-select-panel',
     '.mat-menu-panel:not(.no-custom-theme)',
     '.mat-autocomplete-panel',
@@ -143,7 +143,7 @@ export class ThemeService {
     this._removeTitleColor();
     if (colors.title) {
       const style = document.createElement('style');
-      style.innerHTML = `#title-color {
+      style.innerHTML = `#title-color * {
         color: ${colors.title} !important;
       }`;
       this.titleStyleNode = document.getElementsByTagName('head')[0].appendChild(style);

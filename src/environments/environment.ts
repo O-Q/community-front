@@ -9,6 +9,7 @@ export const environment = {
   configPath: './assets/config/config.json',
   BASE_FRONT_URL: 'http://localhost:4200',
   urls: {
+    wsUrl: 'ws://localhost:8080',
     baseUrl: 'http://localhost:3000',
     search: {
       SEARCH: 'search',

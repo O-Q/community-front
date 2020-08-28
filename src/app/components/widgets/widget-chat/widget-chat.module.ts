@@ -13,7 +13,7 @@ import { WidgetChatMessageComponent } from './widget-chat-message/widget-chat-me
 import { environment } from '@env/environment';
 
 const config: SocketIoConfig = {
-  url: `ws://localhost:8080`,
+  url: environment.urls.wsUrl,
   options: { query: { token: localStorage.getItem(ACCESS_TOKEN_KEY) } }
 };
 
