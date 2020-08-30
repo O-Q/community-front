@@ -203,7 +203,7 @@ export class ThemeService {
   private _changeTextColor(colors) {
     this._removeTextColor();
     const style = document.createElement('style');
-    const text = getTextColor(this._getBackgroundColor(colors), this._getTextColor(colors))
+    const text = getTextColor(this._getBackgroundColor(colors), this._getTextColor(colors));
     style.innerHTML = `${this.textClassLists.join(', #background-color ')} { color: ${text} !important; }`;
     this.textStyleNode = document.getElementsByTagName('head')[0].appendChild(style);
     this._adaptColor(colors);

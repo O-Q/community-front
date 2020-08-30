@@ -3,7 +3,7 @@ export const environment = {
   configPath: './assets/config/config.prod.json',
   BASE_FRONT_URL: 'https://dev.miakova.ir',
   urls: {
-    wsUrl: 'wss://api.miakova.ir',
+    wsUrl: 'ws://api.miakova.ir',
     baseUrl: 'https://api.miakova.ir',
     search: {
       SEARCH: 'search',
